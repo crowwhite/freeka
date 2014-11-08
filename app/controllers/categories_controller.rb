@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
   respond_to :html, :js
 
   def index
-    @categories = Category.where("parent_id is NULL")
+    @categories = Category.where("parent_id is NULL").order(:name)
     respond_with(@categories)
   end
 

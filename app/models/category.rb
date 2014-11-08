@@ -2,16 +2,18 @@ class Category < ActiveRecord::Base
   has_many :sub_categories, :class_name => "Category", foreign_key: "parent_id"
   belongs_to :parent_category, :class_name => "Category", foreign_key: "parent_id"
   before_destroy :prevent_if_children_exists
-  validate :prevent_parent_id_updation_if_children_exists, on: :update
+  validates :sub_categories, absence: true, if: :parent_id
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :parent_category, presence: true, if: :parent_id
+  validate :ensure_parent_is_not_a_sub_category, if: :parent_id
 
-  def prevent_if_children_exists
-    raise 'cannot delete parent category' unless sub_categories.count.zero?
-  end
+  private
 
-  def prevent_parent_id_updation_if_children_exists
-    if sub_categories.count > 0 && parent_id
-      errors.add(:parent_id, " category can't change its parent since it has sub categories under it")
-      false
+    def prevent_if_children_exists
+      raise 'cannot delete parent category' unless sub_categories.count.zero?
     end
-  end
+
+    def ensure_parent_is_not_a_sub_category
+      errors.add(:parent_id, " category can't be a sub category") unless parent_category.parent_id.nil?
+    end
 end

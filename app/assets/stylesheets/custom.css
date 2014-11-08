@@ -6,3 +6,7 @@
 .hiddenn {
   display: none;
 }
+
+a {
+  color: #03C6FF !important;
+}

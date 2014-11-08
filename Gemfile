@@ -10,3 +10,9 @@ gem 'carmen-rails', '~> 1.0.0'
 group :development do
   gem 'quiet_assets'
 end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'shoulda-matchers', require: false
+  gem 'factory_girl_rails'
+end
