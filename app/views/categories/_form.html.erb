@@ -10,15 +10,18 @@
       </ul>
     </div>
   <% end %>
+  
+  <%= link_to 'Create Sub-Category', new_category_path, remote: true, class: @link_to_visibility.to_s %>
+  <%= content_tag :div, class: 'field' + ' ' + @select_list_visibility.to_s do %>
+    <%= f.label :parent_id %><br>
+    <%= f.collection_select(:parent_id, @parent_categories, :id, :name, {:prompt => true}) %>
+  <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :category_id %><br>
-    <%= f.text_field :category_id %>
-  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

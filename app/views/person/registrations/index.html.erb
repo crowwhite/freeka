@@ -1,0 +1,27 @@
+<h1>Listing Users</h1>
+<table>
+  <th>name</th>
+  <th>email</th>
+  <th>type</th>
+  <th>address</th>
+  <th>contact number</th>
+  <th>about me</th>
+  <th>enable/disable</th>
+  <th>Edit</th>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.type %></td>
+      <td><%= user.address %></td>
+      <td><%= user.contact_no %></td>
+      <td><%= user.about_me %></td>
+      <% if user.enabled %>
+        <td>disable</td>
+      <% else %>
+        <td>enable</td>
+      <% end %>
+      <td><%= link_to 'Update Information', edit_user(user) %></td>
+    </tr>
+  <% end %>
+</table>
