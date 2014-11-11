@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :admins, controllers: { registrations: 'person/registrations' }
   resources :categories
   resources :users, except: :destroy
-  root 'categories#index'
+  root 'welcome#index'
   devise_scope :person do
     get 'sign_in', to: 'devise/sessions#new'
   end
