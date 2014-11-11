@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :people
-  devise_for :users, controllers: { registrations: 'user/registrations' }
-  devise_for :admins
+  devise_for :people, controllers: { confirmations: 'person/confirmations' }
+  devise_for :users, controllers: { registrations: 'person/registrations', confirmations: 'person/confirmations' }
+  devise_for :admins, controllers: { registrations: 'person/registrations' }
   resources :categories
   resources :users, except: :destroy
   root 'categories#index'

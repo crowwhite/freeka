@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :allow_only_admin, only: [:new, :edit, :create, :update, :destroy]
   before_action :populate_parent_categories, only: [:new, :edit]
+  after_action :populate_parent_categories, only: :create
   before_action :set_category, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
 
@@ -23,8 +24,12 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-    @category.save
-    redirect_to categories_path
+    if @category.save
+      redirect_to categories_path
+    else
+      populate_parent_categories
+      render 'edit'
+    end
   end
 
   def update

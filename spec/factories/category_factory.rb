@@ -1,6 +1,5 @@
 FactoryGirl.define do
-  factory :parent_category, class: Category do
+  factory :category do
     name "test Category"
-    parent_id nil
   end
 end
