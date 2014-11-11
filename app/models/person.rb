@@ -7,6 +7,7 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   def self.types
+    #TODO -> CREATE a constant which contains this array.
     %w(Admin User)
   end
 

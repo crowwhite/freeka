@@ -1,5 +1,9 @@
+#TODO -> Include secrets.yml.example file ?
+#TODO -> migration are giving error.
+#TODO -> Also update migrations as discussed.
+#TODO -> Add indexes as required.
 class Admin < Person
-  #TODO -> Please discuss these things.
+  #TODO -> Use before destroy, Conditions should fire only count query.
   after_destroy :atleast_one_admin_remains
   before_create :prevent_admin_creation_if_it_exists
 
