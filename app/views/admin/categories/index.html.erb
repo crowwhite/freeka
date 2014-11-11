@@ -6,7 +6,7 @@
 <h3><%= link_to 'Show Sub Categories', categories_path, remote: true %></h3>
 
 <div class='link right'>
-  <%= link_to 'New Category', new_category_path %>
+  <%= link_to 'New Category', new_admin_category_path %>
 </div>
 
 <table class="table table-striped">
@@ -21,7 +21,14 @@
     <% @categories.each do |category| %>
       <tr>
         <td><%= category.name %></td>
-        <td><%= link_to 'Show', category %></td>
+        <td><%= link_to 'Show', admin_category_path(category) %></td>
+        <% if @person_logged_in..try(:admin?) %>
+        <td><%= link_to 'Edit', edit_admin_category_path(category) %></td>
+          <% @category = category %>
+          <!-- <div id='status'> -->
+            <%= render 'status' %>
+          <!-- </div> -->
+        <% end %>
       </tr>
       <% if category.sub_categories.count > 0 %>
         <tr class="hiddenn">
@@ -38,6 +45,15 @@
                   <tr>
                     <td><%= sub_category.name %></td>
                     <td><%= link_to 'Show', sub_category %></td>
+                    <% if @person_logged_in..try(:admin?) %>
+                    <td><%= link_to 'Edit', edit_admin_category_path(sub_category) %></td>
+                    <!-- Create different action for enabling or disabling category and do it via ajax -->
+                    <% if sub_category.enabled %>
+                      <td><%= link_to 'disable', category_path(sub_category, category: { enabled: false }), method: :put %></td>
+                    <% else %>
+                      <td><%= link_to 'enable', category_path(sub_category, category: { enabled: true }), method: :put %></td>
+                    <% end %>
+                    <% end %>
                   </tr>
                 <% end %>
               </tbody>

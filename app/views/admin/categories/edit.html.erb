@@ -1,9 +1,9 @@
 <h1>Editing category</h1>
-<% @link_to_visibility = '' %>
+<% @link_visibility = '' %>
 <% if @category.parent_id == nil %>
-<% @select_list_visibility = 'hiddenn' %>
+  <% @select_list_visibility = 'hiddenn' %>
 <% end %>
 <%= render 'form' %>
 
 <%= link_to 'Show', @category %> |
-<%= link_to 'Back', categories_path %>
+<%= link_to 'Back', admin_categories_path %>

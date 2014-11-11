@@ -1,0 +1,15 @@
+<% if @person_logged_in = current_person %>
+  <strong><div>currently logged in as <%= @person_logged_in.type %> using <%= @person_logged_in.email %></div></strong>
+<% end %>
+<div class='right'>
+  <% if !person_signed_in? %>
+    <div class='link'>
+      <%= link_to 'sign up', new_user_registration_path %>
+      <%= link_to 'sign in', new_person_session_path %>
+    </div>
+  <% else %>
+    <div class='link'>
+      <%= link_to 'sign out', destroy_person_session_path, method: :delete %>
+    </div>
+  <% end %>
+</div>
