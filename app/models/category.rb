@@ -1,8 +1,12 @@
 class Category < ActiveRecord::Base
+  #TODO -> Please give some space in associations and validations.
   has_many :sub_categories, :class_name => "Category", foreign_key: "parent_id"
   belongs_to :parent_category, :class_name => "Category", foreign_key: "parent_id"
+  #TODO -> There is one option association to do this.
   before_destroy :prevent_if_children_exists
   validates :sub_categories, absence: true, if: :parent_id, on: :update
+  #TODO -> I think this validation is not required.
+  validates :sub_categories, absence: true, if: :parent_id
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :parent_category, presence: true, if: :parent_id
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id

@@ -1,4 +1,5 @@
 class Admin < Person
+  #TODO -> Please discuss these things.
   after_destroy :atleast_one_admin_remains
   before_create :prevent_admin_creation_if_it_exists
 
