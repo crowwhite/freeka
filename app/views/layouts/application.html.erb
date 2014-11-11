@@ -9,6 +9,26 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if notice %>
+    <div><%= notice %></div>
+  <% end %>
+  <% if person_logged_in = current_person %>
+    <strong><div>currently logged in as <%= person_logged_in.type %> using <%= person_logged_in.email %></div></strong>
+  <% end %>
+  <% if !person_signed_in? %>
+    <div class='link right'>
+      <%= link_to 'sign up', new_user_registration_path %>
+    </div>
+    <div class='link right'>
+      <%= link_to 'sign in', new_person_session_path %>
+    </div>
+  <% else %>
+    <div class='link right'>
+      <%= link_to 'sign out', destroy_person_session_path, method: :delete %>
+    </div>
+  <% end %>
+  <br>
+  <br>
 
 <%= yield %>
 
