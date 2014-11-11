@@ -17,6 +17,7 @@
       <td><%= user.contact_no %></td>
       <td><%= user.about_me %></td>
       <% if user.enabled %>
+        <!-- Create different action for enabling or disabling category and do it via ajax -->
         <td><%= link_to 'disable', user_path(user, user: { enabled: false }), method: :put %></td>
       <% else %>
         <td><%= link_to 'enable', user_path(user, user: { enabled: true }), method: :put %></td>

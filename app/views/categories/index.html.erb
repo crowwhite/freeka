@@ -59,6 +59,7 @@
                   <% if person_logged_in %>
                   <td><%= link_to 'Edit', edit_category_path(sub_category) %></td>
                   <!-- <td><%#= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+                  <!-- Create different action for enabling or disabling category and do it via ajax -->
                   <% if sub_category.enabled %>
                     <td><%= link_to 'disable', category_path(sub_category, category: { enabled: false }), method: :put %></td>
                   <% else %>

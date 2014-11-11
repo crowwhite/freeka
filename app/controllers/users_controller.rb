@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   respond_to :html
 
   def index
+    #TODO -> Create scope which finds users without passed user_ids
     @users = User.where.not(id: current_person.id)
   end
 
@@ -19,6 +20,7 @@ class UsersController < ApplicationController
 
   private
     def load_user
+      #TODO -> You forgot this debugger line.
       debugger
       @user = User.where(id: params[:id]).first
       unless @user
