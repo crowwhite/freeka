@@ -1,5 +1,6 @@
 class Admin::CategoriesController < Admin::BaseController
-
+  #TODO -> Remove destroy
+  #TODO -> Move this before_filter into base_controller
   before_action :allow_only_admin, only: [:index, :new, :edit, :create, :update, :destroy]
   before_action :set_category, only: [:show, :edit, :update, :destroy, :toggle_status]
 
@@ -15,6 +16,7 @@ class Admin::CategoriesController < Admin::BaseController
     @category = Category.new
   end
 
+  #TODO -> This action is not required.
   def new_sub_category
     @category ||= Category.new
     @select_list_visibility = ''
@@ -31,6 +33,7 @@ class Admin::CategoriesController < Admin::BaseController
       redirect_to admin_categories_path
     else
       unless category_params[:parent_id].empty?
+        #TODO -> Please check I think this instance variable is not required.
         @select_list_visibility = ''
       end
       render 'new'
@@ -49,6 +52,7 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def toggle_status
+    #TODO -> I think validation and callback execution is not required.
     @category.update(category_params)
   end
 

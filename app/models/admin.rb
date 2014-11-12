@@ -1,10 +1,7 @@
-#Fixed -> Include secrets.yml.example file ?
-#Fixed -> migration are giving error.
-#Fixed -> Also update migrations as discussed.
-#Fixed -> Add indexes as required.
+#TODO -> migration are giving error.
+#TODO -> Also update migrations as discussed.
+#TODO -> Add indexes as required.
 class Admin < Person
-
-  #Fixed -> Use before destroy, Conditions should fire only count query.
   before_destroy :atleast_one_admin_remains
   before_create :prevent_admin_creation_if_it_exists
 
@@ -14,6 +11,7 @@ class Admin < Person
     end
 
     def prevent_admin_creation_if_it_exists
+      #TODO -> Conditions should fire only count query.
       raise "only one admin can exist" if Admin.exists?
     end
 end
