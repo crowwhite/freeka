@@ -1,7 +1,9 @@
+#TODO -> Remove if not required.
 class Admin::UsersController < Admin::BaseController
-  
+  #TODO -> Move this before_filter into base_controller
   before_action :allow_only_admin, only: [:index, :edit, :update, :destroy]
   before_action :load_user, only: [:edit, :update, :destroy, :show]
+
   respond_to :html
 
   def index
@@ -9,11 +11,13 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def update
+    #TODO -> Handle unsuccessful updation also.
     @user.update(update_params)
     redirect_to users_path
   end
 
   def destroy
+    #TODO -> Handle unsuccessful destroy also.
     @user.destroy
     redirect_to users_path
   end

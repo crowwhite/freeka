@@ -1,7 +1,5 @@
 <%= render 'shared/notice' %>
 <%= render 'shared/users/sign_up_in' %>
-<!-- Fixed -> The above thing should be in a different partial. So, can be used in any other location. -->
-<!-- Fixed -> Indentation issues -->
 <h1>Listing categories</h1>
 <h3><%= link_to 'Show Sub Categories', categories_path, remote: true, id: 'sub_categories_link' %></h3>
 <%= javascript_include_tag 'sub_categories' %>
@@ -20,6 +18,7 @@
         <td><%= category.name %></td>
         <td><%= link_to 'Show', category %></td>
       </tr>
+      <!-- Eager load sub-categories -->
       <% if category.sub_categories.count > 0 %>
         <tr class="sub_category hiddenn">
           <td colspan = 4>

@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    #TODO -> Make only those routes which are required.
     resources :categories
+    #TODO -> Make this route as member route of categories.
     put 'update_categories/:id', as: 'category_toggle_status', to: 'categories#toggle_status'
   end
 

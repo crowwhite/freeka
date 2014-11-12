@@ -12,6 +12,7 @@ class Person < ActiveRecord::Base
 
   def self.types
     #Fixed -> CREATE a constant which contains this array.
+    #TODO -> You have not used this array in all locations.
     TYPES
   end
 
