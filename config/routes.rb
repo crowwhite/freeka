@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   get 'admin/sub_categories/new', as: 'sub_category', to: 'admin/categories#new_sub_category'
 
   root 'welcome#index'
+  get 'admin/welcome', to: 'welcome#admin_welcome'
 
 end
