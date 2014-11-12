@@ -1,6 +1,5 @@
 class Admin::UsersController < Admin::BaseController
-  
-  before_action :allow_only_admin, only: [:index, :edit, :update, :destroy]
+
   before_action :load_user, only: [:edit, :update, :destroy, :show]
   respond_to :html
 
@@ -20,7 +19,7 @@ class Admin::UsersController < Admin::BaseController
 
   private
     def load_user
-      @user = User.where(id: params[:id]).first
+      @user = User.find_by(id: params[:id])
       unless @user
         redirect_to users_path, alert: 'User not found'
       end

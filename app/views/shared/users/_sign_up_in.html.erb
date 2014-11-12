@@ -5,7 +5,7 @@
   <% if !person_signed_in? %>
     <div class='link'>
       <%= link_to 'sign up', new_user_registration_path %>
-      <%= link_to 'sign in', new_person_session_path %>
+      <%= link_to 'sign in', person_new_session_path %>
     </div>
   <% else %>
     <div class='link'>

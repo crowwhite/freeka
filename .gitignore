@@ -31,3 +31,5 @@ config/secrets.yml
 bower.json
 database.yml
 /.ruby-version
+freeka
+freeka.pub
