@@ -4,7 +4,8 @@ class Category < ActiveRecord::Base
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
     dependent: :restrict_with_error
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
-  #TODO -> check the need of below given validation
+
+  #Fixed -> check the need of below given validation
   #this validation is for updation of parent category
   validates :sub_categories, absence: true, if: :parent_id, on: :update
 

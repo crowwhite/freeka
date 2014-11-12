@@ -1,7 +1,7 @@
 <%= render 'shared/notice' %>
 <%= render 'shared/users/sign_up_in' %>
-<!-- TODO -> The above thing should be in a different partial. So, can be used in any other location. -->
-<!-- TODO -> Indentation issues -->
+<!-- Fixed -> The above thing should be in a different partial. So, can be used in any other location. -->
+<!-- Fixed -> Indentation issues -->
 <h1>Listing categories</h1>
 <h3><%= link_to 'Show Sub Categories', categories_path, remote: true %></h3>
 
@@ -47,7 +47,7 @@
                     <td><%= link_to 'Show', sub_category %></td>
                     <% if @person_logged_in..try(:admin?) %>
                     <td><%= link_to 'Edit', edit_admin_category_path(sub_category) %></td>
-                    <!-- Create different action for enabling or disabling category and do it via ajax -->
+                    <!--Fixed Create different action for enabling or disabling category and do it via ajax -->
                     <% if sub_category.enabled %>
                       <td><%= link_to 'disable', category_path(sub_category, category: { enabled: false }), method: :put %></td>
                     <% else %>

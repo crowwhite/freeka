@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141108095704) do
+ActiveRecord::Schema.define(version: 20141112065102) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20141108095704) do
     t.boolean  "enabled",    default: true, null: false
   end
 
+  add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
   create_table "people", force: true do |t|
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 20141108095704) do
   end
 
   add_index "people", ["email"], name: "index_people_on_email", unique: true, using: :btree
+  add_index "people", ["name"], name: "index_people_on_name", using: :btree
   add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
 
 end
