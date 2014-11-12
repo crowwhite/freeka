@@ -1,7 +1,7 @@
 <%= render 'shared/notice' %>
 <%= render 'shared/users/sign_up_in' %>
 <h1>Listing categories</h1>
-<h3><%= link_to 'Show Sub Categories', categories_path, remote: true, id: 'sub_categories_link' %></h3>
+<h3><a id='sub_categories_link'>Show Sub Categories</a></h3>
 <%= javascript_include_tag 'sub_categories' %>
 
 <div class='link right'>
@@ -19,15 +19,7 @@
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', admin_category_path(category) %></td>
-        <% if @person_logged_in..try(:admin?) %>
-        <td><%= link_to 'Edit', edit_admin_category_path(category) %></td>
-          <% @category = category %>
-          <!-- <div id='status'> -->
-            <%= render 'status' %>
-          <!-- </div> -->
-        <% end %>
+        <%= render 'show_edit', locals: { category: category } %>
       </tr>
       <% if category.sub_categories.count > 0 %>
         <tr class="sub_category hiddenn">
@@ -40,20 +32,11 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- Eager load sub-categories -->
+                <!-- TODO Eager load sub-categories -->
                 <% category.sub_categories.order(:name).each do |sub_category| %>
                   <tr>
                     <!-- TODO -> Use same partial for both category and subcategory -->
-                    <td><%= sub_category.name %></td>
-                    <td><%= link_to 'Show', sub_category %></td>
-                    <% if @person_logged_in..try(:admin?) %>
-                    <td><%= link_to 'Edit', edit_admin_category_path(sub_category) %></td>
-                    <% if sub_category.enabled %>
-                      <td><%= link_to 'disable', category_path(sub_category, category: { enabled: false }), method: :put %></td>
-                    <% else %>
-                      <td><%= link_to 'enable', category_path(sub_category, category: { enabled: true }), method: :put %></td>
-                    <% end %>
-                    <% end %>
+                    <%= render 'show_edit', locals: { category: sub_category } %>
                   </tr>
                 <% end %>
               </tbody>

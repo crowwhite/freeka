@@ -1,14 +1,14 @@
 class Admin::CategoriesController < Admin::BaseController
   #TODO -> Remove destroy
   #TODO -> Move this before_filter into base_controller
-  before_action :allow_only_admin, only: [:index, :new, :edit, :create, :update, :destroy]
-  before_action :set_category, only: [:show, :edit, :update, :destroy, :toggle_status]
+  #Fixed
+  before_action :set_category, only: [:show, :edit, :update, :toggle_status]
 
   respond_to :html, :js
 
 
   def index
-    @categories = Category.parent_categories
+    @categories = Category.root
     respond_with(@categories)
   end
 
@@ -17,11 +17,7 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   #TODO -> This action is not required.
-  def new_sub_category
-    @category ||= Category.new
-    @select_list_visibility = ''
-    render 'new'
-  end
+  #Fixed -- removed new_sub_category
 
   def show
     respond_with(@category)
@@ -32,10 +28,8 @@ class Admin::CategoriesController < Admin::BaseController
     if @category.save
       redirect_to admin_categories_path
     else
-      unless category_params[:parent_id].empty?
-        #TODO -> Please check I think this instance variable is not required.
-        @select_list_visibility = ''
-      end
+      #TODO -> Please check I think this instance variable is not required.
+      #Fixed -- removed
       render 'new'
     end
   end
@@ -53,7 +47,8 @@ class Admin::CategoriesController < Admin::BaseController
 
   def toggle_status
     #TODO -> I think validation and callback execution is not required.
-    @category.update(category_params)
+    #Fixed -- 'toggle' skips callbacks and 'toggle!' skips validation but update_column skips both
+    @category.update_column(:enabled, category_params[:enabled] == 'true')
   end
 
   private

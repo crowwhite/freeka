@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  scope :parent_categories, -> { where('parent_id is NULL').order(:name) }
+  scope :root, -> { where('parent_id is NULL').order(:name) }
 
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
     dependent: :restrict_with_error

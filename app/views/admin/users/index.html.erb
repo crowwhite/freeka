@@ -1,0 +1,26 @@
+<%= render 'shared/notice' %>
+<%= render 'shared/users/sign_up_in' %>
+<h1>Listing Users</h1>
+<table class='table'>
+  <th>name</th>
+  <th>email</th>
+  <th>type</th>
+  <th>address</th>
+  <th>contact number</th>
+  <th>about me</th>
+  <th>enable/disable</th>
+  <th colspan="2">Edit</th>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.type %></td>
+      <td><%= user.address %></td>
+      <td><%= user.contact_no %></td>
+      <td><%= user.about_me %></td>
+      <%= render 'status', locals: { user: user } %>
+      <td><%= link_to 'Update Information', edit_admin_user_path(user) %></td>
+      <td><%= link_to 'delete user', admin_user_path(user), method: :delete %></td>
+    </tr>
+  <% end %>
+</table>

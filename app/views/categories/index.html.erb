@@ -19,6 +19,7 @@
         <td><%= link_to 'Show', category %></td>
       </tr>
       <!-- Eager load sub-categories -->
+      <!--not Fixed I will fix this in next commit -->
       <% if category.sub_categories.count > 0 %>
         <tr class="sub_category hiddenn">
           <td colspan = 4>

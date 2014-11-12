@@ -1,9 +1,9 @@
-<% if @category.enabled %>
-  <%= content_tag :td, id: 'status' + @category.id.to_s do %>
-    <%= link_to 'disable', admin_category_toggle_status_path(@category, category: { enabled: false }), method: :put, remote: true %></td>
+<% if locals[:category].enabled %>
+  <%= content_tag :td, id: 'status' + locals[:category].id.to_s do %>
+    <%= link_to 'disable', admin_category_toggle_status_path(locals[:category], category: { enabled: false }), method: :put, remote: true %></td>
   <% end %>
 <% else %>
-  <%= content_tag :td, id: 'status' + @category.id.to_s do %>
-    <%= link_to 'enable', admin_category_toggle_status_path(@category, category: { enabled: true }), method: :put, remote: true %></td>
+  <%= content_tag :td, id: 'status' + locals[:category].id.to_s do %>
+    <%= link_to 'enable', admin_category_toggle_status_path(locals[:category], category: { enabled: true }), method: :put, remote: true %></td>
   <% end %>
 <% end %>

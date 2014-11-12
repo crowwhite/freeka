@@ -1,32 +1,44 @@
 #TODO -> Remove if not required.
+#Fixed -- Functionality corrected
 class Admin::UsersController < Admin::BaseController
   #TODO -> Move this before_filter into base_controller
-  before_action :allow_only_admin, only: [:index, :edit, :update, :destroy]
-  before_action :load_user, only: [:edit, :update, :destroy, :show]
+  #Fixed
+  before_action :load_user, only: [:edit, :update, :destroy, :show, :toggle_status]
 
-  respond_to :html
+  respond_to :html, :js
 
   def index
-    @users = User.where.not(id: current_person.id)
+    @users = User.all_except_current(current_person.id)
   end
 
   def update
     #TODO -> Handle unsuccessful updation also.
-    @user.update(update_params)
-    redirect_to users_path
+    #Fixed
+    if @user.update(update_params)
+      redirect_to admin_users_path
+    else
+      render 'edit'
+    end
   end
 
   def destroy
     #TODO -> Handle unsuccessful destroy also.
-    @user.destroy
-    redirect_to users_path
+    #Fixed
+    flash[:notice] = 'Could not destroy User' unless @user.destroy
+    redirect_to admin_users_path
+  end
+
+  def toggle_status
+    #TODO -> I think validation and callback execution is not required.
+    #Fixed -- 'toggle' skips callbacks and 'toggle!' skips validation but update_column skips both
+    @user.update_column(:enabled, update_params[:enabled] == 'true')
   end
 
   private
     def load_user
       @user = User.find_by(id: params[:id])
       unless @user
-        redirect_to users_path, alert: 'User not found'
+        redirect_to admin_users_path, alert: 'User not found'
       end
     end
 
