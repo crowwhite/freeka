@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
 
   namespace :admin do
-    #TODO -> Make only those routes which are required.
     #Fixed
     resources :categories do
       put 'toggle_status', on: :member
@@ -22,7 +21,6 @@ Rails.application.routes.draw do
       put 'toggle_status', on: :member
     end
     #TODO -> Make this route as member route of categories.
-    #Fixed -- Want to discuss this
   end
 
   root 'welcome#index'

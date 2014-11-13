@@ -5,8 +5,6 @@ class CategoriesController < ApplicationController
   respond_to :html
 
   def index
-    #TODO -> categories is not required in the name.
-    #Fixed
     @categories = Category.root.includes(:sub_categories)
     respond_with(@categories)
   end
