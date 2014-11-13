@@ -13,14 +13,12 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
 
   namespace :admin do
-    #Fixed
     resources :categories do
       put 'toggle_status', on: :member
     end
     resources :users, except: :new do
       put 'toggle_status', on: :member
     end
-    #TODO -> Make this route as member route of categories.
   end
 
   root 'welcome#index'

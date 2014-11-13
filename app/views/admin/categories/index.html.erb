@@ -34,8 +34,6 @@
               <tbody>
                 <% category.sub_categories.sort_by(&:name).each do |sub_category| %>
                   <tr>
-                    <!-- TODO -> Change name of this partial -->
-                    <!-- Fixed -->
                     <%= render 'manage', locals: { category: sub_category } %>
                   </tr>
                 <% end %>
