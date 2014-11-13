@@ -21,7 +21,7 @@
       <tr>
         <%= render 'show_edit', locals: { category: category } %>
       </tr>
-      <% if category.sub_categories.count > 0 %>
+      <% if category.sub_categories.size > 0 %>
         <tr class="sub_category hiddenn">
           <td colspan = 4>
             <table class="table sub_table">
@@ -33,7 +33,8 @@
               </thead>
               <tbody>
                 <!-- TODO Eager load sub-categories -->
-                <% category.sub_categories.order(:name).each do |sub_category| %>
+                <!-- Fixed -->
+                <% category.sub_categories.sort_by(&:name).each do |sub_category| %>
                   <tr>
                     <!-- TODO -> Use same partial for both category and subcategory -->
                     <%= render 'show_edit', locals: { category: sub_category } %>

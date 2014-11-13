@@ -8,7 +8,7 @@ class Admin::CategoriesController < Admin::BaseController
 
 
   def index
-    @categories = Category.root
+    @categories = Category.root.includes(:sub_categories)
     respond_with(@categories)
   end
 

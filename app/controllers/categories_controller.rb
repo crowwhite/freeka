@@ -7,7 +7,7 @@ class CategoriesController < ApplicationController
   def index
     #TODO -> categories is not required in the name.
     #Fixed
-    @categories = Category.root
+    @categories = Category.root.includes(:sub_categories)
     respond_with(@categories)
   end
 
