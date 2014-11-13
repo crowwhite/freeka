@@ -32,11 +32,9 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- TODO Eager load sub-categories -->
-                <!-- Fixed -->
                 <% category.sub_categories.sort_by(&:name).each do |sub_category| %>
                   <tr>
-                    <!-- TODO -> Use same partial for both category and subcategory -->
+                    <!-- TODO -> Change name of this partial -->
                     <%= render 'show_edit', locals: { category: sub_category } %>
                   </tr>
                 <% end %>

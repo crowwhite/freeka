@@ -11,9 +11,6 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   def self.types
-    #Fixed -> CREATE a constant which contains this array.
-    #TODO -> You have not used this array in all locations.
-    #Fixed
     TYPES
   end
 

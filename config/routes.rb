@@ -13,14 +13,12 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
 
   namespace :admin do
-    #TODO -> Make only those routes which are required.
-    #Fixed
+    #TODO -> Make this route as member route of categories.
     put 'categories/:id', to: 'categories#toggle_status', as: 'category_toggle_status'
     resources :categories
+    #TODO -> Make this route as member route of categories.
     put 'users/:id', as: 'user_toggle_status', to: 'users#toggle_status'
     resources :users, except: :new
-    #TODO -> Make this route as member route of categories.
-    #Not Fixed -- Want to discuss this
   end
 
   root 'welcome#index'
