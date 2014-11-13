@@ -1,27 +1,34 @@
 class Admin::UsersController < Admin::BaseController
+  before_action :load_user, only: [:edit, :update, :destroy, :show, :toggle_status]
 
-  before_action :load_user, only: [:edit, :update, :destroy, :show]
-  respond_to :html
+  respond_to :html, :js
 
   def index
-    @users = User.where.not(id: current_person.id)
+    @users = User.all_except_current(current_person.id)
   end
 
   def update
-    @user.update(update_params)
-    redirect_to users_path
+    if @user.update(update_params)
+      redirect_to admin_users_path
+    else
+      render 'edit'
+    end
   end
 
   def destroy
-    @user.destroy
-    redirect_to users_path
+    flash[:notice] = 'Could not destroy User' unless @user.destroy
+    redirect_to admin_users_path
+  end
+
+  def toggle_status
+    @user.update_column(:enabled, update_params[:enabled] == 'true')
   end
 
   private
     def load_user
       @user = User.find_by(id: params[:id])
       unless @user
-        redirect_to users_path, alert: 'User not found'
+        redirect_to admin_users_path, alert: 'User not found'
       end
     end
 

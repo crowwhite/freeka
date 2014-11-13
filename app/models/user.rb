@@ -1,4 +1,3 @@
 class User < Person
-
-  scope :all_except_current, -> { where.not(id: current_person.id) }
+  scope :all_except_current, ->(id) { where.not(id: id) }
 end

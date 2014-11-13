@@ -1,24 +1,16 @@
 class Admin::CategoriesController < Admin::BaseController
-
-  before_action :allow_only_admin, only: [:index, :new, :edit, :create, :update, :destroy]
-  before_action :set_category, only: [:show, :edit, :update, :destroy, :toggle_status]
+  before_action :set_category, only: [:show, :edit, :update, :toggle_status]
 
   respond_to :html, :js
 
 
   def index
-    @categories = Category.parent_categories
+    @categories = Category.root.includes(:sub_categories)
     respond_with(@categories)
   end
 
   def new
     @category = Category.new
-  end
-
-  def new_sub_category
-    @category ||= Category.new
-    @select_list_visibility = ''
-    render 'new'
   end
 
   def show
@@ -30,9 +22,6 @@ class Admin::CategoriesController < Admin::BaseController
     if @category.save
       redirect_to admin_categories_path
     else
-      unless category_params[:parent_id].empty?
-        @select_list_visibility = ''
-      end
       render 'new'
     end
   end
@@ -49,7 +38,7 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def toggle_status
-    @category.update(category_params)
+    @category.update_column(:enabled, category_params[:enabled] == 'true')
   end
 
   private

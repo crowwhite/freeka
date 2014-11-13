@@ -1,18 +1,15 @@
 class Category < ActiveRecord::Base
-  scope :parent_categories, -> { where('parent_id is NULL').order(:name) }
+  scope :root, -> { where('parent_id is NULL').order(:name) }
 
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
     dependent: :restrict_with_error
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
 
-  #Fixed -> check the need of below given validation
-  #this validation is for updation of parent category
   validates :sub_categories, absence: true, if: :parent_id, on: :update
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :parent_category, presence: true, if: :parent_id
 
-  #this validation is for creation of sub-category
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
 
   private

@@ -1,0 +1,1 @@
+$('#status' + <%= @user.id.to_s %>).html("<%= escape_javascript render 'status', locals: { user: @user} %>")

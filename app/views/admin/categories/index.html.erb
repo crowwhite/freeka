@@ -1,9 +1,7 @@
 <%= render 'shared/notice' %>
 <%= render 'shared/users/sign_up_in' %>
-<!-- Fixed -> The above thing should be in a different partial. So, can be used in any other location. -->
-<!-- Fixed -> Indentation issues -->
 <h1>Listing categories</h1>
-<h3><%= link_to 'Show Sub Categories', categories_path, remote: true, id: 'sub_categories_link' %></h3>
+<h3><a id='sub_categories_link'>Show Sub Categories</a></h3>
 <%= javascript_include_tag 'sub_categories' %>
 
 <div class='link right'>
@@ -21,17 +19,9 @@
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', admin_category_path(category) %></td>
-        <% if @person_logged_in..try(:admin?) %>
-        <td><%= link_to 'Edit', edit_admin_category_path(category) %></td>
-          <% @category = category %>
-          <!-- <div id='status'> -->
-            <%= render 'status' %>
-          <!-- </div> -->
-        <% end %>
+        <%= render 'manage', locals: { category: category } %>
       </tr>
-      <% if category.sub_categories.count > 0 %>
+      <% if category.sub_categories.size > 0 %>
         <tr class="sub_category hiddenn">
           <td colspan = 4>
             <table class="table sub_table">
@@ -42,19 +32,11 @@
                 </tr>
               </thead>
               <tbody>
-                <% category.sub_categories.order(:name).each do |sub_category| %>
+                <% category.sub_categories.sort_by(&:name).each do |sub_category| %>
                   <tr>
-                    <td><%= sub_category.name %></td>
-                    <td><%= link_to 'Show', sub_category %></td>
-                    <% if @person_logged_in..try(:admin?) %>
-                    <td><%= link_to 'Edit', edit_admin_category_path(sub_category) %></td>
-                    <!--Fixed Create different action for enabling or disabling category and do it via ajax -->
-                    <% if sub_category.enabled %>
-                      <td><%= link_to 'disable', category_path(sub_category, category: { enabled: false }), method: :put %></td>
-                    <% else %>
-                      <td><%= link_to 'enable', category_path(sub_category, category: { enabled: true }), method: :put %></td>
-                    <% end %>
-                    <% end %>
+                    <!-- TODO -> Change name of this partial -->
+                    <!-- Fixed -->
+                    <%= render 'manage', locals: { category: sub_category } %>
                   </tr>
                 <% end %>
               </tbody>

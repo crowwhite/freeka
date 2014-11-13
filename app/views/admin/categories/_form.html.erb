@@ -1,4 +1,4 @@
-<%= form_for(@category, url: { action: "create" }) do |f| %>
+<%= form_for(@category, url: admin_category_path) do |f| %>
   <% if @category.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
@@ -10,11 +10,10 @@
       </ul>
     </div>
   <% end %>
-  
-  <%= link_to 'Create Sub-Category', sub_category_path, class: @link_visibility.to_s %>
-  <%= content_tag :div, class: 'field' + ' ' + @select_list_visibility.to_s do %>
+  <a id="create_sub_category_link">Create Sub-Category</a>
+  <%= content_tag :div, class: 'field hiddenn', id: 'sub_category_select' do %>
     <%= f.label :parent_id %><br>
-    <%= f.collection_select(:parent_id, Category.parent_categories, :id, :name, {:prompt => true}) %>
+    <%= f.collection_select(:parent_id, Category.root, :id, :name, {:prompt => true}) %>
   <% end %>
 
   <div class="field">
