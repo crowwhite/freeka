@@ -1,36 +1,20 @@
 # config valid only for Capistrano 3.1
-require 'capistrano/ext/multistage'
 lock '3.1.0'
 
-set :stages, ["staging", "production"]
-set :default_stage, "staging"
-
 set :application, 'freeka'
-set :repo_url, 'https://github.com/vinsol/freeka.git'
+set :repo_url, 'git@github.com:vinsol/freeka.git'
 
-set :linked_files, %w{config/database.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-
-namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
-
-  after :publishing, 'deploy:restart'
-  after :finishing, 'deploy:cleanup'
-end
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
+set :deploy_to, '/var/www/freeka'
+set :use_sudo, true
 
 # Default value for :scm is :git
 # set :scm, :git
+set :scm, :git
+set :branch, "server_setup"
 
 # Default value for :format is :pretty
 # set :format, :pretty
@@ -53,25 +37,28 @@ end
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+set :deploy_via, :remote_cache
+
 namespace :deploy do
 
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 
+  after :finishing, :cleanup
   after :publishing, :restart
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
+  # after :restart, :clear_cache do
+  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
+  #     # Here we can do anything such as:
+  #     # within release_path do
+  #     #   execute :rake, 'cache:clear'
+  #     # end
+  #   end
+  # end
 
 end
