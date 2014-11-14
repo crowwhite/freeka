@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   get 'people/sign_in', to: redirect('sign_in')
   get 'admins/sign_in', to: redirect('sign_in')
+  get 'people/sign_up', to: redirect('users/sign_up')
 
   devise_scope :person do
     get 'sign_in', to: 'devise/sessions#new', as: 'person_new_session'
