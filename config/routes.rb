@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
 
 
-  devise_for :people, controllers: { confirmations: 'person/confirmations' }
+  devise_for :people, controllers: { registrations: 'person/registrations', confirmations: 'person/confirmations' }
   devise_for :users, controllers: { registrations: 'person/registrations', confirmations: 'person/confirmations' }
   resources :categories, only: [:index, :show]
 
