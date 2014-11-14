@@ -7,8 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+  <div id='head'>
+    <%= render 'shared/notice' %>
+    <%= render 'shared/users/sign_up_in' %>
+  </div>
+  <div id='left'>
+  </div>
+  <div class='inline'>
+    <%= yield %>
+  </div>
 
 </body>
 </html>

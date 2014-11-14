@@ -4,7 +4,7 @@ class Admin::UsersController < Admin::BaseController
   respond_to :html, :js
 
   def index
-    @users = User.all_except_current(current_person.id)
+    @users = User.all_except_current(current_admin.try(:id))
   end
 
   def update

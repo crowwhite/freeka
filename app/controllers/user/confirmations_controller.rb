@@ -1,4 +1,4 @@
-class Person::ConfirmationsController < Devise::ConfirmationsController
+class User::ConfirmationsController < Devise::ConfirmationsController
 
   def show
     self.resource = resource_class.confirm_by_token(params[:confirmation_token])
