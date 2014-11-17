@@ -6,6 +6,4 @@ class WelcomeController < ApplicationController
     end
   end
 
-  #TODO -> Make different welcome controller for admin and make index action in it.
-  #Fixed
 end

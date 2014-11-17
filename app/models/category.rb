@@ -17,14 +17,15 @@ class Category < ActiveRecord::Base
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
 
   after_update :toggle_status_of_sub_categories, if: :enabled_changed? && :is_parent?
-  #TODO -> Change name of this method.
-  #Fixed
+
   def is_parent?
     parent_id.nil?
   end
 
   def toggle_status_of_sub_categories
     sub_categories.with_status(!enabled?).each do |sub_category|
+    #TODO -> Create a scope with status as an argument.
+    #Fixed
       sub_category.update_column(:enabled, status)
     end
   end

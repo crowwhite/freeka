@@ -40,8 +40,6 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def toggle_status
-    #TODO -> Move this thing to callback.
-    #Fixed
     @category.update(category_params)
   end
 
