@@ -1,4 +1,6 @@
 class Admin::UsersController < Admin::BaseController
+  layout 'admin'
+
   before_action :load_user, only: [:edit, :update, :destroy, :show, :toggle_status]
 
   respond_to :html, :js
@@ -9,7 +11,7 @@ class Admin::UsersController < Admin::BaseController
 
   def update
     if @user.update(update_params)
-      redirect_to admin_users_path
+      redirect_to admins_users_path
     else
       render 'edit'
     end
@@ -17,7 +19,7 @@ class Admin::UsersController < Admin::BaseController
 
   def destroy
     flash[:notice] = 'Could not destroy User' unless @user.destroy
-    redirect_to admin_users_path
+    redirect_to admins_users_path
   end
 
   def toggle_status
@@ -28,7 +30,7 @@ class Admin::UsersController < Admin::BaseController
     def load_user
       @user = User.find_by(id: params[:id])
       unless @user
-        redirect_to admin_users_path, alert: 'User not found'
+        redirect_to admins_users_path, alert: 'User not found'
       end
     end
 

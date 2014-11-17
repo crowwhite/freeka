@@ -1,8 +1,11 @@
 class Category < ActiveRecord::Base
-  scope :root, -> { where('parent_id is NULL').order(:name) }
+  scope :root, -> { where("parent_id is NULL").order(:name) }
+  scope :enabled, -> { where("parent_id is NULL and enabled=true").order(:name) }
 
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
     dependent: :restrict_with_error
+  has_many :enabled_sub_categories, -> { where enabled: true }, class_name: Category,
+    foreign_key: :parent_id
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
 
   validates :sub_categories, absence: true, if: :parent_id, on: :update
@@ -11,6 +14,10 @@ class Category < ActiveRecord::Base
   validates :parent_category, presence: true, if: :parent_id
 
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
+
+  def parent?
+    parent_id.nil?
+  end
 
   private
 

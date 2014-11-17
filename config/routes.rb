@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'user/registrations', confirmations: 'user/confirmations' }
   resources :categories, only: [:index, :show]
 
-  namespace :admin do
+  namespace :admin, path: 'admins', as: :admins do
     resources :categories do
       put 'toggle_status', on: :member
     end
@@ -13,7 +13,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'welcome/index'
   root 'welcome#index'
-  get 'admin/welcome', to: 'welcome#admin_welcome'
+  get 'admins/welcome', to: 'welcome#admin_welcome'
 
 end

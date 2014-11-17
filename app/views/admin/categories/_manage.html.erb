@@ -1,4 +1,4 @@
 <td><%= locals[:category].name %></td>
-<td><%= link_to 'Show', admin_category_path(locals[:category]) %></td>
-<td><%= link_to 'Edit', edit_admin_category_path(locals[:category]) %></td>
+<td><%= link_to 'Show', admins_category_path(locals[:category]) %></td>
+<td><%= link_to 'Edit', edit_admins_category_path(locals[:category]) %></td>
 <%= render 'status', locals: { category: locals[:category] } %>

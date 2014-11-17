@@ -6,6 +6,7 @@ class Person < ActiveRecord::Base
   validates :email, uniqueness: { case_sensitive: false }
   validates :contact_no, numericality: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
+  validate :white_spaces_not_allowed_in_password
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
@@ -20,5 +21,11 @@ class Person < ActiveRecord::Base
 
   def admin?
     type == 'Admin'
+  end
+
+  def white_spaces_not_allowed_in_password
+    if password.include? ' '
+      errors.add(:password, 'cannot contain white spaces')
+    end
   end
 end

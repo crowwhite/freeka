@@ -1,4 +1,6 @@
 class Admin::CategoriesController < Admin::BaseController
+  layout 'admin'
+
   before_action :set_category, only: [:show, :edit, :update, :toggle_status]
 
   respond_to :html, :js
@@ -20,7 +22,7 @@ class Admin::CategoriesController < Admin::BaseController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to admin_categories_path
+      redirect_to admins_categories_path
     else
       render 'new'
     end
@@ -31,14 +33,20 @@ class Admin::CategoriesController < Admin::BaseController
 
   def update
     if @category.update(category_params)
-      redirect_to admin_categories_path
+      redirect_to admins_categories_path
     else
       render 'edit'
     end
   end
 
   def toggle_status
-    @category.update_column(:enabled, category_params[:enabled] == 'true')
+    status = category_params[:enabled] == 'true'
+    @category.update_column(:enabled, status)
+    if @category.parent?
+      @category.sub_categories.where("enabled = ?", !status).each do |sub_category|
+        sub_category.update_column(:enabled, status)
+      end
+    end
   end
 
   private
@@ -46,7 +54,7 @@ class Admin::CategoriesController < Admin::BaseController
       @category = Category.find_by(id: params[:id])
       unless @category
         flash[:notice] = 'Category not found'
-        redirect_to admin_categories_path
+        redirect_to admins_categories_path
       end
     end
 
