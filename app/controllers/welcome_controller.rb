@@ -6,6 +6,7 @@ class WelcomeController < ApplicationController
     end
   end
 
+  #TODO -> Make different welcome controller for admin and make index action in it.
   def admin_welcome
     unless current_admin
       flash[:notice] = "you are not authorised to view that page"

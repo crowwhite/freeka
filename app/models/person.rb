@@ -6,6 +6,7 @@ class Person < ActiveRecord::Base
   validates :email, uniqueness: { case_sensitive: false }
   validates :contact_no, numericality: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
+  #TODO -> Change name of this method.
   validate :white_spaces_not_allowed_in_password
 
   devise :database_authenticatable, :registerable,

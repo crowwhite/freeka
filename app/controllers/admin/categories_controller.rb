@@ -41,6 +41,7 @@ class Admin::CategoriesController < Admin::BaseController
 
   def toggle_status
     status = category_params[:enabled] == 'true'
+    #TODO -> Move this thing to callback.
     @category.update_column(:enabled, status)
     if @category.parent?
       @category.sub_categories.where("enabled = ?", !status).each do |sub_category|

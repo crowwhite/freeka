@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
   scope :root, -> { where("parent_id is NULL").order(:name) }
+  #TODO -> It should only return enabled categories. It does not related to parent_id condition
   scope :enabled, -> { where("parent_id is NULL and enabled=true").order(:name) }
 
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
@@ -15,6 +16,7 @@ class Category < ActiveRecord::Base
 
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
 
+  #TODO -> Change name of this method.
   def parent?
     parent_id.nil?
   end
