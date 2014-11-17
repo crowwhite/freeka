@@ -11,10 +11,9 @@ Rails.application.routes.draw do
     resources :users, except: :new do
       put 'toggle_status', on: :member
     end
+    resources :welcome, only: :index
   end
 
-  get 'welcome/index'
   root 'welcome#index'
-  get 'admins/welcome', to: 'welcome#admin_welcome'
 
 end

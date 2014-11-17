@@ -3,7 +3,8 @@ class Admin::BaseController < ApplicationController
 
   def allow_only_admin
     #TODO -> Remove commented code.
-    unless current_admin# && current_person.admin?
+    #Fixed
+    unless current_admin
       flash[:notice] = "You don't have access to that page"
       redirect_to root_path
     end

@@ -7,7 +7,8 @@ class Person < ActiveRecord::Base
   validates :contact_no, numericality: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
   #TODO -> Change name of this method.
-  validate :white_spaces_not_allowed_in_password
+  #Fixed
+  validate :no_spaces_in_password
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
@@ -24,7 +25,7 @@ class Person < ActiveRecord::Base
     type == 'Admin'
   end
 
-  def white_spaces_not_allowed_in_password
+  def no_spaces_in_password
     if password.include? ' '
       errors.add(:password, 'cannot contain white spaces')
     end

@@ -8,16 +8,12 @@
 </head>
 <body>
   <div id='left'>
-    <%= link_to 'Home', admins_welcome_path %>
+    <%= link_to 'Home', admins_welcome_index_path %>
   </div>
   <div id='head'>
     <%= render 'shared/users/sign_up_in' %>
   </div>
-  <% flash.each do |type, message| %>
-    <p class=<%= type %> >
-      <%= message %>
-    </p>
-  <% end %>
+  <%= render 'layouts/flash' %>
   <div class='inline'>
     <%= yield %>
   </div>

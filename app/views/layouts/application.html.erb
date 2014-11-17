@@ -13,11 +13,8 @@
     <%= render 'shared/users/sign_up_in' %>
   </div>
   <!-- TODO -> Make separate partial for flash -->
-  <% flash.each do |type, message| %>
-    <p class=<%= type %> >
-      <%= message %>
-    </p>
-  <% end %>
+  <!-- Fixed -->
+  <%= render 'layouts/flash' %>
   <div class='inline'>
     <%= yield %>
   </div>
