@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
   respond_to :html
 
   def index
-    @categories = Category.root.enabled.includes(:enabled_sub_categories)
+    @categories = Category.root.enabled.order(:name).includes(:enabled_sub_categories)
     respond_with(@categories)
   end
 
