@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-    <% @categories.each do |category| %>
+    <% @categories.sort_by(&:name).each do |category| %>
       <tr>
         <%= render 'manage', locals: { category: category } %>
       </tr>

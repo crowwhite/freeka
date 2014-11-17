@@ -1,8 +1,8 @@
 class Category < ActiveRecord::Base
-  scope :root, -> { where("parent_id is NULL").order(:name) }
+  scope :root, -> { where("parent_id is NULL") }
   #TODO -> It should only return enabled categories. It does not related to parent_id condition
   #Fixed
-  scope :with_status, ->(status) { where("enabled = ?", status).order(:name) }
+  scope :with_status, ->(status) { where("enabled = ?", status) }
   scope :enabled, -> { with_status(true) }
 
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
