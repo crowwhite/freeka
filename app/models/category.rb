@@ -1,7 +1,6 @@
 class Category < ActiveRecord::Base
   scope :root, -> { where("parent_id is NULL").order(:name) }
-  #TODO -> It should only return enabled categories. It does not related to parent_id condition
-  #Fixed
+
   scope :with_status, ->(status) { where("enabled = ?", status).order(:name) }
   scope :enabled, -> { with_status(true) }
 
@@ -24,8 +23,6 @@ class Category < ActiveRecord::Base
 
   def toggle_status_of_sub_categories
     sub_categories.with_status(!enabled?).each do |sub_category|
-    #TODO -> Create a scope with status as an argument.
-    #Fixed
       sub_category.update_column(:enabled, status)
     end
   end
