@@ -22,7 +22,7 @@ class Category < ActiveRecord::Base
 
   def toggle_status_of_sub_categories
     sub_categories.with_status(!enabled?).each do |sub_category|
-      sub_category.update_column(:enabled, status)
+      sub_category.update_column(:enabled, enabled)
     end
   end
 
