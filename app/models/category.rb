@@ -2,6 +2,7 @@ class Category < ActiveRecord::Base
   scope :root, -> { where("parent_id is NULL") }
   scope :with_status, ->(status) { where("enabled = ?", status) }
   scope :enabled, -> { with_status(true) }
+  scope :all_except, ->(id) { where.not(id: id) }
 
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
     dependent: :restrict_with_error
@@ -9,7 +10,7 @@ class Category < ActiveRecord::Base
     foreign_key: :parent_id
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
 
-  validates :sub_categories, absence: true, if: :parent_id, on: :update
+  validates :sub_categories, absence: { message: 'should not exist for this category' }, if: :parent_id, on: :update
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :parent_category, presence: true, if: :parent_id
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
