@@ -8,7 +8,7 @@ class Person < ActiveRecord::Base
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
   validate :no_spaces_in_password
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   def self.types
