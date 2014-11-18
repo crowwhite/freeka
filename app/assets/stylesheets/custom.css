@@ -12,8 +12,6 @@ a {
 }
 
 body {
-  /*margin-left: 20px;*/
-  /*margin-right: 20px;*/
 }
 
 div.link {
@@ -33,4 +31,8 @@ div.right {
   padding-left: 70px;
   background-color: #a80000;
   color: white;
+}
+
+.mandatory label {
+  border: 1px red solid;
 }
