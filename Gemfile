@@ -8,6 +8,8 @@ gem 'byebug'
 gem 'carmen-rails', '~> 1.0.0'
 
 group :development do
+  gem 'binding_of_caller',            '~> 0.7.2'
+  gem 'better_errors',                '~> 1.1.0'
   gem 'quiet_assets'
 end
 

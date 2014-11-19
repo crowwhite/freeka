@@ -2,6 +2,9 @@ class Person < ActiveRecord::Base
 
   TYPES = %w(Admin User)
 
+  belongs_to :address
+  has_many :requirements, foreign_key: :requestor_id
+
   validates :name, :contact_no, presence: true
   validates :contact_no, numericality: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }

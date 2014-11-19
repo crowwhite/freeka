@@ -13,6 +13,10 @@ class CategoriesController < ApplicationController
     respond_with(@category)
   end
 
+  def sub_categories
+    render partial: 'sub_categories', layout: false
+  end
+
   private
     def set_category
       @category = Category.find_by(id: params[:id])

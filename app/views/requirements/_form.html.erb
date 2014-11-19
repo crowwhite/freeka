@@ -1,0 +1,57 @@
+<%= javascript_include_tag 'sub_region_select' %>
+<%= javascript_include_tag 'sub_category_select' %>
+<%= form_for(@requirement) do |f| %>
+<%= render 'shared/errors', locals: { object: @requirement } %>
+  <div class="field">
+    <%= f.label :category_ids %>
+    <%= f.collection_select(:category_ids, Category.root.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]'}) %>
+  </div>
+  <div class="field">
+    <%= f.label :sub_category %>
+    <%= render 'categories/sub_categories' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :details %><br />
+    <%= f.text_area :details %>
+  </div>
+  <div class="field">
+    <%= f.label :Require_Before, for: :expiration_date %><br />
+    <%= f.date_select :expiration_date %>
+  </div>
+
+  <div class="field">
+    <%= f.fields_for :address, f.object.build_address do |a| %>
+
+      <div class="field">
+        <%= a.label :street %>
+        <%= a.text_field :street %>
+      </div>
+
+      <div class="field">
+        <%= a.label :city %>
+        <%= a.text_field :city %>
+      </div>
+
+      <div class="field">
+        <%= a.label :country, for: :country_code %><br />
+        <%= a.country_select :country_code, priority: %w(US CA), prompt: 'Please select a country', id: 'country_select' %>
+      </div>
+
+      <div class="field">
+        <%= f.label :state, for: :state_code %><br />
+        <div id="subregion_select">
+          <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

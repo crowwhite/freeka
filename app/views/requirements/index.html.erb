@@ -1,0 +1,30 @@
+<h1>Requirements</h1>
+
+<div class="right">
+  <%= link_to 'New Requirement', new_requirement_path %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <th>Title</th>
+    <th>Details</th>
+    <th>Expiration Date</th>
+    <th>Address</th>
+    <th>Status</th>
+    <th>Enable/Disable</th>
+    <th>Delete</th>
+  </thead>
+  <tbody>
+    <% @requirements.each do |requirement| %>
+      <tr>
+        <td><%= link_to requirement.title, requirement %></td>
+        <td><%= requirement.details %></td>
+        <td><%= requirement.expiration_date %></td>
+        <td><%= Carmen::Country.coded(requirement.address.try(:country_code)).try(:name) %></td>
+        <td><%= Requirement::STATUS[requirement.status] %></td>
+        <%= render 'state', locals: { requirement: requirement } %>
+        <td><%= link_to 'delete', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
