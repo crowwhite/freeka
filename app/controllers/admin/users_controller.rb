@@ -3,10 +3,8 @@ class Admin::UsersController < Admin::BaseController
 
   before_action :load_user, only: [:edit, :update, :destroy, :show, :toggle_status]
 
-  respond_to :html, :js
-
   def index
-    @users = User.all_except_current(current_admin.try(:id))
+    @users = User.where.not(id: current_admin.id).order(:name)
   end
 
   def update

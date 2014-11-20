@@ -6,19 +6,23 @@
   <th>address</th>
   <th>contact number</th>
   <th>about me</th>
+  <th>#Requests</th>
   <th>enable/disable</th>
   <th colspan="2">Edit</th>
   <% @users.each do |user| %>
     <tr>
-      <td><%= user.name %></td>
+      <td><%= link_to user.name, admins_user_path(user) %></td>
       <td><%= user.email %></td>
       <td><%= user.type %></td>
       <td><%= user.address %></td>
       <td><%= user.contact_no %></td>
       <td><%= user.about_me %></td>
-      <%= render 'status', locals: { user: user } %>
-      <td><%= link_to 'Update Information', edit_admins_user_path(user) %></td>
-      <td><%= link_to 'delete user', admins_user_path(user), method: :delete %></td>
+      <td><%= user.requirements.size %></td>
+      <%= content_tag :td, id: 'status' + user.id.to_s do %>
+        <%= render 'status', locals: { user: user } %>
+      <% end %>
+      <td><%= render 'update', locals: { user: user } %></td>
+      <td><%= render 'delete', locals: { user: user } %></td>
     </tr>
   <% end %>
 </table>

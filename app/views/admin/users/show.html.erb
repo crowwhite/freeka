@@ -4,4 +4,11 @@
 <strong>email: </strong><%= @user.email %><br>
 <strong>address: </strong><%= @user.address %><br>
 <strong>contact no: </strong><%= @user.contact_no %><br>
-<strong>about me: </strong><%= @user.about_me %>
+<strong>about me: </strong><%= @user.about_me %><br>
+<strong>no. of Requests: </strong><%= @user.requirements.size %><br>
+<%= content_tag :span, id: 'status' + @user.id.to_s do %>
+  <%= render 'status', locals: { user: @user } %>
+<% end %>|
+<%= render 'update', locals: { user: @user } %>|
+<%= render 'delete', locals: { user: @user } %>
+<%= render 'shared/users/links' %>
