@@ -24,6 +24,15 @@ class Admin::UsersController < Admin::BaseController
     @user.update_column(:enabled, update_params[:enabled] == 'true')
   end
 
+  def search
+    search = search_params
+    @users = User.public_send("with_#{ search[:criteria] }_like", search[:text])
+    if @users.length.zero?
+      flash[:notice] = 'No results found'
+    end
+    render 'index'
+  end
+
   private
     def load_user
       @user = User.find_by(id: params[:id])
@@ -34,5 +43,9 @@ class Admin::UsersController < Admin::BaseController
 
     def update_params
       params.require(:user).permit(:about_me, :contact_no, :name, :email, :address, :enabled)
+    end
+
+    def search_params
+      params.require(:user).require(:search).permit(:criteria, :text)
     end
 end

@@ -1,4 +1,15 @@
 <h1>Listing Users</h1>
+<div class="form right">
+  <h3>Search by</h3>
+  <%= form_tag('/admins/users/search', method: :post) do %>
+    <select name="user[search][criteria]">
+      <option value='email'>email</option>
+      <option value='name'>name</option>
+    </select>
+    <input name="user[search][text]" type="text">
+    <%= submit_tag 'Search' %>
+  <% end %>
+</div>
 <table class='table'>
   <th>name</th>
   <th>email</th>

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       put 'toggle_status', on: :member
     end
     resources :users, except: :new do
+      post 'search', on: :collection
       put 'toggle_status', on: :member
     end
     resources :welcome, only: :index
