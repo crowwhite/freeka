@@ -4,16 +4,15 @@
   <title>Freeka</title>
   <%= stylesheet_link_tag    'application' %>
   <%= javascript_include_tag 'application' %>
+  <%= javascript_include_tag 'bootstrap' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id='left'>
-  </div>
-  <div id='head'>
-    <%= render 'shared/users/sign_up_in' %>
+  <%= render 'layouts/menu_bar' %>
+  <div id="flash">
+    <%= render 'shared/flash' %>
   </div>
 
-  <%= render 'shared/flash' %>
 
   <div class='inline'>
     <%= yield %>

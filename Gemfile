@@ -6,7 +6,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'byebug'
 gem 'carmen-rails', '~> 1.0.0'
-
+gem 'kaminari'
 group :development do
   gem 'binding_of_caller',            '~> 0.7.2'
   gem 'better_errors',                '~> 1.1.0'

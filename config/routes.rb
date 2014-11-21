@@ -2,12 +2,22 @@ Rails.application.routes.draw do
 
   devise_for :admins, controllers: { confirmations: 'user/confirmations' }
   devise_for :users, controllers: { registrations: 'user/registrations', confirmations: 'user/confirmations' }
-  resources :categories, only: [:index, :show]
+  resources :categories, only: [:index, :show] do
+    get 'sub_categories', on: :collection
+  end
 
-  get 'requirements/sub_category', to: 'categories#sub_categories'
-  get 'requirements/sub_region', to: 'addresses#sub_region'
+  get 'addresses/sub_region'
+
   resources :requirements do
-    put 'toggle_state', on: :member
+    member do
+      put 'toggle_state'
+      put 'toggle_interest'
+      put 'fulfilled'
+    end
+  end
+
+  resources :donations, only: :index do
+    put 'donated', on: :member
   end
 
   namespace :admin, path: 'admins', as: :admins do

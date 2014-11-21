@@ -7,7 +7,7 @@ class Admin::CategoriesController < Admin::BaseController
 
 
   def index
-    @categories = Category.root.order(:name).includes(:sub_categories)
+    @categories = Category.root.order(:name).includes(:sub_categories).page params[:page]
     respond_with(@categories)
   end
 
@@ -24,7 +24,7 @@ class Admin::CategoriesController < Admin::BaseController
     if @category.save
       redirect_to admins_categories_path
     else
-      render 'new'
+      render 'edit'
     end
   end
 

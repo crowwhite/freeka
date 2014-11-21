@@ -1,0 +1,10 @@
+<% if current_user && current_user.donations.include?(locals[:requirement]) %>
+  <strong>Interested</strong>
+  <%= link_to 'X', toggle_interest_requirement_path(locals[:requirement]), method: :put, remote: true %>
+<% else %>
+  <% if current_user && current_user.id == locals[:requirement].requestor_id %>
+    <strong> -- </strong>
+  <% else %>
+    <%= link_to 'Show Interest', toggle_interest_requirement_path(locals[:requirement]), method: :put, remote: true %>
+  <% end %>
+<% end %>

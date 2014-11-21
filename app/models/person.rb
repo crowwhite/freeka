@@ -4,6 +4,8 @@ class Person < ActiveRecord::Base
 
   belongs_to :address
   has_many :requirements, foreign_key: :requestor_id
+  has_many :donor_requirements, foreign_key: :donor_id
+  has_many :donations, through: :donor_requirements, source: :requirement
 
   validates :name, :contact_no, presence: true
   validates :contact_no, numericality: true

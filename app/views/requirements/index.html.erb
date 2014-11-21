@@ -1,18 +1,23 @@
+<%= render 'shared/requirement/my_links' %>
 <h1>Requirements</h1>
-
 <div class="right">
   <%= link_to 'New Requirement', new_requirement_path %>
 </div>
-
 <table class="table table-striped">
   <thead>
     <th>Title</th>
     <th>Details</th>
     <th>Expiration Date</th>
     <th>Address</th>
-    <th>Status</th>
-    <th>Enable/Disable</th>
-    <th>Delete</th>
+    <% if controller_name == 'welcome' %>
+      <th>Show Interest</th>
+      <th>Share</th>
+    <% else %>
+      <th>Status</th>
+      <th>Enable/Disable</th>
+      <th>Delete</th>
+      <th></th>
+    <% end %>
   </thead>
   <tbody>
     <% @requirements.each do |requirement| %>
@@ -20,11 +25,30 @@
         <td><%= link_to requirement.title, requirement %></td>
         <td><%= requirement.details %></td>
         <td><%= requirement.expiration_date %></td>
-        <td><%= Carmen::Country.coded(requirement.address.try(:country_code)).try(:name) %></td>
-        <td><%= Requirement::STATUS[requirement.status] %></td>
-        <%= render 'state', locals: { requirement: requirement } %>
-        <td><%= link_to 'delete', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= requirement.address.street %><br>
+          <%= requirement.address.city %><br>
+          <% country = Carmen::Country.coded(requirement.address.country_code) %>
+          <%= country.subregions.coded(requirement.address.state_code).name %><br>
+          <%= country.name %>
+        </td>
+        <% if controller_name == 'welcome' %>
+          <td>
+            <%= content_tag :span, id: 'interest' + requirement.id.to_s do %>
+              <%= render 'requirements/interest', locals: { requirement: requirement } %>
+            <% end %>
+          </td>
+          <td><%= link_to 'Facebook Share' %></td>
+        <% else %>
+          <td><%= Requirement::STATUS[requirement.status] %></td>
+          <%= render 'requirements/state', locals: { requirement: requirement } %>
+          <td><%= link_to 'delete', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <%= content_tag :td, id: 'fulfill' + requirement.id.to_s do %>
+            <%= render 'requirements/fulfill', locals: { requirement: requirement } %>
+          <% end %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= paginate @requirements %>

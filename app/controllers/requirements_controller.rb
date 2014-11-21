@@ -1,13 +1,21 @@
 class RequirementsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :load_requirement, only: [:edit, :show, :toggle_state, :destroy]
+  before_action :authenticate_user!, except: [:welcome, :show]
+  before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled]
+  before_action :check_status_for_pending, only: :toggle_state
 
   def index
-    @requirements = current_user.requirements
+    @requirements = current_user.requirements.order(:expiration_date).page params[:page]
   end
 
   def new
     @requirement = current_user.requirements.build
+  end
+
+  def edit
+    unless current_user.id == @requirement.requestor_id
+      flash[:alert] = 'not authorised to use this page'
+      redirect_to @requirement
+    end
   end
 
   def create
@@ -19,6 +27,17 @@ class RequirementsController < ApplicationController
     end
   end
 
+  def update
+    if current_user.id != @requirement.requestor_id
+      flash[:alert] = 'not authorised to use this page'
+      redirect_to @requirement
+    elsif @requirement.update(requirement_params)
+      redirect_to @requirement
+    else
+      render 'edit'
+    end
+  end
+
   def destroy
     flash[:notice] = "requirement could not be deleted" unless @requirement.destroy
     redirect_to requirements_path
@@ -26,6 +45,14 @@ class RequirementsController < ApplicationController
 
   def toggle_state
     @requirement.update(requirement_params)
+  end
+
+  def toggle_interest
+    @requirement.toggle_interest(current_user.id)
+  end
+
+  def fulfilled
+    flash[:notice] = 'this request has no donors, you can disable or delete it.' unless @requirement.fulfill
   end
 
   private
@@ -39,5 +66,14 @@ class RequirementsController < ApplicationController
 
     def requirement_params
       params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, address_attributes: [:id, :street, :city, :country_code, :state_code])
+    end
+
+    def check_status_for_pending
+      if @requirement.status != 0
+        flash[:notice] = 'this request has received some response, hence cant be disabled'
+        return
+      else
+        return true
+      end
     end
 end

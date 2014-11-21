@@ -6,7 +6,7 @@
   <%= link_to 'New Category', new_admins_category_path %>
 </div>
 
-<table class="table table-striped">
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
@@ -22,7 +22,7 @@
       <% if category.sub_categories.size > 0 %>
         <tr class="sub_category hiddenn">
           <td colspan = 4>
-            <table class="table sub_table">
+            <table class="table table-striped sub_table">
               <thead>                
                 <tr>
                   <th>Sub-Category Name</th>
@@ -44,3 +44,4 @@
   </tbody>
 
 </table>
+<%= paginate @categories %>

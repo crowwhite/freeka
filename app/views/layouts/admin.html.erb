@@ -7,12 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id='left'>
-    <%= link_to 'Home', admins_welcome_index_path %>
-  </div>
-  <div id='head'>
-    <%= render 'shared/users/sign_up_in' %>
-  </div>
+  <%= render 'layouts/menu_bar' %>
   <%= render 'shared/flash' %>
   <div class='inline'>
     <%= yield %>

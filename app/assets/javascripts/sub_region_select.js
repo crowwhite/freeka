@@ -4,7 +4,7 @@ $(function () {
     $.ajax({
       type: "GET",
       dataType: "html",
-      url: 'sub_region',
+      url: '/addresses/sub_region',
       data: { 'parent_region': _this.value },
       success: function (response) {
         $('#subregion_select').html(response)

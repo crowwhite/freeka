@@ -1,0 +1,5 @@
+<% if locals[:requirement].status == 2 %>
+  <strong>Fulfilled</strong>
+<% else %>
+  <%= link_to 'Fulfilled', fulfilled_requirement_path(locals[:requirement]), method: :put, data: { confirm: 'This action is irreversible!!'}, remote: true %>
+<% end %>

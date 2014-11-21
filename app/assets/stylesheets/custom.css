@@ -1,6 +1,5 @@
 .sub_table {
   margin-left: 10px;
-  background: #e7ebed !important;
 }
 
 .hiddenn {
@@ -8,10 +7,15 @@
 }
 
 a {
-  color: #03C6FF !important;
+  /*color: #03C6FF !important;*/
+}
+
+select {
+  color: black;
 }
 
 body {
+  margin-bottom: 20px;
 }
 
 div.link {

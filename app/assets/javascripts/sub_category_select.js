@@ -4,7 +4,7 @@ $(function () {
     $.ajax({
       type: "GET",
       dataType: "html",
-      url: 'sub_category',
+      url: '/categories/sub_categories',
       data: { 'parent_id': _this.value },
       success: function (response) {
         $('#sub_category_select').html(response)
