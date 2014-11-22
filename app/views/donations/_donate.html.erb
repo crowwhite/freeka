@@ -1,0 +1,7 @@
+<% if locals[:donation].donor_requirement(current_user.id).donated? %>
+  <strong>Donated</strong>
+<% elsif locals[:donation].donor_requirement(current_user.id).current? %>
+  <%= link_to 'Donated', donated_donation_path(locals[:donation]), method: :put, data: { confirm: 'This action is irreversible!!'}, remote: true %>
+<% else %>
+  <strong>The recipient has not<br> selected you as donor yet</strong>
+<% end %>

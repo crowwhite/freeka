@@ -8,6 +8,7 @@
     <th>Address</th>
     <th>Show Interest</th>
     <th>Share</th>
+    <th></th>
   </thead>
   <tbody>
     <% @donations.each do |donation| %>
@@ -22,6 +23,9 @@
           <% end %>
         </td>
         <td><%= link_to 'Facebook Share' %></td>
+        <%= content_tag :td, id: 'donate' + donation.id.to_s do %>
+            <%= render 'donations/donate', locals: { donation: donation } %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

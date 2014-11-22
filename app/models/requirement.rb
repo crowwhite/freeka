@@ -6,18 +6,31 @@ class Requirement < ActiveRecord::Base
   belongs_to :person, foreign_key: :requestor_id
   has_many :category_requirements
   has_many :categories, through: :category_requirements
-  has_many :donors, through: :donor_requirements, source: :user
+  has_many :donor_requirements
+  has_many :interested_donors, through: :donor_requirements, source: :user
 
   accepts_nested_attributes_for :address
 
   validates :title, presence: true
 
-  before_destroy :allow_only_if_pending
+  before_destroy :pending?
 
-  scope :enabled, -> { where(enabled: true)}
+  scope :enabled, -> { where(enabled: true) }
 
-  def allow_only_if_pending
+  def donor_requirement(user_id)
+    donor_requirements.find { |dr| dr.donor_id == user_id }
+  end
+
+  def pending?
     status == 0
+  end
+
+  def in_process?
+    status == 1
+  end
+
+  def fulfilled?
+    status == 2
   end
 
   def toggle_interest(user_id)
@@ -29,10 +42,31 @@ class Requirement < ActiveRecord::Base
   end
 
   def fulfill
-    if status == 1
+    if in_process?
       update(status: 2)
+      update_donor_and_reject_interested_donors
     else
       false
     end
   end
+
+  def donor
+    donor_requirements.find(&:donated?).try(:user)
+  end
+
+  def reject_current_donor
+    donor_requirements.find(&:current?).update(status: 2)
+    donor_requirements.sort_by(&:created_at).first.update(status: 3)
+  end
+
+  private
+    def update_donor_and_reject_interested_donors
+      donor_requirements.each do |donor_requirement|
+        if donor_requirement.interested?
+          donor_requirement.update_column(:status, 2) # 2=> rejected
+        elsif donor_requirement.current?
+          donor_requirement.update_column(:status, 1) # 1=> donated
+        end
+      end
+    end
 end

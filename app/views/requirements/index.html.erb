@@ -16,6 +16,7 @@
       <th>Status</th>
       <th>Enable/Disable</th>
       <th>Delete</th>
+      <th>Donors</th>
       <th></th>
     <% end %>
   </thead>
@@ -42,7 +43,15 @@
         <% else %>
           <td><%= Requirement::STATUS[requirement.status] %></td>
           <%= render 'requirements/state', locals: { requirement: requirement } %>
-          <td><%= link_to 'delete', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td>
+            <% if requirement.pending? %>
+              <%= link_to 'delete', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% else %>
+              <strong>--</strong>
+            <% end %>
+          <%= content_tag :td, id: 'donors' do %>
+            <%= render 'requirements/donors', locals: { requirement: requirement } %>
+          <% end %>
           <%= content_tag :td, id: 'fulfill' + requirement.id.to_s do %>
             <%= render 'requirements/fulfill', locals: { requirement: requirement } %>
           <% end %>

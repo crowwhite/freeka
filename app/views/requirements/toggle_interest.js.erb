@@ -1,1 +1,2 @@
 $('#interest' + <%= @requirement.id.to_s %>).html("<%= escape_javascript render 'interest', locals: { requirement: @requirement} %>")
+$('#flash').html("<%= escape_javascript render 'shared/flash' %>")

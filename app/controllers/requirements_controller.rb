@@ -1,6 +1,6 @@
 class RequirementsController < ApplicationController
   before_action :authenticate_user!, except: [:welcome, :show]
-  before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled]
+  before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled, :reject_donor]
   before_action :check_status_for_pending, only: :toggle_state
 
   def index
@@ -44,15 +44,20 @@ class RequirementsController < ApplicationController
   end
 
   def toggle_state
-    @requirement.update(requirement_params)
+    @requirement.update(enabled: requirement_params[:enabled])
   end
 
   def toggle_interest
-    @requirement.toggle_interest(current_user.id)
+    flash[:notice] = "successful donation can't be undone" unless @requirement.toggle_interest(current_user.id)
+
   end
 
   def fulfilled
     flash[:notice] = 'this request has no donors, you can disable or delete it.' unless @requirement.fulfill
+  end
+
+  def reject_donor
+    @requirement.reject_current_donor
   end
 
   private
@@ -60,7 +65,7 @@ class RequirementsController < ApplicationController
       @requirement = Requirement.find_by(id: params[:id])
       unless @requirement
         flash[:notice] = 'requirement not found'
-        redirect_to requirements_path
+        redirect_to(requirements_path) and return
       end
     end
 
@@ -69,11 +74,9 @@ class RequirementsController < ApplicationController
     end
 
     def check_status_for_pending
-      if @requirement.status != 0
+      unless @requirement.status.zero?
         flash[:notice] = 'this request has received some response, hence cant be disabled'
-        return
-      else
-        return true
+        render 'toggle_state' and return
       end
     end
 end

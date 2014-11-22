@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       put 'toggle_state'
       put 'toggle_interest'
       put 'fulfilled'
+      put 'reject_donor', as: :reject_current_donor_of
     end
   end
 

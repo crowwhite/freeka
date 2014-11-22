@@ -1,0 +1,2 @@
+$('#donate' + <%= @donation.id.to_s %>).html("<%= escape_javascript render 'donate', locals: { donation: @donation} %>")
+$('#flash').html("<%= escape_javascript render 'shared/flash' %>")
