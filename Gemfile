@@ -7,6 +7,9 @@ gem 'devise'
 gem 'byebug'
 gem 'carmen-rails', '~> 1.0.0'
 gem 'kaminari'
+gem 'aasm'
+gem 'thinking-sphinx', '~> 3.1.1'
+
 group :development do
   gem 'binding_of_caller',            '~> 0.7.2'
   gem 'better_errors',                '~> 1.1.0'

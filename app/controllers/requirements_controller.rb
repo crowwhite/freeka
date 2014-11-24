@@ -53,7 +53,7 @@ class RequirementsController < ApplicationController
   end
 
   def fulfilled
-    flash[:notice] = 'this request has no donors, you can disable or delete it.' unless @requirement.fulfill
+    flash[:notice] = 'this request has no donors, you can disable or delete it.' unless @requirement.fulfill!
   end
 
   def reject_donor
@@ -74,7 +74,7 @@ class RequirementsController < ApplicationController
     end
 
     def check_status_for_pending
-      unless @requirement.status.zero?
+      unless @requirement.pending?
         flash[:notice] = 'this request has received some response, hence cant be disabled'
         render 'toggle_state' and return
       end

@@ -3,7 +3,7 @@
 <%= form_for(@requirement, html: { class: 'form-horizontal' }) do |f| %>
 <%= render 'shared/errors', locals: { object: @requirement } %>
   <div class="field form-group">
-    <%= f.label :category_ids %>
+    <%= f.label :category_ids %>*
     <%= f.collection_select(:category_ids, Category.root.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]'}) %>
   </div>
   <div class="field form-group">
@@ -12,15 +12,15 @@
   </div>
 
   <div class="field form-group">
-    <%= f.label :title %><br />
+    <%= f.label :title %>*<br />
     <%= f.text_field :title %>
   </div>
   <div class="field form-group">
-    <%= f.label :details %><br />
+    <%= f.label :details %>*<br />
     <%= f.text_area :details %>
   </div>
   <div class="field form-group">
-    <%= f.label :Require_Before, for: :expiration_date %><br />
+    <%= f.label :Require_Before, for: :expiration_date %>*<br />
     <%= f.date_select :expiration_date %>
   </div>
 
@@ -33,17 +33,17 @@
       </div>
 
       <div class="field form-group">
-        <%= a.label :city %>
+        <%= a.label :city %>*
         <%= a.text_field :city %>
       </div>
 
       <div class="field form-group">
-        <%= a.label :country, for: :country_code %><br />
+        <%= a.label :country, for: :country_code %>*<br />
         <%= a.country_select :country_code, priority: %w(US CA), prompt: 'Please select a country', id: 'country_select' %>
       </div>
 
       <div class="field form-group">
-        <%= f.label :state, for: :state_code %><br />
+        <%= f.label :state, for: :state_code %>*<br />
         <div id="subregion_select">
           <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
         </div>

@@ -5,7 +5,7 @@
 <h3>Details: </h3><%= @requirement.details %>
 <h3>Expiration Date: </h3><%= @requirement.expiration_date %>
 <h3>Location: </h3><%= Carmen::Country.coded(@requirement.address.try(:country_code)).try(:name) %>
-<h3>Status: </h3><%= Requirement::STATUS[@requirement.status] %>
+<h3>Status: </h3><%= @requirement.status %>
 <h3>Enabled/Disabled: </h3><%= 'Enabled' if @requirement.enabled %>
   <%= render 'state', locals: { requirement: @requirement } %>
 <h3>Delete: </h3><%= link_to 'delete', @requirement, method: :delete, data: { confirm: 'Are you sure?' } %>

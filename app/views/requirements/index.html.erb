@@ -24,7 +24,7 @@
     <% @requirements.each do |requirement| %>
       <tr>
         <td><%= link_to requirement.title, requirement %></td>
-        <td><%= requirement.details %></td>
+        <td><%= requirement.details.truncate(30) %></td>
         <td><%= requirement.expiration_date %></td>
         <td>
           <%= requirement.address.street %><br>
@@ -41,7 +41,7 @@
           </td>
           <td><%= link_to 'Facebook Share' %></td>
         <% else %>
-          <td><%= Requirement::STATUS[requirement.status] %></td>
+          <td><%= requirement.status %></td>
           <%= render 'requirements/state', locals: { requirement: requirement } %>
           <td>
             <% if requirement.pending? %>

@@ -7,6 +7,7 @@ class DonationsController < ApplicationController
   end
 
   def donated
+    @donation.donate
   end
 
   private

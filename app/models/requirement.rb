@@ -1,6 +1,7 @@
 class Requirement < ActiveRecord::Base
+  include AASM
 
-  STATUS = { 0 => 'Pending', 1 => 'In Process', 2 => 'Fulfilled' }
+  enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
   belongs_to :address, foreign_key: :location_id
   belongs_to :person, foreign_key: :requestor_id
@@ -14,39 +15,43 @@ class Requirement < ActiveRecord::Base
   validates :title, presence: true
 
   before_destroy :pending?
+  before_update :pending?
 
   scope :enabled, -> { where(enabled: true) }
 
+  aasm column: :status, enum: true do
+    state :pending, initial: true
+    state :in_process
+    state :fulfilled
+
+    event :process do
+      transitions from: :pending, to: :in_process
+    end
+
+    event :unprocess do
+      transitions from: :in_process, to: :pending
+    end
+
+    event :fulfill do
+      after do
+        update_donor_and_reject_interested_donors
+      end
+      before do
+        return false if pending?
+      end
+      transitions from: :in_process, to: :fulfilled
+    end
+  end
+
   def donor_requirement(user_id)
     donor_requirements.find { |dr| dr.donor_id == user_id }
-  end
-
-  def pending?
-    status == 0
-  end
-
-  def in_process?
-    status == 1
-  end
-
-  def fulfilled?
-    status == 2
   end
 
   def toggle_interest(user_id)
     if record = DonorRequirement.find_by(requirement_id: id, donor_id: user_id)
       record.destroy
     else
-      record = DonorRequirement.create(requirement_id: id, donor_id: user_id)
-    end
-  end
-
-  def fulfill
-    if in_process?
-      update(status: 2)
-      update_donor_and_reject_interested_donors
-    else
-      false
+      DonorRequirement.create(requirement_id: id, donor_id: user_id)
     end
   end
 
@@ -55,17 +60,21 @@ class Requirement < ActiveRecord::Base
   end
 
   def reject_current_donor
-    donor_requirements.find(&:current?).update(status: 2)
-    donor_requirements.sort_by(&:created_at).first.update(status: 3)
+    donor_requirements.find(&:current?).reject!
+    donor_requirements.sort_by(&:created_at).first.make_current!
+  end
+
+  def donate
+    donor_requirements.find(&:current?).donate!
   end
 
   private
     def update_donor_and_reject_interested_donors
       donor_requirements.each do |donor_requirement|
         if donor_requirement.interested?
-          donor_requirement.update_column(:status, 2) # 2=> rejected
+          donor_requirement.reject!
         elsif donor_requirement.current?
-          donor_requirement.update_column(:status, 1) # 1=> donated
+          donor_requirement.donate!
         end
       end
     end

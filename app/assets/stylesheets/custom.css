@@ -20,10 +20,6 @@
   display: none;
 }
 
-a {
-  /*color: #03C6FF !important;*/
-}
-
 select {
   color: black;
 }
@@ -52,5 +48,5 @@ div.right {
 }
 
 .mandatory label {
-  border: 1px red solid;
+  /*border: 1px red solid;*/
 }
