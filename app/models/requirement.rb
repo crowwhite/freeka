@@ -1,5 +1,5 @@
 class Requirement < ActiveRecord::Base
-  include AASM
+  include RequirementASM
 
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
@@ -18,30 +18,6 @@ class Requirement < ActiveRecord::Base
   before_update :pending?
 
   scope :enabled, -> { where(enabled: true) }
-
-  aasm column: :status, enum: true do
-    state :pending, initial: true
-    state :in_process
-    state :fulfilled
-
-    event :process do
-      transitions from: :pending, to: :in_process
-    end
-
-    event :unprocess do
-      transitions from: :in_process, to: :pending
-    end
-
-    event :fulfill do
-      after do
-        update_donor_and_reject_interested_donors
-      end
-      before do
-        return false if pending?
-      end
-      transitions from: :in_process, to: :fulfilled
-    end
-  end
 
   def donor_requirement(user_id)
     donor_requirements.find { |dr| dr.donor_id == user_id }
