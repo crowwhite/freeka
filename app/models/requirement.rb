@@ -17,6 +17,8 @@ class Requirement < ActiveRecord::Base
   before_destroy :prevent_if_not_pending
 
   scope :enabled, -> { where(enabled: true) }
+  scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
+  scope :with_status, ->(status) { where(status: status) }
 
   def donor_requirement(user_id)
     donor_requirements.find { |dr| dr.donor_id == user_id }

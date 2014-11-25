@@ -1,4 +1,10 @@
-
+#status_filter {
+  list-style-type: none;
+}
+#status_filter > li {
+  padding: 10px;
+  display: inline-block;
+}
 .circle { 
    color: black;
    font-size: 15px;

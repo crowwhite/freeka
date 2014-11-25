@@ -30,6 +30,10 @@ Rails.application.routes.draw do
       put 'toggle_status', on: :member
     end
     resources :welcome, only: :index
+    resources :requirements, only: :index do
+      put 'toggle_state', on: :member
+      get 'filter', on: :collection
+    end
   end
 
   root 'welcome#index'

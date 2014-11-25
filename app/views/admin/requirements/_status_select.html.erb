@@ -1,0 +1,5 @@
+<ul id="status_filter">
+  <li><%= link_to 'Pending', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 0 }}) %></li>|
+  <li><%= link_to 'In Process', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 1 }}) %></li>|
+  <li><%= link_to 'Fulfilled', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 2 }}) %></li>
+</ul>
