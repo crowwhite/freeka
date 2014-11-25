@@ -7,13 +7,13 @@ class DonorRequirement < ActiveRecord::Base
   belongs_to :requirement
 
   after_create :update_requirement_status
-  after_create :make_current, if: -> { DonorRequirement.where(requirement_id: requirement_id).one? }
+  after_create :make_current!, if: -> { DonorRequirement.where(requirement_id: requirement_id, status: 0).one? }
   before_destroy :prevent_if_fulfilled
   after_destroy :update_requirement_status
 
   def update_requirement_status
     if DonorRequirement.find_by(id: id)
-      requirement.process!
+      requirement.process! if requirement.may_process?
     else
       requirement.unprocess!
     end

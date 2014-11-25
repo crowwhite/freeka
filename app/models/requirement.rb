@@ -14,8 +14,7 @@ class Requirement < ActiveRecord::Base
 
   validates :title, presence: true
 
-  before_destroy :pending?
-  before_update :pending?
+  before_destroy :prevent_if_not_pending
 
   scope :enabled, -> { where(enabled: true) }
 
@@ -37,7 +36,11 @@ class Requirement < ActiveRecord::Base
 
   def reject_current_donor
     donor_requirements.find(&:current?).reject!
-    donor_requirements.sort_by(&:created_at).first.make_current!
+    if donor = donor_requirements.sort_by(&:created_at).find(&:interested?)
+      donor.make_current!
+    else
+      unprocess!
+    end
   end
 
   def donate
@@ -45,6 +48,10 @@ class Requirement < ActiveRecord::Base
   end
 
   private
+    def prevent_if_not_pending
+      errors.add(:status, 'Cannot be destroyed or updated in -in process- or -fulfilled- state') if !pending?
+    end
+
     def update_donor_and_reject_interested_donors
       donor_requirements.each do |donor_requirement|
         if donor_requirement.interested?
