@@ -2,7 +2,6 @@ class Person < ActiveRecord::Base
 
   TYPES = %w(Admin User)
 
-  belongs_to :address
   has_many :requirements, foreign_key: :requestor_id
   has_many :donor_requirements, foreign_key: :donor_id
   has_many :donations, through: :donor_requirements, source: :requirement

@@ -1,10 +1,15 @@
 class RequirementsController < ApplicationController
-  before_action :authenticate_user!, except: [:welcome, :show]
+  before_action :authenticate_user!, except: [:welcome, :show, :search]
   before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled, :reject_donor]
   before_action :check_status_for_pending, only: :toggle_state
 
   def index
     @requirements = current_user.requirements.order(:expiration_date).page params[:page]
+  end
+
+  def search
+    @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    render :index
   end
 
   def new

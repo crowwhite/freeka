@@ -21,9 +21,14 @@
         </li>
       <% end %>
     </ul>
-    <form class="navbar-form navbar-left">
-      <input type="text" class="form-control col-lg-8" placeholder="Search">
-    </form>
+    <%= form_tag('/requirements/search', method: :post) do %>
+      <input name="requirement[search]" type="text">
+      <%= submit_tag 'Search' %>
+    <% end %>
+    <!-- <form action="/requirements/search" class="navbar-form navbar-left">
+      <input type="text" name="requirement[search]" class="form-control col-lg-8" placeholder="Search">
+      <input type="submit" value="Search">
+    </form> -->
     <ul class="nav navbar-nav navbar-right">
       <%= render 'shared/users/sign_up_in' %>
     </ul>

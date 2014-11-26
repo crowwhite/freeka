@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'addresses/sub_region'
 
   resources :requirements do
+    post 'search', on: :collection
     member do
       put 'toggle_state'
       put 'toggle_interest'
