@@ -18,7 +18,7 @@ class Requirement < ActiveRecord::Base
 
   scope :enabled, -> { where(enabled: true) }
   scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
-  scope :with_status, ->(status) { where(status: status) }
+  scope :with_status_not, ->(status) { where.not(status: status) }
 
   def donor_requirement(user_id)
     donor_requirements.find { |dr| dr.donor_id == user_id }

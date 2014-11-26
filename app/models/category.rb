@@ -9,8 +9,8 @@ class Category < ActiveRecord::Base
   has_many :enabled_sub_categories, -> { where enabled: true }, class_name: Category,
     foreign_key: :parent_id
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
-  has_many :requirements, through: :category_requirements
-  has_many :category_requirements
+  has_many :requirements, through: :category_requirements, dependent: :restrict_with_error
+  has_many :category_requirements, dependent: :restrict_with_error
 
   validates :sub_categories, absence: { message: 'should not exist for this category' }, if: :parent_id, on: :update
   validates :name, presence: true, uniqueness: { case_sensitive: false }

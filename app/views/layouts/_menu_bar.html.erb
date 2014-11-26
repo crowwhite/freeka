@@ -22,7 +22,8 @@
       <% end %>
     </ul>
     <%= form_tag('/requirements/search', method: :post) do %>
-      <input name="requirement[search]" type="text">
+      <input name="requirement[search]" type="text" placeholder='search'>
+      <%= hidden_field_tag 'requirement[view]', @action %>
       <%= submit_tag 'Search' %>
     <% end %>
     <!-- <form action="/requirements/search" class="navbar-form navbar-left">

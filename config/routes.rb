@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   namespace :admin, path: 'admins', as: :admins do
     resources :categories do
+      get 'new_sub_category', on: :collection
       put 'toggle_status', on: :member
     end
     resources :users, except: :new do

@@ -15,6 +15,12 @@ class Admin::CategoriesController < Admin::BaseController
     @category = Category.new
   end
 
+  def new_sub_category
+    @category = Category.new
+    @select_list_visibility = ' '
+    render :new
+  end
+
   def show
     respond_with(@category)
   end

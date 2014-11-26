@@ -10,7 +10,6 @@
       </ul>
     </div>
   <% end %>
-  <a id="create_sub_category_link" class=<%= @link_visibility.to_s %>>Create Sub-Category</a>
   <%= content_tag :div, class: 'field ' + @select_list_visibility.to_s, id: 'sub_category_select' do %>
     <%= f.label :parent_id %>*<br>
     <%= f.collection_select(:parent_id, Category.root.all_except(@category.id), :id, :name, { prompt: 'Select Parent', include_blank: 'No Parent' }) %>
