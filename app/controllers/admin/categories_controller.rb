@@ -30,7 +30,7 @@ class Admin::CategoriesController < Admin::BaseController
     if @category.save
       redirect_to admins_categories_path
     else
-      render 'edit'
+      render 'new'
     end
   end
 
