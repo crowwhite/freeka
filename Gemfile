@@ -1,3 +1,4 @@
+# TODO: freeze gems and organize a bit more.
 source 'https://rubygems.org'
 
 gem 'rails', '4.1.7'

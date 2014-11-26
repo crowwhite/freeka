@@ -50,6 +50,7 @@ class Requirement < ActiveRecord::Base
   end
 
   private
+  # TODO: Is this working?
     def prevent_if_not_pending
       errors.add(:status, 'Cannot be destroyed or updated in -in process- or -fulfilled- state') if !pending?
     end

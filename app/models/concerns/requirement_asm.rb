@@ -19,6 +19,7 @@ module RequirementASM
 
       event :fulfill do
         after do
+          # TODO: Module should never be dependent on including classes.
           update_donor_and_reject_interested_donors
         end
         before do

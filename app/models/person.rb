@@ -14,6 +14,7 @@ class Person < ActiveRecord::Base
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  # TODO: Why do we need this?
   def self.types
     TYPES
   end
@@ -30,6 +31,7 @@ class Person < ActiveRecord::Base
     donor_requirements.find { |dr| dr.requirement_id == requirement_id }
   end
 
+  # TODO: Use regexp to validate password.
   def no_spaces_in_password
     if password.include? ' '
       errors.add(:password, 'cannot contain white spaces')
