@@ -1,6 +1,7 @@
 class WelcomeController < ApplicationController
 
   def index
+    @controller_action = 'welcome#index'
     if current_admin
       redirect_to admins_welcome_index_path
     else

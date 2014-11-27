@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :requirements do
     post 'search', on: :collection
+    get 'filter', on: :collection
     member do
       put 'toggle_state'
       put 'toggle_interest'
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
     resources :welcome, only: :index
     resources :requirements, only: :index do
       put 'toggle_state', on: :member
+      post 'search', on: :collection
       get 'filter', on: :collection
     end
   end

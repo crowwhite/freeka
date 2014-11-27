@@ -1,3 +1,11 @@
+div.custom {
+  display: inline-block;
+}
+
+ul.navbar-nav > li {
+  padding: 10px;
+}
+
 #status_filter {
   list-style-type: none;
 }

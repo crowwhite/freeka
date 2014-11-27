@@ -5,10 +5,18 @@ class RequirementsController < ApplicationController
 
   def index
     @requirements = current_user.requirements.order(:expiration_date).page params[:page]
+    @controller_action = 'requirements#index'
   end
 
   def search
     @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    @controller_action = params[:requirement][:controller_action]
+    render :index
+  end
+
+  def filter
+    @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
+    @controller_action = params[:requirement][:controller_action]
     render :index
   end
 
@@ -75,6 +83,10 @@ class RequirementsController < ApplicationController
 
     def requirement_params
       params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, address_attributes: [:id, :street, :city, :country_code, :state_code])
+    end
+
+    def filter_params
+      params.require(:requirement).require(:filter).permit(:criteria, :value)
     end
 
     def check_status_for_pending

@@ -1,3 +1,0 @@
-<% locals[:requirement].categories.each do |category| %>
-  <%= link_to category.name, filter_admins_requirements_path(requirement: { filter: { criteria: :category, value: category.id }}) %><br>
-<% end %>
