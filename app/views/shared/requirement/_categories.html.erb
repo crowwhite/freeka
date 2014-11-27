@@ -1,0 +1,3 @@
+<% locals[:requirement].categories.each do |category| %>
+  <%= render 'shared/requirement/category_link', locals: { category: category } %><br>
+<% end %>

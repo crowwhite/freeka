@@ -1,3 +1,15 @@
+li.rejected {
+  color: red;
+}
+
+div.custom {
+  display: inline-block;
+}
+
+ul.navbar-nav > li {
+  padding: 10px;
+}
+
 #status_filter {
   list-style-type: none;
 }
@@ -49,8 +61,12 @@ div.right {
 
 .alert, .notice {
   padding-left: 70px;
-  background-color: #a80000;
+  background-color: green;
   color: white;
+}
+
+.alert {
+  background-color: #a80000;
 }
 
 .mandatory label {

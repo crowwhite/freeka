@@ -1,6 +1,6 @@
 class Category < ActiveRecord::Base
-  scope :root, -> { where("parent_id is NULL") }
-  scope :with_status, ->(status) { where("enabled = ?", status) }
+  scope :root, -> { where(parent_id: nil) }
+  scope :with_status, ->(status) { where(enabled: status) }
   scope :enabled, -> { with_status(true) }
   scope :all_except, ->(id) { where.not(id: id) }
 
@@ -30,10 +30,6 @@ class Category < ActiveRecord::Base
   end
 
   private
-
-    def prevent_if_children_exists
-      raise 'cannot delete parent category if sub categories exists' unless sub_categories.count.zero?
-    end
 
     def ensure_parent_is_not_a_sub_category
       errors.add(:parent_id, "category can't be a sub category") unless parent_category.parent_id.nil?

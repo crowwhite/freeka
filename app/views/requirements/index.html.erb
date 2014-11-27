@@ -1,5 +1,8 @@
 <%= render 'shared/requirement/my_links' %>
 <h1>Requirements</h1>
+<% if @controller_action == 'requirements#index' %>
+  <%= render 'shared/requirement/status_select' %>
+<% end %>
 <div class="right">
   <%= link_to 'New Requirement', new_requirement_path %>
 </div>
@@ -9,10 +12,11 @@
     <th>Details</th>
     <th>Expiration Date</th>
     <th>Address</th>
-    <% if controller_name == 'welcome' %>
+    <th>Categories</th>
+    <% if @controller_action == 'welcome#index' %>
       <th>Show Interest</th>
       <th>Share</th>
-    <% else %>
+    <% elsif @controller_action == 'requirements#index' %>
       <th>Status</th>
       <th>Enable/Disable</th>
       <th>Delete</th>
@@ -33,14 +37,17 @@
           <%= country.subregions.coded(requirement.address.state_code).name %><br>
           <%= country.name %>
         </td>
-        <% if controller_name == 'welcome' %>
+        <td>
+          <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>
+        </td>
+        <% if @controller_action == 'welcome#index' %>
           <td>
             <%= content_tag :span, id: 'interest' + requirement.id.to_s do %>
               <%= render 'requirements/interest', locals: { requirement: requirement } %>
             <% end %>
           </td>
-          <td><%= link_to 'Facebook Share' %></td>
-        <% else %>
+          <td><%= link_to 'Facebook Share', 'https://facebook.com', target: :_blank %></td>
+        <% elsif @controller_action == 'requirements#index' %>
           <td><%= requirement.status %></td>
           <%= render 'requirements/state', locals: { requirement: requirement } %>
           <td>

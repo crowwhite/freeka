@@ -1,14 +1,26 @@
 class RequirementsController < ApplicationController
-  before_action :authenticate_user!, except: [:welcome, :show, :search]
+  before_action :authenticate_user!, except: [:welcome, :show, :search, :filter]
   before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled, :reject_donor]
   before_action :check_status_for_pending, only: :toggle_state
 
   def index
     @requirements = current_user.requirements.order(:expiration_date).page params[:page]
+    @controller_action = 'requirements#index'
   end
 
   def search
     @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    @controller_action = params[:requirement][:controller_action]
+    render :index
+  end
+
+  def filter
+    @controller_action = params[:requirement][:controller_action]
+    if @controller_action.split('#')[0] == 'welcome'
+      @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).page params[:page]
+    elsif current_user
+      @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
+    end
     render :index
   end
 
@@ -44,7 +56,7 @@ class RequirementsController < ApplicationController
   end
 
   def destroy
-    flash[:notice] = "requirement could not be deleted" unless @requirement.destroy
+    flash[:alert] = "requirement could not be deleted" unless @requirement.destroy
     redirect_to requirements_path
   end
 
@@ -53,11 +65,11 @@ class RequirementsController < ApplicationController
   end
 
   def toggle_interest
-    flash[:notice] = "successful donation can't be undone" unless @requirement.toggle_interest(current_user.id)
+    flash[:alert] = "successful donation can't be undone" unless @requirement.toggle_interest(current_user.id)
   end
 
   def fulfilled
-    flash[:notice] = 'this request has no donors, you can disable or delete it.' unless @requirement.fulfill!
+    flash[:alert] = 'this request has no donors, you can disable or delete it.' unless @requirement.fulfill!
   end
 
   def reject_donor
@@ -68,7 +80,7 @@ class RequirementsController < ApplicationController
     def load_requirement
       @requirement = Requirement.find_by(id: params[:id])
       unless @requirement
-        flash[:notice] = 'requirement not found'
+        flash[:alert] = 'requirement not found'
         redirect_to(requirements_path) and return
       end
     end
@@ -77,9 +89,13 @@ class RequirementsController < ApplicationController
       params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, address_attributes: [:id, :street, :city, :country_code, :state_code])
     end
 
+    def filter_params
+      params.require(:requirement).require(:filter).permit(:criteria, :value)
+    end
+
     def check_status_for_pending
       unless @requirement.pending?
-        flash[:notice] = 'this request has received some response, hence cant be disabled'
+        flash[:alert] = 'this request has received some response, hence cant be disabled'
         render 'toggle_state' and return
       end
     end

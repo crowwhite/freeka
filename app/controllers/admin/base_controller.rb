@@ -3,7 +3,7 @@ class Admin::BaseController < ApplicationController
 
   def allow_only_admin
     unless current_admin
-      flash[:notice] = "You don't have access to that page"
+      flash[:alert] = "You don't have access to that page"
       redirect_to root_path
     end
   end

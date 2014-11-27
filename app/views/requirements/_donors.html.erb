@@ -6,10 +6,10 @@
     <strong>Contact #: </strong><%= donor.contact_no %><br>
   </div>
   <% end %>
-<% elsif locals[:requirement].in_process? %>
+<% else %>
   <ul class="donor">
-    <% locals[:requirement].interested_donors.each do |donor| %>
-      <li class="donor">
+    <% locals[:requirement].interested_donors.includes(:donor_requirements).each do |donor| %>
+      <%= content_tag :li, class: 'donor ' + donor.donor_requirement(locals[:requirement].id).status do %>
         <strong>Name: </strong><span id=<%= 'donor' + donor.id.to_s %>><%= donor.name %></span><br>
         <% if donor.donor_requirement(locals[:requirement].id).current? %>
           <div id="current_donor">
@@ -18,9 +18,7 @@
             <%= link_to 'Reject', reject_current_donor_of_requirement_path(locals[:requirement]), method: :put, remote: true %>
           </div>
         <% end %>
-      </li>
+      <% end %>
     <% end %>
   </ul>
-<% else %>
-  <strong>None</strong>
 <% end %>
