@@ -25,7 +25,7 @@ class Admin::RequirementsController < Admin::BaseController
     def load_requirement
       @requirement = Requirement.find_by(id: params[:id])
       unless @requirement
-        flash[:notice] = 'requirement not found'
+        flash[:alert] = 'requirement not found'
         redirect_to(admins_requirements_path) and return
       end
     end

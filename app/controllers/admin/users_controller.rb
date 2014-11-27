@@ -16,7 +16,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def destroy
-    flash[:notice] = 'Could not destroy User' unless @user.destroy
+    flash[:alert] = 'Could not destroy User' unless @user.destroy
     redirect_to admins_users_path
   end
 
@@ -28,7 +28,7 @@ class Admin::UsersController < Admin::BaseController
     search = search_params
     @users = User.public_send("with_#{ search[:criteria] }_like", search[:text])
     if @users.length.zero?
-      flash[:notice] = 'No results found'
+      flash[:alert] = 'No results found'
     end
     render 'index'
   end

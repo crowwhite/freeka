@@ -46,7 +46,7 @@
               <%= render 'requirements/interest', locals: { requirement: requirement } %>
             <% end %>
           </td>
-          <td><%= link_to 'Facebook Share' %></td>
+          <td><%= link_to 'Facebook Share', 'https://facebook.com', target: :_blank %></td>
         <% elsif @controller_action == 'requirements#index' %>
           <td><%= requirement.status %></td>
           <%= render 'requirements/state', locals: { requirement: requirement } %>

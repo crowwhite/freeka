@@ -21,7 +21,7 @@ class CategoriesController < ApplicationController
     def set_category
       @category = Category.find_by(id: params[:id])
       unless @category
-        flash[:notice] = 'Category not found'
+        flash[:alert] = 'Category not found'
         redirect_to categories_path
       end
     end
