@@ -1,7 +1,9 @@
 class Requirement < ActiveRecord::Base
-  include RequirementASM
+  include AASM
 
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
+
+  
 
   belongs_to :address, foreign_key: :location_id
   belongs_to :person, foreign_key: :requestor_id
@@ -19,6 +21,32 @@ class Requirement < ActiveRecord::Base
   scope :enabled, -> { where(enabled: true) }
   scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
   scope :with_status, ->(status) { where(status: status) }
+
+  aasm column: :status, enum: true do
+    state :pending, initial: true
+    state :in_process
+    state :fulfilled
+
+    event :process do
+      transitions from: :pending, to: :in_process
+    end
+
+    event :unprocess do
+      transitions from: :in_process, to: :pending
+    end
+
+    event :fulfill do
+      after do
+        # TODO: Module should never be dependent on including classes.
+        # Fixed
+        update_donor_and_reject_interested_donors
+      end
+      before do
+        !pending?
+      end
+      transitions from: :in_process, to: :fulfilled
+    end
+  end
 
   def donor_requirement(user_id)
     donor_requirements.find { |dr| dr.donor_id == user_id }
@@ -51,8 +79,10 @@ class Requirement < ActiveRecord::Base
 
   private
   # TODO: Is this working?
+  # Fixed
     def prevent_if_not_pending
       errors.add(:status, 'Cannot be destroyed or updated in -in process- or -fulfilled- state') if !pending?
+      !pending?
     end
 
     def update_donor_and_reject_interested_donors
