@@ -1,7 +1,7 @@
 <span class="circle">
   <%= locals[:requirement].interested_donors.size %>
 </span>
-<% if current_user && current_user.donations.include?(locals[:requirement]) %>
+<% if @donations && @donations.include?(locals[:requirement]) %>
   <strong>Interested</strong>
   <%= link_to 'X', toggle_interest_requirement_path(locals[:requirement]), method: :put, remote: true %>
 <% else %>
