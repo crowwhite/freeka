@@ -1,9 +1,11 @@
 class Category < ActiveRecord::Base
+  # TODO: Rename to `roots`
   scope :root, -> { where("parent_id is NULL") }
   scope :with_status, ->(status) { where("enabled = ?", status) }
   scope :enabled, -> { with_status(true) }
   scope :all_except, ->(id) { where.not(id: id) }
 
+  # TODO: Fix indentation
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
     dependent: :restrict_with_error
   has_many :enabled_sub_categories, -> { where enabled: true }, class_name: Category,

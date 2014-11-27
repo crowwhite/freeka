@@ -22,8 +22,10 @@ class Admin::CategoriesController < Admin::BaseController
   def create
     @category = Category.new(category_params)
     if @category.save
+      # TODO: Notice?? Add flash messages every where in app on succes / failure
       redirect_to admins_categories_path
     else
+      # TODO: Can use symbol.
       render 'edit'
     end
   end
@@ -40,6 +42,7 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def toggle_status
+    # TODO: what if update fails? Think of all cases while writing any code.
     @category.update(category_params)
   end
 
@@ -47,6 +50,7 @@ class Admin::CategoriesController < Admin::BaseController
     def set_category
       @category = Category.find_by(id: params[:id])
       unless @category
+        # TODO: Should not be a notice.
         flash[:notice] = 'Category not found'
         redirect_to admins_categories_path
       end

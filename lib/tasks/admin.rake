@@ -1,4 +1,6 @@
+# TODO: Should create admin in a seed. No need for user input.
 namespace :admin do
+  # TODO: Why TODO??
   desc "TODO"
   task create: :environment do
     puts 'Enter admin name: '

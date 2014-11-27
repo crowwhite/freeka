@@ -6,6 +6,7 @@ class DonationsController < ApplicationController
     @donations = current_user.donations.page params[:page]
   end
 
+  # TODO: Rename
   def donated
     @donation.donate
   end
@@ -15,6 +16,7 @@ class DonationsController < ApplicationController
       @donation = Requirement.find_by(id: params[:id])
       unless @donation
         flash[:notice] = 'donation not found'
+        # TODO: No need to return
         redirect_to(requirements_path) and return
       end
     end
