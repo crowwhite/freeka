@@ -50,18 +50,19 @@ class Requirement < ActiveRecord::Base
     donor_requirements.find(&:current?).donate!
   end
 
+  def update_donor_and_reject_interested_donors
+    donor_requirements.each do |donor_requirement|
+      if donor_requirement.interested?
+        donor_requirement.reject!
+      elsif donor_requirement.current?
+        donor_requirement.donate!
+      end
+    end
+  end
+
   private
     def prevent_if_not_pending
       errors.add(:status, 'Cannot be destroyed or updated in -in process- or -fulfilled- state') if !pending?
     end
 
-    def update_donor_and_reject_interested_donors
-      donor_requirements.each do |donor_requirement|
-        if donor_requirement.interested?
-          donor_requirement.reject!
-        elsif donor_requirement.current?
-          donor_requirement.donate!
-        end
-      end
-    end
 end
