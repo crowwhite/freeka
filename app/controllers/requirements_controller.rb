@@ -30,7 +30,7 @@ class RequirementsController < ApplicationController
 
   def new
     @requirement = current_user.requirements.build
-    @address = @requirement.address.build
+    @address = @requirement.build_address
   end
 
   def edit
