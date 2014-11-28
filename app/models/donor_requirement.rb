@@ -15,7 +15,7 @@ class DonorRequirement < ActiveRecord::Base
     if DonorRequirement.find_by(id: id)
       requirement.process! if requirement.may_process?
     else
-      requirement.unprocess! if(DonorRequirement.where(requirement_id: requirement.id).count.zero? && requirement.may_unprocess?)
+      requirement.unprocess! if DonorRequirement.where(requirement_id: requirement.id).count.zero?
     end
   end
 

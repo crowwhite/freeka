@@ -42,7 +42,7 @@ class Requirement < ActiveRecord::Base
     if donor = donor_requirements.sort_by(&:created_at).find(&:interested?)
       donor.make_current!
     else
-      unprocess! if may_unprocess?
+      unprocess!
     end
   end
 
