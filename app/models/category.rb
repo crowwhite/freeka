@@ -17,16 +17,18 @@ class Category < ActiveRecord::Base
   validates :parent_category, presence: true, if: :parent_id
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
 
-  after_update :toggle_status_of_sub_categories, if: :enabled_changed? && :is_parent?
+  after_update :toggle_status_of_sub_categories, :toggle_status_of_requirements, if: :enabled_changed? && :is_parent?
 
   def is_parent?
     parent_id.nil?
   end
 
   def toggle_status_of_sub_categories
-    sub_categories.with_status(!enabled?).each do |sub_category|
-      sub_category.update_column(:enabled, enabled)
-    end
+    sub_categories.update_all(enabled: enabled)
+  end
+
+  def toggle_status_of_requirements
+    requirements.update_all(enabled: enabled)
   end
 
   private
