@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   validates :name, :contact_no, presence: true
   validates :contact_no, numericality: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
-  validate :no_spaces_in_password
+  validate :no_spaces_in_password, on: :create
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable

@@ -21,7 +21,11 @@ class RequirementsController < ApplicationController
     elsif current_user
       @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
     end
-    render :index
+    if current_admin
+      render 'admin/requirements/index'
+    else
+      render :index
+    end
   end
 
   def new
