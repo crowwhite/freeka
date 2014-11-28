@@ -17,7 +17,8 @@ class Category < ActiveRecord::Base
   validates :parent_category, presence: true, if: :parent_id
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
 
-  after_update :toggle_status_of_sub_categories, :toggle_status_of_requirements, if: :enabled_changed? && :is_parent?
+  after_update :toggle_status_of_sub_categories, if: :enabled_changed? && :is_parent?
+  after_update :toggle_status_of_requirements, if: :enabled_changed?
 
   def is_parent?
     parent_id.nil?
