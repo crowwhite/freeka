@@ -30,6 +30,7 @@ class RequirementsController < ApplicationController
 
   def new
     @requirement = current_user.requirements.build
+    @address = @requirement.address.build
   end
 
   def edit
@@ -37,6 +38,7 @@ class RequirementsController < ApplicationController
       flash[:alert] = 'not authorised to use this page'
       redirect_to @requirement
     end
+    @address = @requirement.address
   end
 
   def create
