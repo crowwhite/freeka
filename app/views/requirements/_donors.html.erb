@@ -11,7 +11,7 @@
     <% locals[:requirement].interested_donors.includes(:donor_requirements).each do |donor| %>
       <%= content_tag :li, class: 'donor ' + donor.donor_requirement(locals[:requirement].id).status do %>
         <strong>Name: </strong><span id=<%= 'donor' + donor.id.to_s %>><%= donor.name %></span><br>
-        <% if donor.donor_requirement(locals[:requirement].id).current? || donor.donor_requirement(locals[:requirement].id).donated? %>
+        <% if donor.donor_requirement(locals[:requirement].id).current? %>
           <div id="current_donor">
             <strong>Email: </strong><%= donor.email %><br>
             <strong>Contact #: </strong><%= donor.contact_no %><br>
