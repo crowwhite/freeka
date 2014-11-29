@@ -186,24 +186,24 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm
+  aasm (= 4.0.1)
   better_errors (~> 1.1.0)
   binding_of_caller (~> 0.7.2)
-  byebug
+  byebug (= 3.4.0)
   capistrano (~> 3.1.0)
   capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1.1)
   carmen-rails (~> 1.0.0)
-  devise
-  factory_girl_rails
-  jquery-rails
-  kaminari
-  mysql2
-  quiet_assets
+  devise (= 3.4.1)
+  factory_girl_rails (= 4.5.0)
+  jquery-rails (= 3.1.2)
+  kaminari (= 0.16.1)
+  mysql2 (= 0.3.16)
+  quiet_assets (= 1.0.3)
   rails (= 4.1.7)
-  rspec-activemodel-mocks
-  rspec-rails
+  rspec-activemodel-mocks (= 1.0.1)
+  rspec-rails (= 3.1.0)
   shoulda-matchers
-  therubyracer
+  therubyracer (= 0.12.1)
   thinking-sphinx (~> 3.1.1)
-  uglifier
+  uglifier (= 2.5.3)

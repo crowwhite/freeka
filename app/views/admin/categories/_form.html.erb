@@ -1,26 +1,35 @@
-<%= form_for([:admins, @category]) do |f| %>
-  <% if @category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
+<div class='container'>
+  <div class="well bs-component col-lg-6">
+    <%= form_for([:admins, @category], html: { class: 'form-horizontal' }) do |f| %>
+      <fieldset>
+        <legend>Category</legend>
+        <% if @category.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
 
-      <ul>
-      <% @category.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <%= content_tag :div, class: 'field ' + @select_list_visibility.to_s, id: 'sub_category_select' do %>
-    <%= f.label :parent_id %>*<br>
-    <%= f.collection_select(:parent_id, Category.root.all_except(@category.id), :id, :name, { prompt: 'Select Parent', include_blank: 'No Parent' }) %>
-  <% end %>
+            <ul>
+            <% @category.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%= content_tag :div, class: 'field ' + @select_list_visibility.to_s, id: 'sub_category_select' do %>
+          <%= f.label :parent_id %>*<br>
+          <%= f.collection_select(:parent_id, Category.roots.all_except(@category.id), :id, :name, { prompt: 'Select Parent', include_blank: 'No Parent' }) %>
+        <% end %>
 
-  <div class="field">
-    <%= f.label :name %>*<br />
-    <%= f.text_field :name %>
+        <div class="field form-group">
+          <%= f.label :name, class: 'col-lg-2 control-label' %>*
+          <div class='col-lg-10'>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="actions btn btn-primary">
+          <%= f.submit %>
+        </div>
+      </fieldset>
+    <% end %>
   </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

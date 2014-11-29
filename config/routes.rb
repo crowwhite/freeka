@@ -24,8 +24,11 @@ Rails.application.routes.draw do
   end
 
   namespace :admin, path: 'admins', as: :admins do
-    resources :categories do
+    resources :categories, except: :show do
       get 'new_sub_category', on: :collection
+      put 'toggle_status', on: :member
+    end
+    resources :sub_categories, except: :show do
       put 'toggle_status', on: :member
     end
     resources :users, except: :new do

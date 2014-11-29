@@ -1,13 +1,17 @@
 class Category < ActiveRecord::Base
-  scope :root, -> { where(parent_id: nil) }
+  # TODO: Rename to `roots`
+  # Fixed
+  scope :roots, -> { where(parent_id: nil) }
   scope :with_status, ->(status) { where(enabled: status) }
   scope :enabled, -> { with_status(true) }
   scope :all_except, ->(id) { where.not(id: id) }
 
+  # TODO: Fix indentation
+  # Fixed
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
-    dependent: :restrict_with_error
+            dependent: :restrict_with_error
   has_many :enabled_sub_categories, -> { where enabled: true }, class_name: Category,
-    foreign_key: :parent_id
+            foreign_key: :parent_id
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
   has_many :requirements, through: :category_requirements, dependent: :restrict_with_error
   has_many :category_requirements, dependent: :restrict_with_error
@@ -32,6 +36,10 @@ class Category < ActiveRecord::Base
 
   def toggle_status_of_requirements
     requirements.update_all(enabled: enabled)
+  end
+
+  def validate_presence_of_parent
+    self.class.validates :parent_id, presence: true
   end
 
   private

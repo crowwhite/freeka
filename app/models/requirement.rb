@@ -23,7 +23,7 @@ class Requirement < ActiveRecord::Base
   scope :with_status_not, ->(status) { where.not(status: status) }
   scope :with_status, ->(status) { where(status: status) }
 
-  aasm column: :status, enum: true do
+  aasm column: :status, enum: true, whiny_transitions: false do
     state :pending, initial: true
     state :in_process
     state :fulfilled

@@ -1,3 +1,4 @@
+<% @controller_action ||= 'welcome#index' %>
 <div class="navbar navbar-default">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -9,7 +10,7 @@
   </div>
   <div class="navbar-collapse collapse navbar-responsive-collapse">
     <ul class="nav navbar-nav">
-      <% categories = Category.root.enabled.includes(:enabled_sub_categories) %>
+      <% categories = Category.roots.enabled.includes(:enabled_sub_categories) %>
       <% categories.each do |category| %>
         <li class="dropdown">
           <div class="custom">

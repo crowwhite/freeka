@@ -2,3 +2,4 @@ $('#status' + <%= @category.id.to_s %>).html("<%= escape_javascript render 'stat
 <% @category.sub_categories.each do |sub_category| %>
   $('#status' + <%= sub_category.id.to_s %>).html("<%= escape_javascript render 'status', locals: { category: sub_category} %>")  
 <% end %>
+$('#flash').html("<%= escape_javascript render 'shared/flash' %>")

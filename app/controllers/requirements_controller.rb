@@ -10,6 +10,7 @@ class RequirementsController < ApplicationController
 
   def search
     @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     @controller_action = params[:requirement][:controller_action]
     render :index
   end
@@ -17,10 +18,11 @@ class RequirementsController < ApplicationController
   def filter
     @controller_action = params[:requirement][:controller_action]
     if @controller_action.split('#')[0] == 'welcome'
-      @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).page params[:page]
+      @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).page params[:page]
     elsif current_user
-      @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
+      @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
     end
+    flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
     if current_admin
       render 'admin/requirements/index'
     else
@@ -42,9 +44,10 @@ class RequirementsController < ApplicationController
   def create
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
-      redirect_to requirements_path
+      redirect_to requirements_path, notice: 'Requirement created'
     else
-      render 'new'
+      flash.now[:alert] = 'Some errors prevented the creation of requirement'
+      render :new
     end
   end
 
@@ -53,9 +56,10 @@ class RequirementsController < ApplicationController
       flash[:alert] = 'not authorised to use this page'
       redirect_to @requirement
     elsif @requirement.update(requirement_params)
-      redirect_to @requirement
+      redirect_to @requirement, notice: 'Requirement updated'
     else
-      render 'edit'
+      flash.now[:alert] = 'Updation of requirement failed'
+      render :edit
     end
   end
 
@@ -65,7 +69,11 @@ class RequirementsController < ApplicationController
   end
 
   def toggle_state
-    @requirement.update(enabled: requirement_params[:enabled])
+    if @requirement.update(enabled: requirement_params[:enabled])
+      flash.now[:notice] = "Updated state to #{ @requirement.enabled ? :Enabled : :Disabled }"
+    else
+      flash.now[:alert] = 'Updation of state failed'
+    end
   end
 
   def toggle_interest
@@ -78,7 +86,11 @@ class RequirementsController < ApplicationController
   end
 
   def reject_donor
-    @requirement.reject_current_donor
+    if @requirement.reject_current_donor
+      flash.now[:notice] = 'Donor Rejected'
+    else
+      flash.now[:alert] = "Donor couldn't be rejected"
+    end
   end
 
   private
@@ -86,7 +98,7 @@ class RequirementsController < ApplicationController
       @requirement = Requirement.find_by(id: params[:id])
       unless @requirement
         flash[:alert] = 'requirement not found'
-        redirect_to(requirements_path) and return
+        redirect_to(requirements_path)
       end
     end
 
@@ -100,8 +112,8 @@ class RequirementsController < ApplicationController
 
     def check_status_for_pending
       unless @requirement.pending?
-        flash[:alert] = 'this request has received some response, hence cant be disabled'
-        render 'toggle_state' and return
+        flash.now[:alert] = 'this request has received some response, hence cant be disabled'
+        render 'toggle_state'
       end
     end
 end

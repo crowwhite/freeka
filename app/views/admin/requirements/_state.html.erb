@@ -1,9 +1,9 @@
 <% if locals[:requirement].enabled %>
   <%= content_tag :td, id: 'status' + locals[:requirement].id.to_s do %>
-    <%= link_to 'disable', toggle_state_admins_requirement_path(locals[:requirement], requirement: { enabled: false }), method: :put, remote: true %></td>
+    <%= link_to 'disable', toggle_state_admins_requirement_path(locals[:requirement], requirement: { enabled: false }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %></td>
   <% end %>
 <% else %>
   <%= content_tag :td, id: 'status' + locals[:requirement].id.to_s do %>
-    <%= link_to 'enable', toggle_state_admins_requirement_path(locals[:requirement], requirement: { enabled: true }), method: :put, remote: true %></td>
+    <%= link_to 'enable', toggle_state_admins_requirement_path(locals[:requirement], requirement: { enabled: true }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %></td>
   <% end %>
 <% end %>

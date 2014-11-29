@@ -7,18 +7,24 @@ class Admin::RequirementsController < Admin::BaseController
   end
 
   def toggle_state
-    @requirement.update_column(:enabled, !@requirement.enabled)
+    if @requirement.update_column(:enabled, !@requirement.enabled)
+      flash.now[:notice] = "Requirement #{ @requirement.enabled ? :Enabled : :Disabled }"
+    else
+      flash.now[:alert] = "Couldn't change state of Requirement"
+    end
   end
 
   def search
     @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     render :index
   end
 
   def filter
     @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).page params[:page]
+    flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
     @controller_action = params[:requirement][:controller_action]
-    render 'index'
+    render :index
   end
 
   private
@@ -26,7 +32,7 @@ class Admin::RequirementsController < Admin::BaseController
       @requirement = Requirement.find_by(id: params[:id])
       unless @requirement
         flash[:alert] = 'requirement not found'
-        redirect_to(admins_requirements_path) and return
+        redirect_to(admins_requirements_path)
       end
     end
 

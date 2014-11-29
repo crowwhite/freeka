@@ -9,9 +9,10 @@ class Admin::UsersController < Admin::BaseController
 
   def update
     if @user.update(update_params)
-      redirect_to admins_users_path
+      redirect_to admins_users_path, notice: 'User succesfully updated'
     else
-      render 'edit'
+      flash.now[:alert] = 'Failed to update due to some errors'
+      render :edit
     end
   end
 
@@ -21,16 +22,18 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def toggle_status
-    @user.update_column(:enabled, update_params[:enabled] == 'true')
+    if @user.update_column(:enabled, update_params[:enabled] == 'true')
+      flash.now[:notice] = "Updated state to #{ @user.enabled ? :active : :inactive }"
+    else
+      flash.now[:alert] = "Failed to update state"
+    end
   end
 
   def search
     search = search_params
     @users = User.public_send("with_#{ search[:criteria] }_like", search[:text])
-    if @users.length.zero?
-      flash[:alert] = 'No results found'
-    end
-    render 'index'
+    flash.now[:alert] = 'No results found' if @users.empty?
+    render :index
   end
 
   private

@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
   respond_to :html
 
   def index
-    @categories = Category.root.enabled.order(:name).includes(:enabled_sub_categories)
+    @categories = Category.roots.enabled.order(:name).includes(:enabled_sub_categories)
     respond_with(@categories)
   end
 
@@ -21,8 +21,7 @@ class CategoriesController < ApplicationController
     def set_category
       @category = Category.find_by(id: params[:id])
       unless @category
-        flash[:alert] = 'Category not found'
-        redirect_to categories_path
+        redirect_to categories_path, alert: 'Category not found'
       end
     end
 end

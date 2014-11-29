@@ -1,57 +1,78 @@
 <%= javascript_include_tag 'sub_region_select' %>
 <%= javascript_include_tag 'sub_category_select' %>
-<%= form_for(@requirement, html: { class: 'form-horizontal' }) do |f| %>
-<%= render 'shared/errors', locals: { object: @requirement } %>
-  <div class="field form-group">
-    <%= f.label :category_ids %>*
-    <%= f.collection_select(:category_ids, Category.root.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]'}) %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :sub_category %>
-    <%= render 'categories/sub_categories' %>
-  </div>
-
-  <div class="field form-group">
-    <%= f.label :title %>*<br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :details %>*<br />
-    <%= f.text_area :details %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :Require_Before, for: :expiration_date %>*<br />
-    <%= f.date_select :expiration_date %>
-  </div>
-
-  <div class="field">
-    <%= f.fields_for :address, f.object.build_address do |a| %>
-
+<div class="well bs-component">
+  <%= form_for(@requirement, html: { class: 'form-horizontal' }) do |f| %>
+  <fieldset>
+    <legend>Requirement</legend>
+    <%= render 'shared/errors', locals: { object: @requirement } %>
       <div class="field form-group">
-        <%= a.label :street %>
-        <%= a.text_field :street %>
-      </div>
-
-      <div class="field form-group">
-        <%= a.label :city %>*
-        <%= a.text_field :city %>
-      </div>
-
-      <div class="field form-group">
-        <%= a.label :country, for: :country_code %>*<br />
-        <%= a.country_select :country_code, priority: %w(US CA), prompt: 'Please select a country', id: 'country_select' %>
-      </div>
-
-      <div class="field form-group">
-        <%= f.label :state, for: :state_code %>*<br />
-        <div id="subregion_select">
-          <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
+        <%= f.label :Category, for: :category_ids, class: 'col-lg-2 control-label' %>*
+        <div class="col-lg-10">
+          <%= f.collection_select(:category_ids, Category.roots.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]', class: 'form-control'}) %>
         </div>
       </div>
-    <% end %>
-  </div>
+      <div class="field form-group">
+        <%= f.label :sub_category, class: 'col-lg-2 control-label' %>
+        <div class="col-lg-10">
+          <%= render 'categories/sub_categories' %>
+        </div>
+      </div>
 
-  <div class="actions btn btn-primary">
-    <%= f.submit %>
-  </div>
-<% end %>
+      <div class="field form-group">
+        <%= f.label :title, class: 'col-lg-2 control-label' %>*
+        <div class="col-lg-10">
+          <%= f.text_field :title, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="field form-group">
+        <%= f.label :details, class: 'col-lg-2 control-label' %>*
+        <div class="col-lg-10">
+          <%= f.text_area :details, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="field form-group">
+        <%= f.label :Require_Before, for: :expiration_date, class: 'col-lg-2 control-label' %>*
+        <div class="col-lg-10">
+          <%= f.date_select :expiration_date, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= f.fields_for :address, f.object.build_address do |a| %>
+
+          <div class="field form-group">
+            <%= a.label :street, class: 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= a.text_field :street, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="field form-group">
+            <%= a.label :city, class: 'col-lg-2 control-label' %>*
+            <div class="col-lg-10">
+              <%= a.text_field :city, class: 'form-control' %>
+            </div>  
+          </div>
+
+          <div class="field form-group">
+            <%= a.label :country, for: :country_code, class: 'col-lg-2 control-label' %>*
+            <div class="col-lg-10">
+              <%= a.country_select :country_code, priority: %w(US CA), prompt: 'Please select a country', id: 'country_select', class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="field form-group">
+            <%= f.label :state, for: :state_code, class: 'col-lg-2 control-label' %>*
+            <div id="subregion_select" class="col-lg-10">
+              <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="actions btn btn-primary">
+        <%= f.submit %>
+      </div>
+    </fieldset>
+  <% end %>
+</div>

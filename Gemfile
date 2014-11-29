@@ -21,13 +21,13 @@ end
 
 group :test do
   gem 'rspec-rails',                          '3.1.0'
-  gem 'shoulda-matchers', require: false,     '2.7.0'
+  gem 'shoulda-matchers', require: false
   gem 'factory_girl_rails',                   '4.5.0'
   gem 'rspec-activemodel-mocks',              '1.0.1'
 end
 
   
-group [:development, :test] do
+group :development, :test do
   gem 'capistrano',                           '~> 3.1.0'
   gem 'capistrano-bundler',                   '~> 1.1.2'
   gem 'capistrano-rails',                     '~> 1.1.1'

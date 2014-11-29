@@ -3,12 +3,8 @@ class Admin::CategoriesController < Admin::BaseController
 
   before_action :set_category, only: [:show, :edit, :update, :toggle_status]
 
-  respond_to :html, :js
-
-
   def index
-    @categories = Category.root.order(:name).includes(:sub_categories).page params[:page]
-    respond_with(@categories)
+    @categories = Category.roots.order(:name).includes(:sub_categories).page params[:page]
   end
 
   def new
@@ -21,38 +17,46 @@ class Admin::CategoriesController < Admin::BaseController
     render :new
   end
 
-  def show
-    respond_with(@category)
-  end
-
   def create
     @category = Category.new(category_params)
     if @category.save
+      # TODO: Notice?? Add flash messages every where in app on succes / failure
+      flash[:notice] = 'Category saved successfully'
       redirect_to admins_categories_path
     else
-      render 'new'
+      # TODO: Can use symbol.
+      # Fixed
+      flash.now[:alert] = 'Some errors were encountered in Category creation'
+      render :new
     end
-  end
-
-  def edit
   end
 
   def update
     if @category.update(category_params)
+      flash[:notice] = 'Category successfully updated'
       redirect_to admins_categories_path
     else
-      render 'edit'
+      flash.now[:alert] = 'Some errors were encountered in Category updation'
+      render :edit
     end
   end
 
   def toggle_status
-    @category.update(category_params)
+    # TODO: what if update fails? Think of all cases while writing any code.
+    # Fixed
+    if @category.update(enabled: category_params[:enabled])
+      flash.now[:notice] = "Category #{ @category.enabled ? :Enabled : :Disabled }"
+    else
+      flash.now[:alert] = "Couldn't change state of Category"
+    end
   end
 
   private
     def set_category
       @category = Category.find_by(id: params[:id])
       unless @category
+        # TODO: Should not be a notice.
+        # Fixed
         flash[:alert] = 'Category not found'
         redirect_to admins_categories_path
       end

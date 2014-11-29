@@ -7,11 +7,14 @@ class DonorRequirement < ActiveRecord::Base
   belongs_to :requirement
 
   after_create :update_requirement_status
+  # TODO: What is zero??
+  # Fixed -- it is changed to 2 now.. status integer for rejected
   after_create :make_current!, if: -> { DonorRequirement.where(requirement_id: requirement_id).where.not(status: 2).one? }
   before_destroy :prevent_if_fulfilled
   after_destroy :update_requirement_status, :update_donors
 
   def update_requirement_status
+    # TODO: Refactor.
     if DonorRequirement.find_by(id: id)
       requirement.process! if requirement.may_process?
     else
@@ -30,6 +33,11 @@ class DonorRequirement < ActiveRecord::Base
   end
 
   def prevent_if_fulfilled
-    !requirement.fulfilled?
+    # TODO: Add errors
+    # Fixed
+    if requirement.fulfilled?
+      errors.add(:base, 'You cannot remove interest from successful donation')
+      false
+    end
   end
 end

@@ -10,6 +10,10 @@ ul.navbar-nav > li {
   padding: 10px;
 }
 
+table.parent > tbody > tr {
+  background-color: #D8D8D8;
+}
+
 #status_filter {
   list-style-type: none;
 }
@@ -18,10 +22,12 @@ ul.navbar-nav > li {
   display: inline-block;
 }
 .circle { 
+   margin-right: 5px;
    color: black;
+   padding: 3px;
    font-size: 15px;
-   padding: 5px;
-   background: white; 
+   padding-left: 7px; 
+   background: #D8D8D8; 
    border-radius: 70px;
 }
 
@@ -42,10 +48,6 @@ select {
   color: black;
 }
 
-body {
-  margin-bottom: 20px;
-}
-
 div.link {
   font-size: 15px;
   padding: 10px;
@@ -54,7 +56,6 @@ div.link {
 }
 
 div.right {
-  display: inline-block;
   float: right;
   margin-right: 30px;
 }
@@ -69,6 +70,6 @@ div.right {
   background-color: #a80000;
 }
 
-.mandatory label {
-  /*border: 1px red solid;*/
+input[type='submit'] {
+  color: black !important;
 }
