@@ -1,3 +1,4 @@
+// Always handle failure cases while making ajax requests.
 $(function () {
   $('#requirement_category_ids').on('change', function () {
     _this = this;

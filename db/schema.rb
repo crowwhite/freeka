@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20141126060310) do
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
   add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
 
+  # TODO: What is delta?
   create_table "requirements", force: true do |t|
     t.string   "title"
     t.text     "details"

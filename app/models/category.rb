@@ -25,6 +25,7 @@ class Category < ActiveRecord::Base
   end
 
   def toggle_status_of_sub_categories
+    # TODO: Optimize
     sub_categories.update_all(enabled: enabled)
   end
 
