@@ -5,11 +5,19 @@ class Admin < Person
   private
     def atleast_one_admin_remains
       # TODO: Why raise ?
-      raise "cant destroy all admins" if Admin.count == 1
+      # Fixed
+      if Admin.count == 1
+        errors.add(:base, "cant destroy all admins")
+        false
+      end
     end
 
     def prevent_admin_creation_if_it_exists
       # TODO: Why raise ?
-      raise "only one admin can exist" if Admin.exists?
+      # Fixed
+      if Admin.exists?
+        errors.add(:base, "only one admin can exist")
+        false
+      end
     end
 end

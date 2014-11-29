@@ -7,6 +7,9 @@ class Person < ActiveRecord::Base
   has_many :donations, through: :donor_requirements, source: :requirement
 
   validates :name, :contact_no, presence: true
+  # TODO: Use regexp to validate password.
+  # Fixed
+  validates :password, format: { with: /\S{8,15}/, message: 'No white spaces allowed' }
   validates :contact_no, numericality: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
   validate :no_spaces_in_password, on: :create
@@ -15,6 +18,7 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   # TODO: Why do we need this?
+  # the devise tells us to define this
   def self.types
     TYPES
   end
@@ -31,10 +35,4 @@ class Person < ActiveRecord::Base
     donor_requirements.find { |dr| dr.requirement_id == requirement_id }
   end
 
-  # TODO: Use regexp to validate password.
-  def no_spaces_in_password
-    if password.include? ' '
-      errors.add(:password, 'cannot contain white spaces')
-    end
-  end
 end
