@@ -28,9 +28,7 @@ Rails.application.routes.draw do
       get 'new_sub_category', on: :collection
       put 'toggle_status', on: :member
     end
-    resources :sub_categories, except: :show do
-      put 'toggle_status', on: :member
-    end
+    resources :sub_categories, only: :index
     resources :users, except: :new do
       post 'search', on: :collection
       put 'toggle_status', on: :member

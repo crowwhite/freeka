@@ -12,7 +12,6 @@ class Person < ActiveRecord::Base
   validates :password, format: { with: /\S{8,15}/, message: 'No white spaces allowed' }
   validates :contact_no, numericality: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
-  validate :no_spaces_in_password, on: :create
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable

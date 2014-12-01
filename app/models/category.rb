@@ -1,10 +1,13 @@
 class Category < ActiveRecord::Base
+
+  attr_accessor :is_sub_category
   # TODO: Rename to `roots`
   # Fixed
   scope :roots, -> { where(parent_id: nil) }
   scope :with_status, ->(status) { where(enabled: status) }
   scope :enabled, -> { with_status(true) }
   scope :all_except, ->(id) { where.not(id: id) }
+  scope :children, -> { where('parent_id IS NOT NULL') }
 
   # TODO: Fix indentation
   # Fixed
@@ -19,6 +22,7 @@ class Category < ActiveRecord::Base
   validates :sub_categories, absence: { message: 'should not exist for this category' }, if: :parent_id, on: :update
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :parent_category, presence: true, if: :parent_id
+  validates :parent_id, presence: true, if: :is_sub_category
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
 
   after_update :toggle_status_of_sub_categories, if: :enabled_changed? && :is_parent?
@@ -36,10 +40,6 @@ class Category < ActiveRecord::Base
 
   def toggle_status_of_requirements
     requirements.update_all(enabled: enabled)
-  end
-
-  def validate_presence_of_parent
-    self.class.validates :parent_id, presence: true
   end
 
   private

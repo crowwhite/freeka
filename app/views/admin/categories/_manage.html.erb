@@ -1,3 +1,7 @@
 <td><%= locals[:category].name %></td>
 <td><%= link_to 'Edit', edit_admins_category_path(locals[:category]) %></td>
-<%= render 'status', locals: { category: locals[:category] } %>
+<% status = 'status' %>
+<% if controller_name == 'sub_categories' %>
+  <% status = '/status' %>
+<% end %>
+<%= render status, locals: { category: locals[:category] } %>
