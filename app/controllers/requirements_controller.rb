@@ -4,7 +4,7 @@ class RequirementsController < ApplicationController
   before_action :check_status_for_pending, only: :toggle_state
 
   def index
-    @requirements = current_user.requirements.order(:expiration_date).page params[:page]
+    @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
     @controller_action = 'requirements#index'
   end
 
@@ -32,6 +32,7 @@ class RequirementsController < ApplicationController
 
   def new
     @requirement = current_user.requirements.build
+    @requirement.build_address
   end
 
   def edit
