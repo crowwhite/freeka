@@ -13,8 +13,14 @@ class Admin::CategoriesController < Admin::BaseController
 
   def new_sub_category
     @category = Category.new
-    @select_list_visibility = ' '
+    @is_sub_category = true
     render :new
+  end
+
+  def edit
+    if @category.parent_id
+      @is_sub_category = true
+    end
   end
 
   def create
@@ -22,8 +28,11 @@ class Admin::CategoriesController < Admin::BaseController
     if @category.save
       # TODO: Notice?? Add flash messages every where in app on succes / failure
       flash[:notice] = 'Category saved successfully'
-      redirect_to admins_categories_path
+      @category.is_sub_category ? redirect_to(admins_categories_path) : redirect_to(admins_sub_categories_path)
     else
+      if @category.is_sub_category
+        @is_sub_category = true
+      end
       # TODO: Can use symbol.
       # Fixed
       flash.now[:alert] = 'Some errors were encountered in Category creation'
@@ -63,6 +72,6 @@ class Admin::CategoriesController < Admin::BaseController
     end
 
     def category_params
-      params.require(:category).permit(:name, :parent_id, :enabled)
+      params.require(:category).permit(:name, :parent_id, :enabled, :is_sub_category)
     end
 end
