@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :requirements do
     post 'search', on: :collection
     get 'filter', on: :collection
+    resources :donor_requirements, only: :create
+    delete 'uninterest', to: 'donor_requirements#destroy'
     member do
       put 'toggle_state'
       put 'toggle_interest'

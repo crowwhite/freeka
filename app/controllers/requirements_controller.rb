@@ -76,11 +76,6 @@ class RequirementsController < ApplicationController
     end
   end
 
-  def toggle_interest
-    flash[:alert] = "successful donation can't be undone" unless @requirement.toggle_interest(current_user.id)
-    load_donations
-  end
-
   def fulfilled
     flash[:alert] = 'this request has no donors, you can disable or delete it.' unless @requirement.fulfill!
   end
