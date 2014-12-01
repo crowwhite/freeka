@@ -4,7 +4,7 @@ class RequirementsController < ApplicationController
   before_action :check_status_for_pending, only: :toggle_state
 
   def index
-    @requirements = current_user.requirements.order(:expiration_date).page params[:page]
+    @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
     @controller_action = 'requirements#index'
   end
 
@@ -32,6 +32,7 @@ class RequirementsController < ApplicationController
 
   def new
     @requirement = current_user.requirements.build
+    @requirement.build_address
   end
 
   def edit
@@ -74,11 +75,6 @@ class RequirementsController < ApplicationController
     else
       flash.now[:alert] = 'Updation of state failed'
     end
-  end
-
-  def toggle_interest
-    flash[:alert] = "successful donation can't be undone" unless @requirement.toggle_interest(current_user.id)
-    load_donations
   end
 
   def fulfilled

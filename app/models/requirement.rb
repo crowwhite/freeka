@@ -53,14 +53,6 @@ class Requirement < ActiveRecord::Base
     donor_requirements.find { |dr| dr.donor_id == user_id }
   end
 
-  def toggle_interest(user_id)
-    if record = DonorRequirement.find_by(requirement_id: id, donor_id: user_id)
-      record.destroy
-    else
-      DonorRequirement.create(requirement_id: id, donor_id: user_id)
-    end
-  end
-
   def donor
     donor_requirements.find(&:donated?).try(:user)
   end

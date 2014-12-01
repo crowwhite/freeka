@@ -38,7 +38,7 @@
       </div>
 
       <div class="field">
-        <%= f.fields_for :address, f.object.build_address do |a| %>
+        <%= f.fields_for :address do |a| %>
 
           <div class="field form-group">
             <%= a.label :street, class: 'col-lg-2 control-label' %>
