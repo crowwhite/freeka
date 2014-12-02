@@ -1,6 +1,5 @@
 class RequirementsController < ApplicationController
-  #TODO: Use `only`
-  # Fixed
+  # TODO: Wht prepend_before_action?
   before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :toggle_state, :fulfilled, :reject_donor]
   before_action :check_if_owner, only: [:edit, :update, :toggle_state, :reject_donor]
   prepend_before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled, :reject_donor]
@@ -8,8 +7,7 @@ class RequirementsController < ApplicationController
 
   def index
     @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
-    #TODO: Please refactor. No need of @controller_action anywhere.
-    # Fixed
+    # TODO: Please refactor. No need of @controller_action anywhere.
   end
 
   def search
@@ -50,8 +48,6 @@ class RequirementsController < ApplicationController
   end
 
   def update
-    #TODO: Move authorization code out of action.
-    # Fixed
     if @requirement.update(requirement_params)
       redirect_to @requirement, notice: 'Requirement updated'
     else
@@ -66,11 +62,10 @@ class RequirementsController < ApplicationController
     else
       flash[:alert] = "Requirement could not be deleted"
     end
-    #TODO: Show notice if requirement destroyed
-    # Fixed
     redirect_to requirements_path
   end
 
+  # TODO: Remove unused actions
   def toggle_state
     if @requirement.update(enabled: requirement_params[:enabled])
       flash.now[:notice] = "Updated state to #{ @requirement.enabled ? :Enabled : :Disabled }"
@@ -79,6 +74,7 @@ class RequirementsController < ApplicationController
     end
   end
 
+  # TODO: Rename
   def fulfilled
     flash.now[:alert] = 'This request has no donors, you can probably delete it.' unless @requirement.fulfill!
   end

@@ -62,8 +62,6 @@ class DonorRequirement < ActiveRecord::Base
   end
 
   def prevent_if_fulfilled
-    # TODO: Add errors
-    # Fixed
     if requirement.fulfilled?
       errors.add(:base, 'You cannot remove interest from successful donation')
       false
