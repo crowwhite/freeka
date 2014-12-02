@@ -14,7 +14,7 @@
       <div class="field form-group">
         <%= f.label :sub_category, class: 'col-lg-2 control-label' %>
         <div class="col-lg-10">
-          <%= render 'categories/sub_categories' %>
+          <%= render 'categories/sub_categories', locals: { parent_id: f.object.category_ids.first, child_id: f.object.category_ids.last } %>
         </div>
       </div>
 

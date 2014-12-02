@@ -26,13 +26,12 @@ ActiveRecord::Schema.define(version: 20141126060310) do
   create_table "categories", force: true do |t|
     t.string   "name"
     t.integer  "parent_id"
+    t.boolean  "enabled",    default: true, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "enabled",    default: true, null: false
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
-  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
   create_table "category_requirements", force: true do |t|
     t.integer  "category_id"
@@ -68,12 +67,12 @@ ActiveRecord::Schema.define(version: 20141126060310) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "type",                   default: "User"
     t.string   "name",                   default: ""
     t.text     "about_me"
-    t.text     "address"
-    t.boolean  "enabled",                default: true,   null: false
     t.string   "contact_no"
+    t.text     "address"
+    t.string   "type",                   default: "User"
+    t.boolean  "enabled",                default: true,   null: false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -84,8 +83,6 @@ ActiveRecord::Schema.define(version: 20141126060310) do
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
   add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
 
-  # TODO: What is delta?
-  # Have used thinking sphinx delta indexing
   create_table "requirements", force: true do |t|
     t.string   "title"
     t.text     "details"

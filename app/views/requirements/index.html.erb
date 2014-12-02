@@ -9,6 +9,7 @@
         <%= link_to 'New Requirement', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
       </div>
     </div>
+    <% @controller_action ||= [controller_name, action_name].join('#') %>
     <% if @controller_action == 'requirements#index' %>
       <%= render 'shared/requirement/status_select' %>
     <% end %>
@@ -23,15 +24,14 @@
           <th>Address</th>
           <th>Categories</th>
           <% if @controller_action == 'welcome#index' %>
-
             <th>Show Interest</th>
-            <th>Share</th>
           <% elsif @controller_action == 'requirements#index' %>
             <th>Status</th>
             <th>Delete</th>
             <th>Donors</th>
-            <th></th>
+            <th>Action</th>
           <% end %>
+          <th>Share</th>
         </thead>
         <tbody>
           <% @requirements.each do |requirement| %>
@@ -55,7 +55,6 @@
                     <%= render 'requirements/interest', locals: { requirement: requirement } %>
                   <% end %>
                 </td>
-                <td><%= link_to 'Facebook Share', 'https://facebook.com', target: :_blank, class: 'btn btn-info btn-xs', role: 'button' %></td>
               <% elsif @controller_action == 'requirements#index' %>
                 <td><%= requirement.status %></td>
                 <td>
@@ -71,6 +70,7 @@
                   <%= render 'requirements/fulfill', locals: { requirement: requirement } %>
                 <% end %>
               <% end %>
+              <td><%= link_to 'Facebook Share', 'https://facebook.com', target: :_blank, class: 'btn btn-info btn-xs', role: 'button' %></td>
             </tr>
           <% end %>
         </tbody>
