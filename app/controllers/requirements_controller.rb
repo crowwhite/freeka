@@ -7,7 +7,6 @@ class RequirementsController < ApplicationController
   def index
     @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
     #TODO: Please refactor. No need of @controller_action anywhere.
-    @controller_action = 'requirements#index'
   end
 
   def search

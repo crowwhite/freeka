@@ -9,6 +9,7 @@
         <%= link_to 'New Requirement', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
       </div>
     </div>
+    <% @controller_action = [controller_name, action_name].join('#') %>
     <% if @controller_action == 'requirements#index' %>
       <%= render 'shared/requirement/status_select' %>
     <% end %>
@@ -23,7 +24,6 @@
           <th>Address</th>
           <th>Categories</th>
           <% if @controller_action == 'welcome#index' %>
-
             <th>Show Interest</th>
             <th>Share</th>
           <% elsif @controller_action == 'requirements#index' %>

@@ -3,7 +3,6 @@ class Admin::RequirementsController < Admin::BaseController
 
   def index
     @requirements = Requirement.order(:expiration_date).page params[:page]
-    @controller_action = 'admins/requirements#index'
   end
 
   def toggle_state

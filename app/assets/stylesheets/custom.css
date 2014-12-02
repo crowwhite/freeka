@@ -60,16 +60,6 @@ div.right {
   margin-right: 30px;
 }
 
-.alert, .notice {
-  padding-left: 70px;
-  background-color: green;
-  color: white;
-}
-
-.alert {
-  background-color: #a80000;
-}
-
 input[type='submit'] {
   color: black !important;
 }
