@@ -16,8 +16,6 @@ class DonationsController < ApplicationController
       @donation = Requirement.find_by(id: params[:id])
       unless @donation
         flash[:alert] = 'Donation not found'
-        # TODO: No need to return
-        # Fixed
         redirect_to(requirements_path)
       end
     end

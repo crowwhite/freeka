@@ -1,5 +1,6 @@
 class Admin::SubCategoriesController < Admin::BaseController
   layout 'admin'
+  #TODO: No need of this.
   append_view_path 'app/views/admin/categories'
 
   def index

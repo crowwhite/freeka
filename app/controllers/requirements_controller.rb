@@ -1,10 +1,12 @@
 class RequirementsController < ApplicationController
+  #TODO: Use `only`
   before_action :authenticate_user!, except: [:welcome, :show, :search, :filter]
   before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled, :reject_donor]
   before_action :check_status_for_pending, only: :toggle_state
 
   def index
     @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
+    #TODO: Please refactor. No need of @controller_action anywhere.
     @controller_action = 'requirements#index'
   end
 
@@ -53,6 +55,7 @@ class RequirementsController < ApplicationController
   end
 
   def update
+    #TODO: Move authorization code out of action.
     if current_user.id != @requirement.requestor_id
       flash[:alert] = 'not authorised to use this page'
       redirect_to @requirement
@@ -66,6 +69,7 @@ class RequirementsController < ApplicationController
 
   def destroy
     flash[:alert] = "requirement could not be deleted" unless @requirement.destroy
+    #TODO: Show notice if requirement destroyed
     redirect_to requirements_path
   end
 
