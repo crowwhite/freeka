@@ -33,12 +33,10 @@
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <% manage = 'manage' %>
         <% if controller_name == 'sub_categories' %>
-          <% manage = '/manage' %>
           <td><%= category.parent_category.name %></td>
         <% end %>
-        <%= render manage, locals: { category: category } %>
+        <%= render '/manage', locals: { category: category } %>
       </tr>
     <% end %>
   </tbody>

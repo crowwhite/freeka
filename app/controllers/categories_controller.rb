@@ -3,15 +3,10 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   #TODO: No need of this.
-  respond_to :html
+  # Fixed
 
   def index
     @categories = Category.roots.enabled.order(:name).includes(:enabled_sub_categories)
-    respond_with(@categories)
-  end
-
-  def show
-    respond_with(@category)
   end
 
   def sub_categories

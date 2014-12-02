@@ -1,12 +1,15 @@
 class RequirementsController < ApplicationController
   #TODO: Use `only`
-  before_action :authenticate_user!, except: [:welcome, :show, :search, :filter]
-  before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled, :reject_donor]
+  # Fixed
+  before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :toggle_state, :fulfilled, :reject_donor]
+  before_action :check_if_owner, only: [:edit, :update, :toggle_state, :reject_donor]
+  prepend_before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled, :reject_donor]
   before_action :check_status_for_pending, only: :toggle_state
 
   def index
     @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
     #TODO: Please refactor. No need of @controller_action anywhere.
+    # Fixed
   end
 
   def search
@@ -36,13 +39,6 @@ class RequirementsController < ApplicationController
     @requirement.build_address
   end
 
-  def edit
-    unless current_user.id == @requirement.requestor_id
-      flash[:alert] = 'not authorised to use this page'
-      redirect_to @requirement
-    end
-  end
-
   def create
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
@@ -55,10 +51,8 @@ class RequirementsController < ApplicationController
 
   def update
     #TODO: Move authorization code out of action.
-    if current_user.id != @requirement.requestor_id
-      flash[:alert] = 'not authorised to use this page'
-      redirect_to @requirement
-    elsif @requirement.update(requirement_params)
+    # Fixed
+    if @requirement.update(requirement_params)
       redirect_to @requirement, notice: 'Requirement updated'
     else
       flash.now[:alert] = 'Updation of requirement failed'
@@ -67,8 +61,13 @@ class RequirementsController < ApplicationController
   end
 
   def destroy
-    flash[:alert] = "requirement could not be deleted" unless @requirement.destroy
+    if @requirement.destroy
+      flash[:notice] = "Requirement destroyed!"
+    else
+      flash[:alert] = "Requirement could not be deleted"
+    end
     #TODO: Show notice if requirement destroyed
+    # Fixed
     redirect_to requirements_path
   end
 
@@ -81,7 +80,7 @@ class RequirementsController < ApplicationController
   end
 
   def fulfilled
-    flash[:alert] = 'this request has no donors, you can disable or delete it.' unless @requirement.fulfill!
+    flash.now[:alert] = 'This request has no donors, you can probably delete it.' unless @requirement.fulfill!
   end
 
   def reject_donor
@@ -96,7 +95,7 @@ class RequirementsController < ApplicationController
     def load_requirement
       @requirement = Requirement.find_by(id: params[:id])
       unless @requirement
-        flash[:alert] = 'requirement not found'
+        flash[:alert] = 'Requirement not found'
         redirect_to(requirements_path)
       end
     end
@@ -111,8 +110,15 @@ class RequirementsController < ApplicationController
 
     def check_status_for_pending
       unless @requirement.pending?
-        flash.now[:alert] = 'this request has received some response, hence cant be disabled'
+        flash.now[:alert] = 'This request has received some response, hence cant be disabled'
         render 'toggle_state'
+      end
+    end
+
+    def check_if_owner
+      if current_user.id != @requirement.requestor_id
+        flash[:alert] = 'Not authorised to use this page'
+        redirect_to @requirement
       end
     end
 end

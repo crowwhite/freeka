@@ -15,6 +15,7 @@ class Requirement < ActiveRecord::Base
   accepts_nested_attributes_for :address
 
   validates :title, presence: true
+  validate :date_not_in_past
 
   before_destroy :prevent_if_not_pending
 
@@ -81,6 +82,10 @@ class Requirement < ActiveRecord::Base
   end
 
   private
+
+    def date_not_in_past
+      errors.add(:expiration_date, 'cannot be a past date') if expiration_date < Date.today
+    end
   # TODO: Is this working?
   # Fixed
     def prevent_if_not_pending
