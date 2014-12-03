@@ -9,7 +9,7 @@ class DonorRequirement < ActiveRecord::Base
   after_create :update_requirement_status_after_create
   # TODO: What is zero??
   # Fixed -- it is changed to 2 now.. status integer for rejected
-  after_create :make_current!, if: -> { DonorRequirement.where(requirement_id: requirement_id).where.not(status: Requirement::STATUS[:fulfilled]).one? }
+  after_create :make_current!, if: -> { DonorRequirement.where(requirement_id: requirement_id).where.not(status: Requirement.statuses[:fulfilled]).one? }
   before_destroy :prevent_if_fulfilled
   after_destroy :update_requirement_status_after_destroy, :update_donors
 

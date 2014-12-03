@@ -1,10 +1,7 @@
 class Requirement < ActiveRecord::Base
   include AASM
-  STATUS = { fulfilled: 2 }
 
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
-
-  
 
   belongs_to :address, foreign_key: :location_id
   belongs_to :person, foreign_key: :requestor_id
