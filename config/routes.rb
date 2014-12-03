@@ -16,21 +16,20 @@ Rails.application.routes.draw do
     member do
       put 'toggle_state'
       put 'toggle_interest'
-      put 'fulfilled'
+      put 'fulfill'
       put 'reject_donor', as: :reject_current_donor_of
     end
   end
 
   resources :donations, only: :index do
-    put 'donated', on: :member
+    put 'donate', on: :member
   end
 
   namespace :admin, path: 'admins', as: :admins do
     resources :categories, except: :show do
-      get 'new_sub_category', on: :collection
       put 'toggle_status', on: :member
     end
-    resources :sub_categories, only: :index
+    resources :sub_categories, only: [:index, :new]
     resources :users, except: :new do
       post 'search', on: :collection
       put 'toggle_status', on: :member

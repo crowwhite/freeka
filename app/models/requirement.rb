@@ -3,8 +3,6 @@ class Requirement < ActiveRecord::Base
 
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
-  
-
   belongs_to :address, foreign_key: :location_id
   belongs_to :person, foreign_key: :requestor_id
   has_many :category_requirements
@@ -39,8 +37,6 @@ class Requirement < ActiveRecord::Base
 
     event :fulfill do
       after do
-        # TODO: Module should never be dependent on including classes.
-        # Fixed
         update_donor_and_reject_interested_donors
       end
       before do
@@ -86,8 +82,7 @@ class Requirement < ActiveRecord::Base
     def date_not_in_past
       errors.add(:expiration_date, 'cannot be a past date') if expiration_date < Date.today
     end
-  # TODO: Is this working?
-  # Fixed
+  
     def prevent_if_not_pending
       if !pending?
         errors.add(:status, 'Cannot be destroyed or updated in -in process- or -fulfilled- state')

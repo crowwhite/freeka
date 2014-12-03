@@ -1,15 +1,13 @@
 class RequirementsController < ApplicationController
-  #TODO: Use `only`
+  # TODO: Wht prepend_before_action?
   # Fixed
-  before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :toggle_state, :fulfilled, :reject_donor]
-  before_action :check_if_owner, only: [:edit, :update, :toggle_state, :reject_donor]
-  prepend_before_action :load_requirement, only: [:edit, :update, :show, :toggle_state, :destroy, :toggle_interest, :donated, :fulfilled, :reject_donor]
-  before_action :check_status_for_pending, only: :toggle_state
+  before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :fulfill, :reject_donor]
+  before_action :load_requirement, only: [:edit, :update, :show, :destroy, :toggle_interest, :fulfill, :reject_donor]
+  before_action :check_if_owner, only: [:edit, :update, :reject_donor]
 
   def index
     @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
-    #TODO: Please refactor. No need of @controller_action anywhere.
-    # Fixed
+    # TODO: Please refactor. No need of @controller_action anywhere.
   end
 
   def search
@@ -50,8 +48,6 @@ class RequirementsController < ApplicationController
   end
 
   def update
-    #TODO: Move authorization code out of action.
-    # Fixed
     if @requirement.update(requirement_params)
       redirect_to @requirement, notice: 'Requirement updated'
     else
@@ -66,20 +62,15 @@ class RequirementsController < ApplicationController
     else
       flash[:alert] = "Requirement could not be deleted"
     end
-    #TODO: Show notice if requirement destroyed
-    # Fixed
     redirect_to requirements_path
   end
 
-  def toggle_state
-    if @requirement.update(enabled: requirement_params[:enabled])
-      flash.now[:notice] = "Updated state to #{ @requirement.enabled ? :Enabled : :Disabled }"
-    else
-      flash.now[:alert] = 'Updation of state failed'
-    end
-  end
+  # TODO: Remove unused actions
+  # Fixed
 
-  def fulfilled
+  # TODO: Rename
+  # Fixed
+  def fulfill
     flash.now[:alert] = 'This request has no donors, you can probably delete it.' unless @requirement.fulfill!
   end
 
@@ -106,13 +97,6 @@ class RequirementsController < ApplicationController
 
     def filter_params
       params.require(:requirement).require(:filter).permit(:criteria, :value)
-    end
-
-    def check_status_for_pending
-      unless @requirement.pending?
-        flash.now[:alert] = 'This request has received some response, hence cant be disabled'
-        render 'toggle_state'
-      end
     end
 
     def check_if_owner
