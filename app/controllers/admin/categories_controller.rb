@@ -1,6 +1,5 @@
 class Admin::CategoriesController < Admin::BaseController
   layout 'admin'
-  append_view_path 'app/views/admin/categories'
 
   before_action :set_category, only: [:show, :edit, :update, :toggle_status]
 
@@ -10,12 +9,6 @@ class Admin::CategoriesController < Admin::BaseController
 
   def new
     @category = Category.new
-  end
-
-  def new_sub_category
-    @category = Category.new
-    @is_sub_category = true
-    render :new
   end
 
   def edit
@@ -28,7 +21,7 @@ class Admin::CategoriesController < Admin::BaseController
     @category = Category.new(category_params)
     if @category.save
       flash[:notice] = 'Category saved successfully'
-      @category.is_sub_category ? redirect_to(admins_categories_path) : redirect_to(admins_sub_categories_path)
+      @category.is_sub_category ? redirect_to(admins_sub_categories_path) : redirect_to(admins_categories_path)
     else
       if @category.is_sub_category
         @is_sub_category = true

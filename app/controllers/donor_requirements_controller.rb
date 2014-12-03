@@ -1,4 +1,6 @@
 class DonorRequirementsController < ApplicationController
+  include Donation
+
   before_action :set_requirement
   before_action :authenticate_user!
 

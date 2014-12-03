@@ -1,13 +1,16 @@
 class DonationsController < ApplicationController
+  include Donation
+
   before_action :authenticate_user!
-  before_action :load_donation, only: [:donated]
+  before_action :load_donations, only: [:donate]
 
   def index
     @donations = current_user.donations.page params[:page]
   end
 
   # TODO: Rename
-  def donated
+  # Fixed
+  def donate
     @donation.donate
   end
 

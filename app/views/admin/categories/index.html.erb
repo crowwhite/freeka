@@ -4,7 +4,7 @@
 
 <% if controller_name == 'sub_categories' %>
   <div class='link pull-right'>
-    <%= link_to 'New Sub Category', new_sub_category_admins_categories_path, class: 'btn btn-primary', role: 'button' %>
+    <%= link_to 'New Sub Category', new_admins_sub_category_path, class: 'btn btn-primary', role: 'button' %>
   </div>
 <% else %>
   <div class='link pull-right'>
@@ -36,7 +36,7 @@
         <% if controller_name == 'sub_categories' %>
           <td><%= category.parent_category.name %></td>
         <% end %>
-        <%= render '/manage', locals: { category: category } %>
+        <%= render 'admin/categories/manage', locals: { category: category } %>
       </tr>
     <% end %>
   </tbody>

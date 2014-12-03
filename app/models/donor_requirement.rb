@@ -6,12 +6,12 @@ class DonorRequirement < ActiveRecord::Base
   belongs_to :user, foreign_key: :donor_id
   belongs_to :requirement
 
-  after_create :update_requirement_status
+  after_create :update_requirement_status_after_create
   # TODO: What is zero??
   # Fixed -- it is changed to 2 now.. status integer for rejected
-  after_create :make_current!, if: -> { DonorRequirement.where(requirement_id: requirement_id).where.not(status: 2).one? }
+  after_create :make_current!, if: -> { DonorRequirement.where(requirement_id: requirement_id).where.not(status: Requirement::STATUS[:fulfilled]).one? }
   before_destroy :prevent_if_fulfilled
-  after_destroy :update_requirement_status, :update_donors
+  after_destroy :update_requirement_status_after_destroy, :update_donors
 
   aasm column: :status, enum: true do
     state :interested, initial: true
@@ -42,13 +42,14 @@ class DonorRequirement < ActiveRecord::Base
     end
   end
 
-  def update_requirement_status
+  def update_requirement_status_after_create
     # TODO: Refactor.
-    if DonorRequirement.find_by(id: id)
-      requirement.process! if requirement.may_process?
-    else
-      requirement.unprocess! if DonorRequirement.where(requirement_id: requirement.id).count.zero?
-    end
+    # Fixed
+    requirement.process! if requirement.may_process?
+  end
+
+  def update_requirement_status_after_destroy
+    requirement.unprocess! unless DonorRequirement.exists?(requirement_id: requirement.id)
   end
 
   def update_donors

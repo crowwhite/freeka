@@ -1,5 +1,6 @@
 class Requirement < ActiveRecord::Base
   include AASM
+  STATUS = { fulfilled: 2 }
 
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
