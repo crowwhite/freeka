@@ -1,6 +1,5 @@
 class Admin::SubCategoriesController < Admin::BaseController
   layout 'admin'
-  #TODO: No need of this.....
 
   def index
     @categories = Category.children.order(:name).includes(:parent_category).page params[:page]

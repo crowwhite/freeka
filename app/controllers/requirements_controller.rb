@@ -1,13 +1,10 @@
 class RequirementsController < ApplicationController
-  # TODO: Wht prepend_before_action?
-  # Fixed
   before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :fulfill, :reject_donor]
   before_action :load_requirement, only: [:edit, :update, :show, :destroy, :toggle_interest, :fulfill, :reject_donor]
   before_action :check_if_owner, only: [:edit, :update, :reject_donor]
 
   def index
     @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
-    # TODO: Please refactor. No need of @controller_action anywhere.
   end
 
   def search
@@ -65,11 +62,6 @@ class RequirementsController < ApplicationController
     redirect_to requirements_path
   end
 
-  # TODO: Remove unused actions
-  # Fixed
-
-  # TODO: Rename
-  # Fixed
   def fulfill
     flash.now[:alert] = 'This request has no donors, you can probably delete it.' unless @requirement.fulfill!
   end

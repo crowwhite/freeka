@@ -8,8 +8,6 @@ class DonationsController < ApplicationController
     @donations = current_user.donations.page params[:page]
   end
 
-  # TODO: Rename
-  # Fixed
   def donate
     @donation.donate
   end
