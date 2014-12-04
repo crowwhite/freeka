@@ -28,5 +28,9 @@ class DonorRequirementsController < ApplicationController
   private
     def set_requirement
       @requirement = Requirement.find_by(id: params[:requirement_id])
+      unless @requirement
+        flash[:alert] = 'Requirement not found'
+        redirect_to(requirements_path)
+      end
     end
 end
