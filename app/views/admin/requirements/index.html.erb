@@ -22,7 +22,9 @@
           <%= requirement.address.street %><br>
           <%= requirement.address.city %><br>
           <% country = Carmen::Country.coded(requirement.address.country_code) %>
-          <%= country.subregions.coded(requirement.address.state_code).name.truncate(20) %><br>
+          <% if !country.subregions.empty? %>
+            <%= country.subregions.coded(requirement.address.state_code).name.truncate(10) %><br>
+          <% end %>
           <%= country.name %>
         </td>
         <td>
