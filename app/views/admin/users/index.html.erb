@@ -3,11 +3,14 @@
   <h3>Search by</h3>
   <%= form_tag('/admins/users/search', method: :post) do %>
     <select name="user[search][criteria]">
-      <option value='email'>email</option>
-      <option value='name'>name</option>
+      <option value='email' <%= 'selected' if(@search && @search[:criteria] == 'email') %> >email</option>
+      <option value='name' <%= 'selected' if(@search && @search[:criteria] == 'name') %> >name</option>
     </select>
-    <input name="user[search][text]" type="text">
+    <input name="user[search][text]" type="text" value=<%= @search[:text] if @search %> >
     <%= submit_tag 'Search' %>
+  <% end %>
+  <% if @search %>
+    <%= link_to 'All Users', admins_users_path %>
   <% end %>
 </div>
 <table class='table'>
@@ -18,6 +21,7 @@
   <th>contact number</th>
   <th>about me</th>
   <th>#Requests</th>
+  <th>#Donations</th>
   <th>enable/disable</th>
   <th colspan="2">Edit</th>
   <% @users.each do |user| %>
@@ -29,6 +33,7 @@
       <td><%= user.contact_no %></td>
       <td><%= user.about_me %></td>
       <td><%= user.requirements.size %></td>
+      <td><%= user.donations.size %></td>
       <%= content_tag :td, id: 'status' + user.id.to_s do %>
         <%= render 'status', locals: { user: user } %>
       <% end %>

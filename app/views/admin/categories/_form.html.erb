@@ -17,7 +17,7 @@
         <% if @is_sub_category %>
           <%= content_tag :div, class: 'field', id: 'sub_category_select' do %>
             <%= f.label :parent_id %>*<br>
-            <%= f.collection_select(:parent_id, Category.roots.all_except(@category.id), :id, :name, { prompt: 'Select Parent', include_blank: 'No Parent' }) %>
+            <%= f.collection_select(:parent_id, Category.roots.all_except(@category.id), :id, :name, { prompt: 'Select Parent' }) %>
           <% end %>
           <%= hidden_field_tag 'category[is_sub_category]', @is_sub_category %>
         <% end %>

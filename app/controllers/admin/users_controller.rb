@@ -30,8 +30,8 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def search
-    search = search_params
-    @users = User.public_send("with_#{ search[:criteria] }_like", search[:text])
+    @search = search_params
+    @users = User.public_send("with_#{ @search[:criteria] }_like", @search[:text]).order(@search[:criteria])
     flash.now[:alert] = 'No results found' if @users.empty?
     render :index
   end

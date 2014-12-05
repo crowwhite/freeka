@@ -2,6 +2,7 @@ class RequirementsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :fulfill, :reject_donor]
   before_action :load_requirement, only: [:edit, :update, :show, :destroy, :toggle_interest, :fulfill, :reject_donor]
   before_action :check_if_owner, only: [:edit, :update, :reject_donor, :destroy]
+  before_action :prevent_if_recieved_response, only: :edit
 
   def index
     @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
@@ -94,6 +95,13 @@ class RequirementsController < ApplicationController
     def check_if_owner
       if current_user.id != @requirement.requestor_id
         flash[:alert] = 'Not authorised to use this page'
+        redirect_to @requirement
+      end
+    end
+
+    def prevent_if_recieved_response
+      if !@requirement.pending?
+        flash[:alert] = 'Cannot be destroyed or updated in -in process- or -fulfilled- state'
         redirect_to @requirement
       end
     end

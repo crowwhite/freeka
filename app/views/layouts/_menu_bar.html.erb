@@ -26,7 +26,7 @@
         </li>
       <% end %>
     </ul>
-    <% if @controller_action && @controller_action.split('#')[0] == 'admins/requirements' %>
+    <% if current_admin %>
       <% action = '/admins/requirements/search' %>
     <% else %>
       <% action = '/requirements/search' %>

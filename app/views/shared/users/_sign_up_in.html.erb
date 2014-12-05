@@ -1,6 +1,6 @@
 <% if @person_logged_in = current_user || current_admin %>
   <li>
-    <%= link_to @person_logged_in.type + ': ' + @person_logged_in.name %>
+    <%= @person_logged_in.type + ': ' + @person_logged_in.name %>
   </li>
   <li>
     <%= link_to 'sign out', destroy_user_session_path, method: :delete %>

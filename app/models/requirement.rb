@@ -3,6 +3,7 @@ class Requirement < ActiveRecord::Base
 
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
+  # Association
   belongs_to :address, foreign_key: :location_id
   belongs_to :person, foreign_key: :requestor_id
   has_many :category_requirements
@@ -12,15 +13,19 @@ class Requirement < ActiveRecord::Base
 
   accepts_nested_attributes_for :address
 
+  # Validation
   validates :title, presence: true
   validate :date_not_in_past
 
+  # Callbacks
   before_destroy :prevent_if_not_pending
 
+  # Scopes
   scope :enabled, -> { where(enabled: true) }
   scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
   scope :with_status_not, ->(status) { where.not(status: status) }
   scope :with_status, ->(status) { where(status: status) }
+  scope :live, -> { where('expiration_date >= ?', Date.today)}
 
   aasm column: :status, enum: true, whiny_transitions: false do
     state :pending, initial: true

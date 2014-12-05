@@ -1,5 +1,8 @@
-<h1>Editing category</h1>
+<% if @is_sub_category %>
+  <h1>Editing sub-category</h1>
+<% else %>
+  <h1>Editing category</h1>
+<% end %>
 <%= render 'form' %>
 
-<%= link_to 'Show', admins_category_path(@category) %> |
 <%= link_to 'Back', :back %>
