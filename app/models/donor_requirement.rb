@@ -41,7 +41,9 @@ class DonorRequirement < ActiveRecord::Base
   end
 
   def update_requirement_status_after_create
+    debugger
     requirement.process! if requirement.may_process?
+    debugger
   end
 
   def update_requirement_status_after_destroy

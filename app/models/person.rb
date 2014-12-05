@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   validates :name, :contact_no, presence: true
   # TODO: Use regexp to validate password.
   # Fixed
-  validates :password, format: { with: /\S{6,15}/, message: 'No white spaces allowed' }, on: :create
+  validates :password, format: { with: /\S/, message: 'No white spaces allowed' }, on: :create
   validates :contact_no, numericality: true, allow_blank: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
 

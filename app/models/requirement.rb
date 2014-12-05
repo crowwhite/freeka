@@ -19,7 +19,6 @@ class Requirement < ActiveRecord::Base
 
   # Callbacks
   before_destroy :prevent_if_not_pending
-  before_update :prevent_if_not_pending
 
   # Scopes
   scope :enabled, -> { where(enabled: true) }
