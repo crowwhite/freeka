@@ -5,4 +5,8 @@
 <% end %>
 <%= render 'form' %>
 
-<%= link_to 'Back', :back %>
+<% if @is_sub_category %>
+  <%= link_to 'Back', admins_sub_categories_path %>
+<% else %>
+  <%= link_to 'Back', admins_categories_path %>
+<% end %>
