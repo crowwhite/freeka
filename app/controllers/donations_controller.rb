@@ -5,7 +5,7 @@ class DonationsController < ApplicationController
   before_action :load_donations, only: [:donate]
 
   def index
-    @donations = current_user.donations.page params[:page]
+    @donations = current_user.donations.order(created_at: :desc).page params[:page]
   end
 
   def donate

@@ -27,9 +27,8 @@
             <th>Show Interest</th>
           <% elsif @controller_action == 'requirements#index' %>
             <th>Status</th>
-            <th>Delete</th>
-            <th>Donors</th>
             <th>Action</th>
+            <th>Donors</th>
           <% end %>
           <th>Share</th>
         </thead>
@@ -63,13 +62,12 @@
                   <% if requirement.pending? %>
                     <%= link_to 'delete', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                   <% else %>
-                    <strong>--</strong>
+                    <%= content_tag :div, id: 'fulfill' + requirement.id.to_s do %>
+                      <%= render 'requirements/fulfill', locals: { requirement: requirement } %>
+                    <% end %>
                   <% end %>
                 <%= content_tag :td, id: 'donors' + requirement.id.to_s do %>
                   <%= render 'requirements/donors', locals: { requirement: requirement } %>
-                <% end %>
-                <%= content_tag :td, id: 'fulfill' + requirement.id.to_s do %>
-                  <%= render 'requirements/fulfill', locals: { requirement: requirement } %>
                 <% end %>
               <% end %>
               <td><%= link_to 'Facebook Share', 'https://facebook.com', target: :_blank, class: 'btn btn-info btn-xs', role: 'button' %></td>

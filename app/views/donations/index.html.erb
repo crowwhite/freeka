@@ -7,7 +7,7 @@
     <th>Expiration Date</th>
     <th>Address</th>
     <th>Show Interest</th>
-    <th></th>
+    <!-- <th></th> -->
   </thead>
   <tbody>
     <% @donations.each do |donation| %>
@@ -21,9 +21,9 @@
             <%= render 'requirements/interest', locals: { requirement: donation } %>
           <% end %>
         </td>
-        <%= content_tag :td, id: 'donate' + donation.id.to_s do %>
-            <%= render 'donations/donate', locals: { donation: donation } %>
-        <% end %>
+        <%#= content_tag :td, id: 'donate' + donation.id.to_s do %>
+            <%#= render 'donations/donate', locals: { donation: donation } %>
+        <%# end %>
       </tr>
     <% end %>
   </tbody>
