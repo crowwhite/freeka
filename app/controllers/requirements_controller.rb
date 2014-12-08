@@ -8,7 +8,11 @@ class RequirementsController < ApplicationController
   end
 
   def search
-    @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    if params[:requirement][:controller_action] == 'requirements#index'
+      @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    else
+      @requirements = Requirement.search(params[:requirement][:search], with: { expiration_date: Time.now..Time.now + 10.year }, without: { status: 2 }).page params[:page]
+    end
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     @controller_action = params[:requirement][:controller_action]
     render :index

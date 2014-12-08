@@ -12,7 +12,6 @@
 <h3>Status: </h3><%= @requirement.status %>
 <% if current_user && current_user.id == @requirement.requestor_id && @requirement.pending? %>
   <h3>Enabled/Disabled: </h3><%= 'Enabled' if @requirement.enabled %>
-  <%= render 'state', locals: { requirement: @requirement } %>
   <h3>Delete: </h3><%= link_to 'delete', @requirement, method: :delete, data: { confirm: 'Are you sure?' } %>
   <%= render 'shared/requirement/links' %>
 <% end %>

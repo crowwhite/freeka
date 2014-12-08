@@ -16,7 +16,7 @@ pickle-email-*.html
 /vendor/bundle
 
 /db/sphinx
-
+config/development.sphinx.conf
 secrets.yml
 
 # these should all be checked in to normalise the environment:

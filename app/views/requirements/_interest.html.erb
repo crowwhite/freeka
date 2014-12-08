@@ -8,6 +8,6 @@
   <% if current_user && current_user.id == locals[:requirement].requestor_id %>
     <strong> -- </strong>
   <% else %>
-    <%= link_to 'Show Interest', requirement_donor_requirements_path(locals[:requirement]), method: :post, remote: true, class: 'btn btn-primary btn-xs', role: 'button' %>
+    <%= link_to 'Show Interest', requirement_donor_requirements_path(locals[:requirement]), method: :post, remote: true, class: 'btn btn-primary btn-xs faliure_link', role: 'button' %>
   <% end %>
 <% end %>

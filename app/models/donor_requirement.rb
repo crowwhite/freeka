@@ -29,7 +29,6 @@ class DonorRequirement < ActiveRecord::Base
     end
 
     event :make_current do
-      transitions from: :rejected, to: :current
       transitions from: :interested, to: :current
     end
 
@@ -50,10 +49,11 @@ class DonorRequirement < ActiveRecord::Base
   def update_donors
     donors = requirement.donor_requirements
     unless donors.detect(&:current?) || donors.detect(&:donated?)
-      donors.sort_by(&:created_at).first.try(:make_current!)
-      donors.each do |donor|
-        donor.show_interest! if donor.may_show_interest?
-      end
+      donors.detect(&:interested?).make_current!
+      # donors.sort_by(&:created_at).first.try(:make_current!)
+      # donors.each do |donor|
+      #   donor.show_interest! if donor.may_show_interest?
+      # end
     end
   end
 
