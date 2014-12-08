@@ -12,6 +12,7 @@ gem 'aasm',                                   '4.0.1'
 gem 'thinking-sphinx',                        '~> 3.1.1'
 gem 'therubyracer',                           '0.12.1'
 gem 'uglifier',                               '2.5.3'
+gem 'paperclip',                              '~> 4.2'
 
 group :development do
   gem 'binding_of_caller',                    '~> 0.7.2'
