@@ -15,7 +15,7 @@
           <div id="current_donor">
             <strong>Email: </strong><%= donor.email %><br>
             <strong>Contact #: </strong><%= donor.contact_no %><br>
-            <%= link_to 'Reject', reject_current_donor_of_requirement_path(locals[:requirement]), method: :put, remote: true %>
+            <%= link_to 'Reject', reject_current_donor_of_requirement_path(locals[:requirement]), method: :put %>
           </div>
         <% end %>
       <% end %>

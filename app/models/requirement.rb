@@ -15,7 +15,7 @@ class Requirement < ActiveRecord::Base
 
   # Validation
   validates :title, presence: true
-  validate :date_not_in_past
+  validate :date_not_in_past, unless: :status_changed?
 
   # Callbacks
   before_destroy :prevent_if_not_pending
@@ -27,7 +27,7 @@ class Requirement < ActiveRecord::Base
   scope :with_status, ->(status) { where(status: status) }
   scope :live, -> { where('expiration_date >= ?', Date.today)}
 
-  aasm column: :status, enum: true, whiny_transitions: false do
+  aasm column: :status, enum: true do
     state :pending, initial: true
     state :in_process
     state :fulfilled
@@ -61,6 +61,9 @@ class Requirement < ActiveRecord::Base
 
   def reject_current_donor
     donor_requirements.find(&:current?).reject!
+  end
+
+  def update_donors
     if donor = donor_requirements.sort_by(&:created_at).find(&:interested?)
       donor.make_current!
     else

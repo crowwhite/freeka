@@ -65,7 +65,7 @@
                   <% else %>
                     <strong>--</strong>
                   <% end %>
-                <%= content_tag :td, id: 'donors' do %>
+                <%= content_tag :td, id: 'donors' + requirement.id.to_s do %>
                   <%= render 'requirements/donors', locals: { requirement: requirement } %>
                 <% end %>
                 <%= content_tag :td, id: 'fulfill' + requirement.id.to_s do %>

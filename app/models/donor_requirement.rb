@@ -20,7 +20,6 @@ class DonorRequirement < ActiveRecord::Base
     event :donate do
       after do
         requirement.update_donor_and_reject_interested_donors
-
       end
       transitions from: :current, to: :donated
     end
@@ -41,9 +40,7 @@ class DonorRequirement < ActiveRecord::Base
   end
 
   def update_requirement_status_after_create
-    debugger
     requirement.process! if requirement.may_process?
-    debugger
   end
 
   def update_requirement_status_after_destroy

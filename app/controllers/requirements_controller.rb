@@ -68,10 +68,12 @@ class RequirementsController < ApplicationController
 
   def reject_donor
     if @requirement.reject_current_donor
-      flash.now[:notice] = 'Donor Rejected'
+      flash[:notice] = 'Donor Rejected'
+      @requirement.update_donors
     else
-      flash.now[:alert] = "Donor couldn't be rejected"
+      flash[:alert] = "Donor couldn't be rejected"
     end
+    redirect_to requirements_path
   end
 
   private
