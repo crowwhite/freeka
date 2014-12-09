@@ -3,6 +3,8 @@ class Requirement < ActiveRecord::Base
 
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
+  LATEST_POSSIBLE_TIME = 10.year
+
   # Association
   belongs_to :address, foreign_key: :location_id
   belongs_to :person, foreign_key: :requestor_id
@@ -25,7 +27,7 @@ class Requirement < ActiveRecord::Base
   scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
   scope :with_status_not, ->(status) { where.not(status: status) }
   scope :with_status, ->(status) { where(status: status) }
-  scope :live, -> { where('expiration_date >= ?', Date.today)}
+  scope :live, -> { where('expiration_date >= ?', Date.today) }
 
   aasm column: :status, enum: true do
     state :pending, initial: true

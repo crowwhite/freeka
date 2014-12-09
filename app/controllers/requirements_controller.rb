@@ -1,7 +1,7 @@
 class RequirementsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :fulfill, :reject_donor]
-  before_action :load_requirement, only: [:edit, :update, :show, :destroy, :toggle_interest, :fulfill, :reject_donor]
-  before_action :check_if_owner, only: [:edit, :update, :reject_donor, :destroy]
+  before_action :load_requirement, only: [:edit, :update, :show, :destroy, :fulfill, :reject_donor]
+  before_action :check_if_owner, only: [:edit, :update, :reject_donor, :destroy, :fulfill]
 
   def index
     @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
@@ -11,7 +11,7 @@ class RequirementsController < ApplicationController
     if params[:requirement][:controller_action] == 'requirements#index'
       @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
     else
-      @requirements = Requirement.search(params[:requirement][:search], with: { expiration_date: Time.now..Time.now + 10.year, enabled: true }, without: { status: 2 }).page params[:page]
+      @requirements = Requirement.search(params[:requirement][:search], with: { expiration_date: Time.now..Time.now + Requirement::LATEST_POSSIBLE_TIME, enabled: true }, without: { status: Requirement.statuses[:fulfilled] }).page params[:page]
     end
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     @controller_action = params[:requirement][:controller_action]
@@ -25,12 +25,13 @@ class RequirementsController < ApplicationController
     elsif current_user
       @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
     end
+
     flash.now[:notice] = 'Nothing matched the filter' if @requirements && @requirements.empty?
+
     if !@requirements
       flash[:alert] = 'Please log in'
-      redirect_to root_path and return
-    end
-    if current_admin
+      redirect_to root_path
+    elsif current_admin
       render 'admin/requirements/index'
     else
       render :index
