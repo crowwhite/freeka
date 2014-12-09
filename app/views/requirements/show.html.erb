@@ -16,3 +16,4 @@
   <h3>Delete: </h3><%= link_to 'delete', @requirement, method: :delete, data: { confirm: 'Are you sure?' } %>
   <%= render 'shared/requirement/links' %>
 <% end %>
+<h3>File: </h3><%= link_to 'click here to download', @requirement.info_file.url %>

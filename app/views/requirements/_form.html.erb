@@ -67,6 +67,12 @@
               <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
             </div>
           </div>
+
+          <div class="field form-group">
+            <div class="col-lg-10">
+              <%= f.file_field :info_file, class: 'form-control' %>
+            </div>
+          </div>
         <% end %>
       </div>
 
