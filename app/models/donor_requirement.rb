@@ -49,7 +49,7 @@ class DonorRequirement < ActiveRecord::Base
   def update_donors
     donors = requirement.donor_requirements
     unless donors.detect(&:current?) || donors.detect(&:donated?)
-      donors.detect(&:interested?).make_current!
+      donors.detect(&:interested?).make_current! if donors.detect(&:interested?)
       # donors.sort_by(&:created_at).first.try(:make_current!)
       # donors.each do |donor|
       #   donor.show_interest! if donor.may_show_interest?

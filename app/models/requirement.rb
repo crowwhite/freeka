@@ -67,9 +67,9 @@ class Requirement < ActiveRecord::Base
 
   def update_donors
     if donor = donor_requirements.sort_by(&:created_at).find(&:interested?)
-      donor.make_current!
+      donor.make_current! if donor.may_make_current?
     else
-      unprocess!
+      unprocess! if may_unprocess?
     end
   end
 

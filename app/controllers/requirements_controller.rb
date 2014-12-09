@@ -9,9 +9,9 @@ class RequirementsController < ApplicationController
 
   def search
     if params[:requirement][:controller_action] == 'requirements#index'
-      @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+      @requirements = Requirement.search(params[:requirement][:search].gsub('@', '\\@')).page params[:page]
     else
-      @requirements = Requirement.search(params[:requirement][:search], with: { expiration_date: Time.now..Time.now + Requirement::LATEST_POSSIBLE_TIME, enabled: true }, without: { status: Requirement.statuses[:fulfilled] }).page params[:page]
+      @requirements = Requirement.search(params[:requirement][:search].gsub('@', '\\@'), with: { expiration_date: Time.now..Time.now + Requirement::LATEST_POSSIBLE_TIME, enabled: true }, without: { status: Requirement.statuses[:fulfilled] }).page params[:page]
     end
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     @controller_action = params[:requirement][:controller_action]

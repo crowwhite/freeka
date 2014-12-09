@@ -23,6 +23,7 @@
           <th>Expiration Date</th>
           <th>Address</th>
           <th>Categories</th>
+          <th>Sub-Categories</th>
           <% if @controller_action == 'welcome#index' %>
             <th>Show Interest</th>
           <% elsif @controller_action == 'requirements#index' %>
@@ -47,9 +48,7 @@
                 <% end %>
                 <%= country.name %>
               </td>
-              <td>
-                <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>
-              </td>
+              <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>
               <% if @controller_action == 'welcome#index' %>
                 <td>
                   <%= content_tag :span, id: 'interest' + requirement.id.to_s do %>

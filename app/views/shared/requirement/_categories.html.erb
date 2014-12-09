@@ -1,3 +1,13 @@
-<% locals[:requirement].categories.each do |category| %>
+<% parent_child = locals[:requirement].categories.partition { |category| category.is_parent? } %>
+<% parent = parent_child[0] %>
+<% child = parent_child[1] %>
+<td>
+<% parent.each do |category| %>
   <%= render 'shared/requirement/category_link', locals: { category: category } %><br>
 <% end %>
+</td>
+<td>
+  <% child.each do |category| %>
+    <%= render 'shared/requirement/category_link', locals: { category: category } %><br>
+  <% end %>
+</td>

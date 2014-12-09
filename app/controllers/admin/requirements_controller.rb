@@ -14,7 +14,7 @@ class Admin::RequirementsController < Admin::BaseController
   end
 
   def search
-    @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    @requirements = Requirement.search(params[:requirement][:search].gsub('@', '\\@')).page params[:page]
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     render :index
   end
