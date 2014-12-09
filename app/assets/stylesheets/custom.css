@@ -6,6 +6,10 @@ div.custom {
   display: inline-block;
 }
 
+ul.donor {
+  padding-left: 15px;
+}
+
 ul.navbar-nav > li {
   padding: 10px;
 }

@@ -25,7 +25,11 @@ class RequirementsController < ApplicationController
     elsif current_user
       @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
     end
-    flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
+    flash.now[:notice] = 'Nothing matched the filter' if @requirements && @requirements.empty?
+    if !@requirements
+      flash[:alert] = 'Please log in'
+      redirect_to root_path and return
+    end
     if current_admin
       render 'admin/requirements/index'
     else
