@@ -26,6 +26,9 @@ group :test do
   gem 'rspec-activemodel-mocks',              '1.0.1'
 end
 
+group :production do
+  gem 'unicorn-rails'
+end
   
 group :development, :test do
   gem 'capistrano',                           '~> 3.1.0'
