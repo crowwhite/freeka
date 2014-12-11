@@ -4,7 +4,8 @@ class Requirement < ActiveRecord::Base
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
   # Association
-  has_attached_file :info_file
+  belongs_to :image, class_name: :Attachment
+  has_many :attachments
   belongs_to :address, foreign_key: :location_id
   belongs_to :person, foreign_key: :requestor_id
   has_many :category_requirements
@@ -13,9 +14,10 @@ class Requirement < ActiveRecord::Base
   has_many :interested_donors, through: :donor_requirements, source: :user
 
   accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :image
 
   # Validation
-  validates_attachment_content_type :info_file, content_type: 'application/pdf'
   validates :title, presence: true
   validate :date_not_in_past, unless: :status_changed?
 

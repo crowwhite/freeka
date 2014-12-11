@@ -70,7 +70,9 @@
                   <%= render 'requirements/donors', locals: { requirement: requirement } %>
                 <% end %>
               <% end %>
-              <td><%= link_to 'Facebook Share', 'https://facebook.com', target: :_blank, class: 'btn btn-info btn-xs', role: 'button' %></td>
+              <td>
+                <div class="fb-share-button" data-href="https://google.com" data-layout="button_count"></div>
+              </td>
             </tr>
           <% end %>
         </tbody>

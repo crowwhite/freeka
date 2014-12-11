@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141209073746) do
+ActiveRecord::Schema.define(version: 20141210085201) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 20141209073746) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "attachments", force: true do |t|
+    t.integer  "requirement_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "desc_file_file_name"
+    t.string   "desc_file_content_type"
+    t.integer  "desc_file_file_size"
+    t.datetime "desc_file_updated_at"
+  end
+
+  add_index "attachments", ["requirement_id"], name: "index_attachments_on_requirement_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -90,15 +102,12 @@ ActiveRecord::Schema.define(version: 20141209073746) do
     t.date     "expiration_date"
     t.integer  "location_id"
     t.integer  "requestor_id"
-    t.integer  "status",                 default: 0,    null: false
-    t.boolean  "enabled",                default: true, null: false
+    t.integer  "status",          default: 0,    null: false
+    t.boolean  "enabled",         default: true, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "delta",                  default: true, null: false
-    t.string   "info_file_file_name"
-    t.string   "info_file_content_type"
-    t.integer  "info_file_file_size"
-    t.datetime "info_file_updated_at"
+    t.boolean  "delta",           default: true, null: false
+    t.integer  "image_id"
   end
 
 end

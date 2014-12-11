@@ -16,4 +16,12 @@
   <h3>Delete: </h3><%= link_to 'delete', @requirement, method: :delete, data: { confirm: 'Are you sure?' } %>
   <%= render 'shared/requirement/links' %>
 <% end %>
-<h3>File: </h3><%= link_to 'click here to download', @requirement.info_file.url %>
+<h3>Files: </h3>
+<% @requirement.attachments.each do |attachment| %>
+  <%= attachment.desc_file_file_name %>: <%= link_to 'Download', attachment.url, target: '_blank' %><br>
+<% end %>
+<% if @requirement.image %>
+  <%= image_tag @requirement.image.url %>
+<% else %>
+  <strong>No image</strong>
+<% end %>

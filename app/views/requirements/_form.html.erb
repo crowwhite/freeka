@@ -1,7 +1,7 @@
 <%= javascript_include_tag 'sub_region_select' %>
 <%= javascript_include_tag 'sub_category_select' %>
 <div class="well bs-component">
-  <%= form_for(@requirement, html: { class: 'form-horizontal' }) do |f| %>
+  <%= form_for(@requirement, html: { class: 'form-horizontal', multipart: true }) do |f| %>
   <fieldset>
     <legend>Requirement</legend>
     <%= render 'shared/errors', locals: { object: @requirement } %>
@@ -68,10 +68,20 @@
             </div>
           </div>
 
-          <div class="field form-group">
-            <div class="col-lg-10">
-              <%= f.file_field :info_file, class: 'form-control' %>
-            </div>
+        <% end %>
+      </div>
+      <div class="field">
+        <%= f.fields_for :attachments, (f.object.attachments if f.object.attachments.exists?) || f.object.attachments.build do |a| %>
+          <div class="col-lg-10">
+            <%= a.file_field :desc_file, multiple: true, name: 'requirement[attachments_attributes][][desc_file]', class: 'form-control' %>
+          </div>
+        <% end %>
+      </div>
+      <div class="field">
+        <%= f.fields_for :image, f.object.image || f.object.build_image do |a| %>
+          <div class="col-lg-10">
+            <%= a.label :Image, for: :desc_file, class: 'col-lg-2 control-label' %>
+            <%= a.file_field :desc_file, class: 'form-control' %>
           </div>
         <% end %>
       </div>
