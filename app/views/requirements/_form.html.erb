@@ -73,15 +73,15 @@
       <div class="field">
         <%= f.fields_for :attachments, (f.object.attachments if f.object.attachments.exists?) || f.object.attachments.build do |a| %>
           <div class="col-lg-10">
-            <%= a.file_field :desc_file, multiple: true, name: 'requirement[attachments_attributes][][desc_file]', class: 'form-control' %>
+            <%= a.file_field :description, multiple: true, name: 'requirement[attachments_attributes][][description]', class: 'form-control' %>
           </div>
         <% end %>
       </div>
       <div class="field">
         <%= f.fields_for :image, f.object.image || f.object.build_image do |a| %>
           <div class="col-lg-10">
-            <%= a.label :Image, for: :desc_file, class: 'col-lg-2 control-label' %>
-            <%= a.file_field :desc_file, class: 'form-control' %>
+            <%= a.label :Image, for: :description, class: 'col-lg-2 control-label' %>
+            <%= a.file_field :description, class: 'form-control' %>
           </div>
         <% end %>
       </div>

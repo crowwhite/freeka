@@ -18,7 +18,7 @@
 <% end %>
 <h3>Files: </h3>
 <% @requirement.attachments.each do |attachment| %>
-  <%= attachment.desc_file_file_name %>: <%= link_to 'Download', attachment.url, target: '_blank' %><br>
+  <%= attachment.description_file_name %>: <%= link_to 'Download', attachment.url, target: '_blank' %><br>
 <% end %>
 <% if @requirement.image %>
   <%= image_tag @requirement.image.url %>

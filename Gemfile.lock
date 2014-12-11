@@ -133,6 +133,7 @@ GEM
     responders (1.1.1)
       railties (>= 3.2, < 4.2)
     riddle (1.5.11)
+    rmagick (2.13.3)
     rspec-activemodel-mocks (1.0.1)
       activemodel (>= 3.0)
       activesupport (>= 3.0)
@@ -211,6 +212,7 @@ DEPENDENCIES
   paperclip (~> 4.2)
   quiet_assets (= 1.0.3)
   rails (= 4.1.7)
+  rmagick (= 2.13.3)
   rspec-activemodel-mocks (= 1.0.1)
   rspec-rails (= 3.1.0)
   shoulda-matchers

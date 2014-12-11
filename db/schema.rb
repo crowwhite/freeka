@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(version: 20141210085201) do
     t.integer  "requirement_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "desc_file_file_name"
-    t.string   "desc_file_content_type"
-    t.integer  "desc_file_file_size"
-    t.datetime "desc_file_updated_at"
+    t.string   "description_file_name"
+    t.string   "description_content_type"
+    t.integer  "description_file_size"
+    t.datetime "description_updated_at"
   end
 
   add_index "attachments", ["requirement_id"], name: "index_attachments_on_requirement_id", using: :btree

@@ -1,11 +1,11 @@
 class AddAttachmentInfoFileToAttachments < ActiveRecord::Migration
   def self.up
     change_table :attachments do |t|
-      t.attachment :desc_file
+      t.attachment :description
     end
   end
 
   def self.down
-    remove_attachment :attachments, :desc_file
+    remove_attachment :attachments, :description
   end
 end
