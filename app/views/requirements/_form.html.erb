@@ -1,5 +1,6 @@
 <%= javascript_include_tag 'sub_region_select' %>
 <%= javascript_include_tag 'sub_category_select' %>
+<%= javascript_include_tag 'multifile-master/jQuery.MultiFile.min.js' %>
 <div class="well bs-component">
   <%= form_for(@requirement, html: { class: 'form-horizontal', multipart: true }) do |f| %>
   <fieldset>
@@ -73,7 +74,11 @@
       <div class="field">
         <%= f.fields_for :files, (f.object.files if f.object.files.exists?) || f.object.files.build do |a| %>
           <div class="col-lg-10">
-            <%= a.file_field :attachment, multiple: true, name: 'requirement[files_attributes][][attachment]', class: 'form-control' %>
+            <% if action_name == 'new' %>
+              <%= a.file_field :attachment, multiple: true, name: 'requirement[files_attributes][][attachment]', class: 'form-control multi' %>
+            <% else %>
+              <%= link_to a.object.attachment.original_filename, '#' %>
+            <% end %>
           </div>
         <% end %>
       </div>
