@@ -17,8 +17,8 @@
   <%= render 'shared/requirement/links' %>
 <% end %>
 <h3>Files: </h3>
-<% @requirement.attachments.each do |attachment| %>
-  <%= attachment.description_file_name %>: <%= link_to 'Download', attachment.url, target: '_blank' %><br>
+<% @requirement.files.each do |attachment| %>
+  <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url, target: '_blank' %><br>
 <% end %>
 <% if @requirement.image %>
   <%= image_tag @requirement.image.url %>

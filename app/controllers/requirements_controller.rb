@@ -37,6 +37,7 @@ class RequirementsController < ApplicationController
   def create
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
+      @requirement.attach_display_image(params[:requirement][:image])
       redirect_to requirements_path, notice: 'Requirement created'
     else
       flash.now[:alert] = 'Some errors prevented the creation of requirement'
@@ -86,7 +87,7 @@ class RequirementsController < ApplicationController
     end
 
     def requirement_params
-      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :description], attachments_attributes: [:id, :description], address_attributes: [:id, :street, :city, :country_code, :state_code])
+      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :attachment], files_attributes: [:id, :attachment], address_attributes: [:id, :street, :city, :country_code, :state_code])
     end
 
     def filter_params
