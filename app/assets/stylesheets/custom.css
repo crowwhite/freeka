@@ -1,3 +1,15 @@
+#donor-list {
+  width: 100px;
+  height: 75px;
+  overflow: auto;
+}
+.border-black {
+  border: 1px solid #aaa;
+}
+.large-font {
+  font-size: 20px;
+}
+
 li.rejected {
   color: red;
 }
@@ -57,8 +69,8 @@ img {
 .highlight-round {
   width: 15px;
   margin: 0;
-  background-color: #3399f3;
-  color: black;
+  background-color: black;
+  color: white;
   border-radius: 2px;
   text-align: center;
 
@@ -137,22 +149,14 @@ input[type='submit'] {
 #main_menu {
     display: inline-block;
     list-style-type: none;
-    border-color: #6d6d6d;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
     margin: 0;
     padding: 0;
   }
   #main_menu > li{
     display: inline-block;
     margin-left: -2px;
-    background-color: #CFCFCF;
+    background-color: #D3D3D3;
     position: relative;
-    border-top: solid;
-    border-left: solid;
-    border-right: solid;
-    border-color: #CFCFCF;
-    border-width: 1px;
   }
   #main_menu > li > a {
     padding: 6px 20px;
@@ -164,11 +168,8 @@ input[type='submit'] {
   #main_menu > li > ul {
     list-style-type: none;
     width: 178px;
-    border-color: #6d6d6d;
     padding: 10px;
-    border-width: 1px;
     display: none;
-    border-style: solid;
     background-color: white;
     position: absolute;
     top: 35px;
@@ -178,9 +179,6 @@ input[type='submit'] {
     border-top-style: none;
   }
   #main_menu > li > ul > li {
-    border-top-style: solid;
-    border-width: 1px;
-    border-color: #cfcfcf;
   }
   #main_menu > li > ul > li > a {
     font: italic 14px Georgia;
@@ -202,9 +200,7 @@ input[type='submit'] {
     color: #8c8c8c;
     background-color: white;
     padding-bottom: 10px;
-    border-bottom: 1px solid white;
   }
   #main_menu > li:hover {
     background-color: white;
-    border-color: black;
   }

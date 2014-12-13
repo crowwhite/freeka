@@ -1,28 +1,27 @@
 class DonorRequirementsController < ApplicationController
-  include Donation
 
-  before_action :set_requirement
+  before_action :set_requirement, only: [:create, :destroy]
+  before_action :dont_allow_owner, only: :create
   before_action :authenticate_user!
 
   def create
     @donor_requirement = DonorRequirement.new(requirement_id: params[:requirement_id], donor_id: current_user.id)
     if @donor_requirement.save
-      flash.now[:notice] = 'Interested'
+      flash[:notice] = 'Thank you for showing interest in the request'
     else
-      flash.now[:alert] = "Couldn't show interest"
+      flash[:alert] = "Couldn't show interest"
     end
-    load_donations
-    render 'requirements/toggle_interest'
+    redirect_to @requirement
   end
 
   def destroy
     @donor_requirement = DonorRequirement.find_by(requirement_id: params[:requirement_id], donor_id: current_user.id)
     if @donor_requirement.destroy
-      flash.now[:notice] = 'successfully toggled interest'
+      flash[:notice] = 'successfully withdrawn interest'
     else
-      flash.now[:alert] = 'could not remove interest'
+      flash[:alert] = 'could not remove interest'
     end
-    render 'requirements/toggle_interest'
+    redirect_to @requirement
   end
 
   private
@@ -32,5 +31,9 @@ class DonorRequirementsController < ApplicationController
         flash[:alert] = 'Requirement not found'
         redirect_to(requirements_path)
       end
+    end
+
+    def dont_allow_owner
+      redirect_to(@requirement, alert: 'Cannot show interest on your own request') if @requirement.requestor_id == current_user.id
     end
 end
