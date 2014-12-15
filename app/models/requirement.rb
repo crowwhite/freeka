@@ -92,7 +92,9 @@ class Requirement < ActiveRecord::Base
 
   def attach_display_image(image_file)
     image = create_image(attachment: image_file)
-    image.update_column(:attacheable_type, :Image)
+    if image.id
+      image.update_column(:attacheable_type, :Image)
+    end
   end
 
   private
