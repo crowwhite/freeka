@@ -10,6 +10,7 @@ gem 'carmen-rails',                           '~> 1.0.0'
 gem 'kaminari',                               '0.16.1'
 gem 'aasm',                                   '4.0.1'
 gem 'thinking-sphinx',                        '~> 3.1.1'
+gem 'therubyracer',                           '0.12.1'
 gem 'uglifier',                               '2.5.3'
 gem 'paperclip',                              '~> 4.2'
 
