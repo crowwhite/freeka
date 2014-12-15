@@ -12,6 +12,7 @@ class Requirement < ActiveRecord::Base
   has_many :categories, through: :category_requirements
   has_many :donor_requirements
   has_many :interested_donors, through: :donor_requirements, source: :user
+  has_many :comments, dependent: :destroy
 
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :files, allow_destroy: true

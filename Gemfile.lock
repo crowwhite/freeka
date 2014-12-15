@@ -91,6 +91,7 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    libv8 (3.16.14.7)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     middleware (0.1.0)
@@ -128,6 +129,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
+    ref (1.0.5)
     responders (1.1.1)
       railties (>= 3.2, < 4.2)
     riddle (1.5.11)
@@ -167,6 +169,9 @@ GEM
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thinking-sphinx (3.1.2)
       activerecord (>= 3.1.0)
       builder (>= 2.1.2)
@@ -209,5 +214,6 @@ DEPENDENCIES
   rspec-activemodel-mocks (= 1.0.1)
   rspec-rails (= 3.1.0)
   shoulda-matchers
+  therubyracer (= 0.12.1)
   thinking-sphinx (~> 3.1.1)
   uglifier (= 2.5.3)

@@ -3,6 +3,32 @@
   height: 75px;
   overflow: auto;
 }
+
+.highlight-grey-border {
+  background-color: #DEDEDC;
+}
+
+#comments {
+  list-style-type: none;
+}
+
+.scroll-auto {
+  overflow: auto;
+}
+
+.height-800 {
+  height: 800px;
+  overflow: hidden;
+}
+
+.height-630 {
+  height: 630px;
+}
+
+.height-725 {
+  height: 725px;
+}
+
 .border-black {
   border: 1px solid #aaa;
 }
