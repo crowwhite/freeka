@@ -19,10 +19,10 @@
 <% end %>
 <h3>Files: </h3>
 <% @requirement.files.each do |attachment| %>
-  <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url, target: '_blank' %><br>
+  <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
 <% end %>
 <% if @requirement.image %>
-  <%= image_tag @requirement.image.url %>
+  <%= image_tag @requirement.image.url(:medium) %>
 <% else %>
   <strong>No image</strong>
 <% end %>

@@ -7,25 +7,6 @@
     </button>
     <%= link_to 'Freeka', root_path, class: 'navbar-brand' %>
   </div>
-  <div class="navbar-collapse collapse navbar-responsive-collapse">
-    <ul class="nav navbar-nav">
-      <% categories = Category.roots.enabled.includes(:enabled_sub_categories) %>
-      <% categories.each do |category| %>
-        <li class="dropdown">
-          <div class="custom">
-            <%= render 'shared/requirement/category_link', locals: { category: category } %>
-          </div>
-          <!-- <div class="dropdown-toggle" data-toggle="dropdown"> -->
-            <b class="caret" class="dropdown-toggle" data-toggle="dropdown"></b>
-          <!-- </div> -->
-          <ul class="dropdown-menu">
-            <% category.enabled_sub_categories.each do |sub_category| %>
-              <li><%= render 'shared/requirement/category_link', locals: { category: sub_category } %></li>
-            <% end %>
-          </ul>
-        </li>
-      <% end %>
-    </ul>
     <% if current_admin %>
       <% action = '/admins/requirements/search' %>
     <% else %>
@@ -35,10 +16,31 @@
     <%= form_tag(action, method: :post, class: "navbar-form navbar-left") do %>
       <input type="text" name="requirement[search]" class="form-control col-lg-8" placeholder="Search">
       <%= hidden_field_tag 'requirement[controller_action]', @controller_action %>
-      <%= submit_tag 'Search' %>
     <% end %>
     <ul class="nav navbar-nav navbar-right">
       <%= render 'shared/users/sign_up_in' %>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class='center'>
+    <ul id='main_menu'>
+
+      <% categories = Category.roots.enabled.includes(:enabled_sub_categories) %>
+    <% categories.each do |category| %>
+      <li>
+        <!-- <div class="custom"> -->
+          <%= render 'shared/requirement/category_link', locals: { category: category } %>
+        <!-- </div> -->
+        <% if !category.enabled_sub_categories.empty? %>
+          <ul>
+            <% category.enabled_sub_categories.each do |sub_category| %>
+              <li><%= render 'shared/requirement/category_link', locals: { category: sub_category } %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
     </ul>
   </div>
 </div>

@@ -1,83 +1,50 @@
+<br>
 <%= render 'shared/requirement/my_links' %>
 <div class="bs-docs-section">
   <div class='row'>
     <div class='row'>
-      <div class='col-lg-12 pull-left'>
-        <h1>Requirements</h1>
-      </div>
-      <div class="col-lg-12 pull-right">
-        <%= link_to 'New Requirement', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
+      <% if controller_name == 'requirements' && action_name == 'index' %>
+        <h1 class="pull-left">My Requests: </h1>
+      <% end %>
+      <div class="pull-right">
+        <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
       </div>
     </div>
+    <br>
     <% @controller_action ||= [controller_name, action_name].join('#') %>
     <% if @controller_action == 'requirements#index' %>
       <%= render 'shared/requirement/status_select' %>
     <% end %>
   </div>
   <div class="row">
-    <div class='col-lg-12'>
-      <table class="table table-hover table-responsive">
-        <thead>
-          <th>Title</th>
-          <th>Details</th>
-          <th>Expiration Date</th>
-          <th>Address</th>
-          <th>Categories</th>
-          <% if @controller_action == 'welcome#index' %>
-            <th>Show Interest</th>
-          <% elsif @controller_action == 'requirements#index' %>
-            <th>Status</th>
-            <th>Action</th>
-            <th>Donors</th>
-          <% end %>
-          <th>Share</th>
-        </thead>
-        <tbody>
-          <% @requirements.each do |requirement| %>
-            <tr>
-              <td><%= link_to requirement.title, requirement %></td>
-              <td><%= requirement.details.truncate(20) %></td>
-              <td><%= requirement.expiration_date %></td>
-              <td>
-                <%= requirement.address.street %><br>
-                <%= requirement.address.city %><br>
-                <% country = Carmen::Country.coded(requirement.address.country_code) %>
-                <% if !country.subregions.empty? %>
-                  <%= country.subregions.coded(requirement.address.state_code).name.truncate(10) %><br>
-                <% end %>
-                <%= country.name %>
-              </td>
-              <td>
-                <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>
-              </td>
-              <% if @controller_action == 'welcome#index' %>
-                <td>
-                  <%= content_tag :span, id: 'interest' + requirement.id.to_s do %>
-                    <%= render 'requirements/interest', locals: { requirement: requirement } %>
-                  <% end %>
-                </td>
-              <% elsif @controller_action == 'requirements#index' %>
-                <td><%= requirement.status %></td>
-                <td>
-                  <% if requirement.pending? %>
-                    <%= link_to 'delete', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                  <% else %>
-                    <%= content_tag :div, id: 'fulfill' + requirement.id.to_s do %>
-                      <%= render 'requirements/fulfill', locals: { requirement: requirement } %>
-                    <% end %>
-                  <% end %>
-                <%= content_tag :td, id: 'donors' + requirement.id.to_s do %>
-                  <%= render 'requirements/donors', locals: { requirement: requirement } %>
-                <% end %>
-              <% end %>
-              <td>
-                <!-- CHECKLIST: I will write js file for this. This is temporary -->
-                <input type="button" value="Facebook Share" onClick='share()'>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <div class='col-md-12'>
+      <div class="container">
+        <div class="row">
+        <% @requirements.each do |requirement| %>
+          <div class="col-md-4">
+            <div class="equal-height">
+              <div class='top-black'>
+                <span title='Interested Donors' class='pull-left highlight-round'>
+                  <strong><%= requirement.donor_requirements.size %></strong>
+                </span>
+                <span title='Files attached' class="pull-right highlight-round">
+                  <strong><%= requirement.files.size %></strong>
+                </span>
+              </div>
+              <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg' %>
+              <div class="bottom-black">
+                <div class="title">
+                  <strong><%= link_to requirement.title, requirement %></strong>
+                </div>
+                <div class="description">
+                  <%= requirement.details.truncate(100) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

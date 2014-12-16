@@ -4,7 +4,7 @@ class RequirementsController < ApplicationController
   before_action :check_if_owner, only: [:edit, :update, :reject_donor, :destroy]
 
   def index
-    @requirements = current_user.requirements.order(created_at: :desc).page params[:page]
+    @requirements = current_user.requirements.includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
   end
 
   def search

@@ -2,7 +2,9 @@ class Attachment < ActiveRecord::Base
 
   # Association
   belongs_to :attacheable, polymorphic: true
-  has_attached_file :attachment, default_url: 'http://beyondplm.com/wp-content/uploads/2011/07/Picture-351.png'
+  has_attached_file :attachment, styles: lambda { |attachment|
+                    attachment.instance.is_image ? {:thumb => "300x300>", :medium => "500x500>"} : {} },
+                    default_url: 'http://beyondplm.com/wp-content/uploads/2011/07/Picture-351.png'
 
   # Callback
   after_validation :clean_error_duplication
@@ -12,14 +14,14 @@ class Attachment < ActiveRecord::Base
   validates_attachment_content_type :attachment, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf", "text/html", "application/doc"], message: "is not valid"
   # validate :image_dimensions, if: :is_image
 
-  def url
-    attachment.url
+  def url(size)
+    attachment.url(size)
   end
 
-  private
     def is_image
       ["image/jpg", "image/jpeg", "image/png", "image/gif"].include?(attachment.content_type)
     end
+  private
 
     def image_dimensions
       dimensions = Paperclip::Geometry.from_file(self.attachment.queued_for_write[:original].path)

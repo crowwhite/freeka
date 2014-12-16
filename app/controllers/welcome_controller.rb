@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
   before_action :check_if_admin, only: :index
 
   def index
-    @requirements = Requirement.enabled.live.with_status_not(Requirement.statuses[:fulfilled]).includes(:address, :donor_requirements, :categories, :interested_donors).order(:expiration_date).page params[:page]
+    @requirements = Requirement.enabled.live.with_status_not(Requirement.statuses[:fulfilled]).includes(:donor_requirements, :files).order(:expiration_date).page params[:page]
     load_donations
     render 'requirements/index'
   end
