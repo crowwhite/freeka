@@ -1,7 +1,4 @@
 <%= render 'shared/requirement/my_links' %>
-<script>
-
-</script>
 <div class="bs-docs-section">
   <div class='row'>
     <div class='row'>
@@ -74,8 +71,7 @@
                 <% end %>
               <% end %>
               <td>
-                <!-- CHECKLIST: I will write js file for this. This is temporary -->
-                <input type="button" value="Facebook Share" onClick='share()'>
+                <div class="fb-share-button" data-href=<%= requirement_url(requirement) %> data-layout="button_count"></div>
               </td>
             </tr>
           <% end %>

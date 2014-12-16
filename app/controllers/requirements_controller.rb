@@ -37,7 +37,7 @@ class RequirementsController < ApplicationController
   def create
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
-      @requirement.attach_display_image(params[:requirement][:image]) if params[:requirement][:image]
+      @requirement.attach_display_image(params[:requirement][:image])
       redirect_to requirements_path, notice: 'Requirement created'
     else
       flash.now[:alert] = 'Some errors prevented the creation of requirement'
@@ -47,7 +47,6 @@ class RequirementsController < ApplicationController
 
   def update
     if @requirement.update(requirement_params)
-      @requirement.attach_display_image(params[:requirement][:image]) if params[:requirement][:image]
       redirect_to @requirement, notice: 'Requirement updated'
     else
       flash.now[:alert] = 'Updation of requirement failed'

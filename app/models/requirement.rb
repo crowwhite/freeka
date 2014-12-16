@@ -14,8 +14,8 @@ class Requirement < ActiveRecord::Base
   has_many :interested_donors, through: :donor_requirements, source: :user
 
   accepts_nested_attributes_for :address
-  accepts_nested_attributes_for :files, allow_destroy: true
-  accepts_nested_attributes_for :image, allow_destroy: true
+  accepts_nested_attributes_for :files
+  accepts_nested_attributes_for :image
 
   # Validation
   validates :title, presence: true

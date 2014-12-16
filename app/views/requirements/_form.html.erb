@@ -1,97 +1,87 @@
 <%= javascript_include_tag 'sub_region_select' %>
 <%= javascript_include_tag 'sub_category_select' %>
-<%= javascript_include_tag 'multifile-master/jQuery.MultiFile.min.js' %>
-<div class="well bs-component col-md-6">
+<div class="well bs-component">
   <%= form_for(@requirement, html: { class: 'form-horizontal', multipart: true }) do |f| %>
   <fieldset>
     <legend>Requirement</legend>
     <%= render 'shared/errors', locals: { object: @requirement } %>
-      <div class="field row form-group">
-        <%= f.label :Category, for: :category_ids, class: 'col-md-2 control-label' %>*
-        <div class="col-md-10">
+      <div class="field form-group">
+        <%= f.label :Category, for: :category_ids, class: 'col-lg-2 control-label' %>*
+        <div class="col-lg-10">
           <%= f.collection_select(:category_ids, Category.roots.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]', class: 'form-control'}) %>
         </div>
       </div>
-      <div class="field row form-group">
-        <%= f.label :sub_category, class: 'col-md-2 control-label' %>
-        <div class="col-md-10">
+      <div class="field form-group">
+        <%= f.label :sub_category, class: 'col-lg-2 control-label' %>
+        <div class="col-lg-10">
           <%= render 'categories/sub_categories', locals: { parent_id: f.object.category_ids.first, child_id: f.object.category_ids.last } %>
         </div>
       </div>
 
-      <div class="field row form-group">
-        <%= f.label :title, class: 'col-md-2 control-label' %>*
-        <div class="col-md-10">
+      <div class="field form-group">
+        <%= f.label :title, class: 'col-lg-2 control-label' %>*
+        <div class="col-lg-10">
           <%= f.text_field :title, class: 'form-control' %>
         </div>
       </div>
-      <div class="field row form-group">
-        <%= f.label :details, class: 'col-md-2 control-label' %>*
-        <div class="col-md-10">
+      <div class="field form-group">
+        <%= f.label :details, class: 'col-lg-2 control-label' %>*
+        <div class="col-lg-10">
           <%= f.text_area :details, class: 'form-control' %>
         </div>
       </div>
-      <div class="field row form-group">
-        <%= f.label :Require_Before, for: :expiration_date, class: 'col-md-2 control-label' %>*
-        <div class="col-md-10">
+      <div class="field form-group">
+        <%= f.label :Require_Before, for: :expiration_date, class: 'col-lg-2 control-label' %>*
+        <div class="col-lg-10">
           <%= f.date_select :expiration_date, class: 'form-control' %>
         </div>
       </div>
 
-      <div class="field row">
+      <div class="field">
         <%= f.fields_for :address do |a| %>
 
-          <div class="field row form-group">
-            <%= a.label :street, class: 'col-md-2 control-label' %>
-            <div class="col-md-10">
+          <div class="field form-group">
+            <%= a.label :street, class: 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
               <%= a.text_field :street, class: 'form-control' %>
             </div>
           </div>
 
-          <div class="field row form-group">
-            <%= a.label :city, class: 'col-md-2 control-label' %>*
-            <div class="col-md-10">
+          <div class="field form-group">
+            <%= a.label :city, class: 'col-lg-2 control-label' %>*
+            <div class="col-lg-10">
               <%= a.text_field :city, class: 'form-control' %>
             </div>  
           </div>
 
-          <div class="field row form-group">
-            <%= a.label :country, for: :country_code, class: 'col-md-2 control-label' %>*
-            <div class="col-md-10">
+          <div class="field form-group">
+            <%= a.label :country, for: :country_code, class: 'col-lg-2 control-label' %>*
+            <div class="col-lg-10">
               <%= a.country_select :country_code, priority: %w(US CA), prompt: 'Please select a country', id: 'country_select', class: 'form-control' %>
             </div>
           </div>
 
-          <div class="field row form-group">
-            <%= f.label :state, for: :state_code, class: 'col-md-2 control-label' %>*
-            <div id="subregion_select" class="col-md-10">
+          <div class="field form-group">
+            <%= f.label :state, for: :state_code, class: 'col-lg-2 control-label' %>*
+            <div id="subregion_select" class="col-lg-10">
               <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
             </div>
           </div>
 
         <% end %>
       </div>
-      <div class="field row form-group">
+      <div class="field">
         <%= f.fields_for :files, (f.object.files if f.object.files.exists?) || f.object.files.build do |a| %>
-          <div class="col-md-10">
-            <% if action_name == 'new' %>
-              <%= a.label :File, for: :file_attachment, class: 'col-md-2 control-label' %>
-              <div class="col-md-10">
-                <%= a.file_field :file_attachment, multiple: true, name: 'requirement[files_attributes][][attachment]', class: 'form-control multi' %>
-              </div>
-            <% else %>
-              <%= link_to a.object.attachment.original_filename, '#' %>
-            <% end %>
+          <div class="col-lg-10">
+            <%= a.file_field :attachment, multiple: true, name: 'requirement[files_attributes][][attachment]', class: 'form-control' %>
           </div>
         <% end %>
       </div>
-      <div class="field row form-group">
+      <div class="field">
         <%= f.fields_for :image, f.object.image || f.object.build_image do |a| %>
-          <div class="col-md-10">
-            <%= a.label :Image, for: :attachment, class: 'col-md-2 control-label' %>
-            <div class="col-md-10">
-              <%= file_field_tag :attachment, name: 'requirement[image]', class: 'form-control' %>
-            </div>
+          <div class="col-lg-10">
+            <%= a.label :Image, for: :attachment, class: 'col-lg-2 control-label' %>
+            <%= file_field_tag :attachment, name: 'requirement[image]', class: 'form-control' %>
           </div>
         <% end %>
       </div>
