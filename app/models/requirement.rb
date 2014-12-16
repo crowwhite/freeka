@@ -30,6 +30,7 @@ class Requirement < ActiveRecord::Base
   scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
   scope :with_status_not, ->(status) { where.not(status: status) }
   scope :with_status, ->(status) { where(status: status) }
+  scope :pending, -> { with_status(Requirement.statuses[:pending])}
   scope :live, -> { where('expiration_date >= ?', Date.today)}
 
   aasm column: :status, enum: true do

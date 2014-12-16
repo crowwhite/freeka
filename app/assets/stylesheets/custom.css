@@ -93,7 +93,7 @@ img {
 }
 
 .highlight-round {
-  width: 15px;
+  width: 20px;
   margin: 0;
   background-color: black;
   color: white;
@@ -118,7 +118,6 @@ table.parent > tbody > tr {
   list-style-type: none;
 }
 #status_filter > li {
-  padding: 10px;
   display: inline-block;
 }
 .circle { 

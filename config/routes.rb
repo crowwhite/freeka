@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'addresses/sub_region'
 
   resources :requirements do
+    post '/', on: :collection, to: 'requirements#index'
     post 'search', on: :collection
     get 'filter', on: :collection
     resources :donor_requirements, only: :create

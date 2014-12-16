@@ -1,18 +1,20 @@
 <div class="bs-docs-section">
   <div class='row'>
     <div class='row'>
-      <% if controller_name == 'requirements' && action_name == 'index' %>
-        <h1 class="pull-left">My Requests: </h1>
-      <% end %>
+      <%# if controller_name == 'requirements' && action_name == 'index' %>
+        <!-- <h1 class="pull-left">My Requests: </h1> -->
+      <%# end %>
+      <%# if @controller_action == 'requirements#index' %>
+      <div class='pull-left'>
+        <%= render 'shared/requirement/status_select' %>
+      </div>
+      <%# end %>
       <div class="pull-right">
         <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
       </div>
     </div>
     <br>
     <% @controller_action ||= [controller_name, action_name].join('#') %>
-    <% if @controller_action == 'requirements#index' %>
-      <%= render 'shared/requirement/status_select' %>
-    <% end %>
   </div>
   <div class="row">
     <div class='col-md-12'>
