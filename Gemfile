@@ -14,6 +14,8 @@ gem 'therubyracer',                           '0.12.1'
 gem 'uglifier',                               '2.5.3'
 gem 'paperclip',                              '~> 4.2'
 gem 'rmagick',                                '2.13.3'
+gem "jquery-fileupload-rails"
+gem 'sass-rails'
 
 group :development do
   gem 'binding_of_caller',                    '~> 0.7.2'
