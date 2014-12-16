@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126060310) do
+ActiveRecord::Schema.define(version: 20141210062309) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -23,15 +23,30 @@ ActiveRecord::Schema.define(version: 20141126060310) do
     t.datetime "updated_at"
   end
 
+  create_table "attachments", force: true do |t|
+    t.integer  "requirement_id"
+    t.integer  "attacheable_id"
+    t.string   "attacheable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  add_index "attachments", ["requirement_id"], name: "index_attachments_on_requirement_id", using: :btree
+
   create_table "categories", force: true do |t|
     t.string   "name"
     t.integer  "parent_id"
-    t.boolean  "enabled",    default: true, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "enabled",    default: true, null: false
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
   create_table "category_requirements", force: true do |t|
     t.integer  "category_id"
@@ -67,12 +82,12 @@ ActiveRecord::Schema.define(version: 20141126060310) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type",                   default: "User"
     t.string   "name",                   default: ""
     t.text     "about_me"
-    t.string   "contact_no"
     t.text     "address"
-    t.string   "type",                   default: "User"
     t.boolean  "enabled",                default: true,   null: false
+    t.string   "contact_no"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"

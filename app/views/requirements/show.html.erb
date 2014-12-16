@@ -1,3 +1,4 @@
+<%= render 'shared/fb_scripts' %>
 <h2>Showing <%= @requirement.title %></h2>
 <% if current_user && current_user.id == @requirement.requestor_id && @requirement.pending? %>
   <h4><%= link_to 'Edit', edit_requirement_path(@requirement) %></h4>
@@ -15,4 +16,13 @@
   <%= render 'state', locals: { requirement: @requirement } %>
   <h3>Delete: </h3><%= link_to 'delete', @requirement, method: :delete, data: { confirm: 'Are you sure?' } %>
   <%= render 'shared/requirement/links' %>
+<% end %>
+<h3>Files: </h3>
+<% @requirement.files.each do |attachment| %>
+  <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url, target: '_blank' %><br>
+<% end %>
+<% if @requirement.image %>
+  <%= image_tag @requirement.image.url %>
+<% else %>
+  <strong>No image</strong>
 <% end %>

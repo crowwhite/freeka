@@ -70,7 +70,10 @@
                   <%= render 'requirements/donors', locals: { requirement: requirement } %>
                 <% end %>
               <% end %>
-              <td><%= link_to 'Facebook Share', 'https://facebook.com', target: :_blank, class: 'btn btn-info btn-xs', role: 'button' %></td>
+              <td>
+                <!-- CHECKLIST: I will write js file for this. This is temporary -->
+                <input type="button" value="Facebook Share" onClick='share()'>
+              </td>
             </tr>
           <% end %>
         </tbody>

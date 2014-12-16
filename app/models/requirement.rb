@@ -4,6 +4,8 @@ class Requirement < ActiveRecord::Base
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
   # Association
+  has_one :image, -> { rewhere(attacheable_type: :Image) }, as: :attacheable, class_name: :Attachment, dependent: :destroy
+  has_many :files, as: :attacheable, class_name: :Attachment, dependent: :destroy
   belongs_to :address, foreign_key: :location_id
   belongs_to :person, foreign_key: :requestor_id
   has_many :category_requirements
@@ -12,6 +14,8 @@ class Requirement < ActiveRecord::Base
   has_many :interested_donors, through: :donor_requirements, source: :user
 
   accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :files, allow_destroy: true
+  accepts_nested_attributes_for :image, allow_destroy: true
 
   # Validation
   validates :title, presence: true
@@ -83,6 +87,11 @@ class Requirement < ActiveRecord::Base
         donor_requirement.donate!
       end
     end
+  end
+
+  def attach_display_image(image_file)
+    image = create_image(attachment: image_file)
+    image.update_column(:attacheable_type, :Image)
   end
 
   private
