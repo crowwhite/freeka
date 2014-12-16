@@ -1,3 +1,4 @@
+<%= render 'shared/fb_scripts' %>
 <h2>Showing <%= @requirement.title %></h2>
 <% if current_user && current_user.id == @requirement.requestor_id && @requirement.pending? %>
   <h4><%= link_to 'Edit', edit_requirement_path(@requirement) %></h4>

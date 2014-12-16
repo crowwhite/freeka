@@ -1,18 +1,23 @@
-function RemoveFile(classOfLink) {
+function Link(classOfLink) {
   this.$links = $('.' + classOfLink)
 };
 
-RemoveFile.prototype.bindEvents = function() {
+Link.prototype.bindEvents = function() {
+  var _this = this;
   this.$links.on('click', function(event) {
     event.preventDefault();
-    link = $(this)
-    hiddenField = link.nextAll(".hidden_field").first();
-    hiddenField.val(hiddenField.val() == 'false' ? 'true' : 'false');
-    link.html(link.html() == 'X' ? 'Undo Remove' : 'X')
-    console.log(hiddenField.val());
-  });
+    _this.markForRemoval(this);
+  })
+};
+
+Link.prototype.markForRemoval = function(link) {
+  var link = $(link);
+  var hiddenField = link.nextAll(".hidden_field").first();
+  var linkTextElements = link.find('.remove-text');
+  linkTextElements.toggleClass('hiddenn').toggleClass('selected');
+  hiddenField.val(linkTextElements.filter('.selected').attr('data-remove'));
 };
 
 $(function() {
-  (new RemoveFile('remove').bindEvents());
+  (new Link('remove').bindEvents());
 });

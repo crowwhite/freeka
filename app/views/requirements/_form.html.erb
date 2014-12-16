@@ -1,6 +1,6 @@
 <%= javascript_include_tag 'sub_region_select' %>
 <%= javascript_include_tag 'sub_category_select' %>
-<% if action_name == 'edit' || action_name == 'update' %>
+<% unless @requirement.new_record? %>
   <%= javascript_include_tag 'remove_file' %>
 <% end %>
 <%= javascript_include_tag 'multifile-master/jQuery.MultiFile.min.js' %>
@@ -80,9 +80,14 @@
           <div class="col-md-10">
             <%= a.label :File, for: :file_attachment, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <% if action_name == 'edit' || action_name == 'update' %>
+              <% unless @requirement.new_record? %>
                 <% if a.object.id %>
-                  <text><%= a.object.attachment.original_filename %></text> <%= link_to 'X', '#', class: 'remove' %><br>
+                  <text><%= a.object.attachment.original_filename %></text>
+                  <a href="#" class='remove'>
+                    <span class='selected remove-text' data-remove='false'>X</span>
+                    <span class='hiddenn remove-text' data-remove='true'>Undo Remove</span>
+                  </a>
+                  <br>
                   <%= a.hidden_field :_destroy, class: 'hidden_field' %>
                 <% else %>
                   <text>No attached Files</text>
@@ -95,7 +100,7 @@
         <% end %>
       </div>
       <div class='row form-group'>
-        <% if action_name == 'edit' || action_name == 'update' %>
+        <% unless @requirement.new_record? %>
           <%= f.fields_for :files, f.object.files.build do |b| %>
             <div class='col-md-2'>
               <%= b.label 'Add files', for: :more_attachments %>
@@ -122,4 +127,10 @@
       </div>
     </fieldset>
   <% end %>
+  <div class='row'>
+    <div class="col-md-6 shared links">
+      <%= link_to 'Cancel', requirements_path %>|
+      <%= link_to 'Back', :back %>
+    </div>
+  </div>
 </div>

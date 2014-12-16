@@ -8,33 +8,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <script src="http://connect.facebook.net/en_US/all.js"></script>
-  <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '378646365645407',
-      xfbml      : true,
-      version    : 'v2.2'
-    });
-  };
-  </script>
-  <script >
-    function share () {
-      FB.ui(
-  {
-    method: 'share',
-    href: 'https://www.freek.herokuapp.com',
-  },
-  function(response) {
-    if (response && !response.error_code) {
-      alert('Posting completed.');
-    } else {
-      alert('Error while posting.');
-    }
-  }
-  );
-  }
-  </script>
+
   <%= render 'layouts/menu_bar' %>
   <div id="flash">
     <%= render 'shared/flash' %>
