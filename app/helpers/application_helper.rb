@@ -1,7 +1,9 @@
 module ApplicationHelper
 
-  def owner
-    @requirement.requestor_id == current_user.id
+  def owner(requirement)
+    if current_user
+      requirement.requestor_id == current_user.id
+    end
   end
 
   def add_class_active_if_filter(filter, value)

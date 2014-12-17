@@ -4,10 +4,11 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @requirement.comments.build(comment_params.merge(user_id: current_user.id))
-    redirect_to @requirement, alert: 'Could not add comment' unless @comment.save
-  end
-
-  def destroy
+    if @comment.save
+      flash.now[:notice] = 'Comment added successfully'
+    else
+      redirect_to @requirement, alert: 'Could not add comment'
+    end
   end
 
   private

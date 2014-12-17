@@ -1,11 +1,11 @@
 class DonorRequirementsController < ApplicationController
 
   before_action :set_requirement, only: [:create, :destroy]
-  before_action :dont_allow_owner, only: :create
+  before_action :restrict_owner, only: :create
   before_action :authenticate_user!
 
   def create
-    @donor_requirement = DonorRequirement.new(requirement_id: params[:requirement_id], donor_id: current_user.id)
+    @donor_requirement = @requirement.donor_requirements.build(donor_id: current_user.id)
     if @donor_requirement.save
       flash[:notice] = 'Thank you for showing interest in the request'
     else
@@ -15,7 +15,7 @@ class DonorRequirementsController < ApplicationController
   end
 
   def destroy
-    @donor_requirement = DonorRequirement.find_by(requirement_id: params[:requirement_id], donor_id: current_user.id)
+    @donor_requirement = @requirement.donor_requirements.find_by(donor_id: current_user.id)
     if @donor_requirement.destroy
       flash[:notice] = 'successfully withdrawn interest'
     else
@@ -33,7 +33,7 @@ class DonorRequirementsController < ApplicationController
       end
     end
 
-    def dont_allow_owner
+    def restrict_owner
       redirect_to(@requirement, alert: 'Cannot show interest on your own request') if @requirement.requestor_id == current_user.id
     end
 end
