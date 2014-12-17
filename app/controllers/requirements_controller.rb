@@ -4,7 +4,7 @@ class RequirementsController < ApplicationController
   before_action :check_if_owner, only: [:edit, :update, :reject_donor, :destroy]
 
   def index
-    @requirements = current_user.requirements.includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+    @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
   end
 
   def search
@@ -14,20 +14,20 @@ class RequirementsController < ApplicationController
     render :index
   end
 
-  def filter
-    @controller_action = params[:requirement][:controller_action]
-    if @controller_action.split('#')[0] == 'welcome'
-      @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).page params[:page]
-    elsif current_user
-      @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
-    end
-    flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
-    if current_admin
-      render 'admin/requirements/index'
-    else
-      render :index
-    end
-  end
+  # def filter
+  #   @controller_action = params[:requirement][:controller_action]
+  #   if @controller_action.split('#')[0] == 'welcome'
+  #     @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).page params[:page]
+  #   elsif current_user
+  #     @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
+  #   end
+  #   flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
+  #   if current_admin
+  #     render 'admin/requirements/index'
+  #   else
+  #     render :index
+  #   end
+  # end
 
   def new
     @requirement = current_user.requirements.build
@@ -38,7 +38,7 @@ class RequirementsController < ApplicationController
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
       @requirement.attach_display_image(params[:requirement][:image]) if params[:requirement][:image]
-      redirect_to requirements_path, notice: 'Requirement created'
+      redirect_to @requirements, notice: 'Requirement created'
     else
       flash.now[:alert] = 'Some errors prevented the creation of requirement'
       render :new

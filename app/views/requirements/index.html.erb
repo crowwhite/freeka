@@ -1,18 +1,41 @@
+<% @requirements ||= @donations %>
 <div class="bs-docs-section">
-  <div class='row'>
-    <div class='row'>
-      <% if controller_name == 'requirements' && action_name == 'index' %>
-        <h1 class="pull-left">My Requests: </h1>
-      <% end %>
-      <div class="pull-right">
-        <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
+  <div class='container'>
+    <div class='container'>
+      <div class='row'>
+        <% if controller_name == 'welcome' %>
+          <div class='row'>
+            <div class='col-md-9'>
+              <%= render 'layouts/category_menu' %>
+            </div>
+            <div class='col-md-3'>
+              <%= render 'layouts/search_bar' %>
+            </div>
+          </div>
+        <% end %>
+        <div class='row'>
+          <div class='col-md-6'>
+            <% unless controller_name == 'welcome' %>
+              <%= render 'requirements/user_pages_select' %>
+            <% end %>
+          </div>
+          <div class='col-md-4'>
+          </div>
+          <div class="col-md-2">
+            <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
+          </div>
+        </div>
+        <% unless controller_name == 'welcome' || controller_name == 'users' || controller_name == 'donations' %>
+          <div class='row'>
+            <div class='col-md-4'>
+              <%= render 'shared/requirement/status_select' %>
+            </div>
+          </div>
+        <% end %>
+        <br>
+        <% @controller_action ||= [controller_name, action_name].join('#') %>
       </div>
     </div>
-    <br>
-    <% @controller_action ||= [controller_name, action_name].join('#') %>
-    <% if @controller_action == 'requirements#index' %>
-      <%= render 'shared/requirement/status_select' %>
-    <% end %>
   </div>
   <div class="row">
     <div class='col-md-12'>
@@ -23,13 +46,22 @@
             <div class="equal-height">
               <div class='top-black'>
                 <span title='Interested Donors' class='pull-left highlight-round'>
-                  <strong><%= requirement.donor_requirements.size %></strong>
+                  <strong>
+                    <% if requirement.donor_requirements.size > 0 %>
+                      <%= requirement.donor_requirements.size %>
+                    <% end %>
+                  </strong>
                 </span>
-                <span title='Files attached' class="pull-right highlight-round">
-                  <strong><%= requirement.files.size %></strong>
+                <span title='No of files attached' class="pull-right highlight-round">
+                  <strong>
+                    <% if requirement.files.size > 0 %>
+                      <%= requirement.files.size %>
+                    <% end %>
+                  </strong>
                 </span>
               </div>
-              <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg' %>
+              <%= image_tag (requirement.image && requirement.image.url(:thumb)) %>
+               <!-- || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg' %> -->
               <div class="bottom-black">
                 <div class="title">
                   <strong><%= link_to requirement.title, requirement %></strong>

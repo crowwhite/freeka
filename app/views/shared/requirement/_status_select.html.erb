@@ -1,11 +1,9 @@
-<ul id="status_filter">
+<ul id="status_filter" class='active-buttons'>
   <% if current_admin %>
-    <li><%= link_to 'Pending', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 0 }, controller_action: @controller_action }) %></li>|
-    <li><%= link_to 'In Process', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 1 }, controller_action: @controller_action }) %></li>|
-    <li><%= link_to 'Fulfilled', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 2 }, controller_action: @controller_action }) %></li>
+    <li><%= link_to 'Pending', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 0 }, controller_action: @controller_action }), class: 'btn btn-primary active', role: 'button' %></li>
+    <li><%= link_to 'Fulfilled', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 2 }, controller_action: @controller_action }), class: 'btn btn-primary', role: 'button' %></li>
   <% else %>
-    <li><%= link_to 'Pending', filter_requirements_path(requirement: { filter: { criteria: :status, value: 0 }, controller_action: @controller_action }) %></li>|
-    <li><%= link_to 'In Process', filter_requirements_path(requirement: { filter: { criteria: :status, value: 1 }, controller_action: @controller_action }) %></li>|
-    <li><%= link_to 'Fulfilled', filter_requirements_path(requirement: { filter: { criteria: :status, value: 2 }, controller_action: @controller_action }) %></li>
+    <li><%= link_to 'Pending', requirements_path({ filter: 'pending' }), class: 'btn btn-primary ' + add_class_active(params[:filter], 'pending'), role: 'button' %></li>
+    <li><%= link_to 'Fulfilled', requirements_path({ filter: 'fulfilled' }), class: 'btn btn-primary ' + add_class_active(params[:filter], 'fulfilled'), role: 'button' %></li>
   <% end %>
 </ul>
