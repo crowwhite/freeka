@@ -61,7 +61,7 @@ class RequirementsController < ApplicationController
     else
       flash[:alert] = "Requirement could not be deleted"
     end
-    redirect_to requirements_path
+    redirect_to requirements_path(filter: 'pending')
   end
 
   def fulfill
@@ -75,7 +75,7 @@ class RequirementsController < ApplicationController
     else
       flash[:alert] = "Donor couldn't be rejected"
     end
-    redirect_to requirements_path
+    redirect_to requirements_path(filter: 'pending')
   end
 
   private
@@ -83,7 +83,7 @@ class RequirementsController < ApplicationController
       @requirement = Requirement.find_by(id: params[:id])
       unless @requirement
         flash[:alert] = 'Requirement not found'
-        redirect_to(requirements_path)
+        redirect_to(requirements_path(filter: 'pending'))
       end
     end
 

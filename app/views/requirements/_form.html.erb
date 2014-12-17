@@ -116,7 +116,8 @@
           <div class="col-md-10">
             <%= a.label :Image, for: :attachment, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <%= file_field_tag :attachment, name: 'requirement[image]', class: 'form-control' %>
+              <%= file_field_tag :attachment, name: 'requirement[image]', class: 'multi form-control' %>
+              (Size of the image should be atleast 300*300)
             </div>
           </div>
         <% end %>
@@ -129,7 +130,7 @@
   <% end %>
   <div class='row'>
     <div class="col-md-6 shared links">
-      <%= link_to 'Cancel', requirements_path %>|
+      <%= link_to 'Cancel', requirements_path(filter: 'pending') %>|
       <%= link_to 'Back', :back %>
     </div>
   </div>

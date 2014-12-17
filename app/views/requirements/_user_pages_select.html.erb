@@ -6,6 +6,6 @@
     <%= link_to 'My Donations', donations_path, class: 'btn btn-primary ' + add_class_active(controller_name, 'donations') %>
   </li>
   <li>
-    <%= link_to 'My Profile', requirements_path(filter: 'pending'), class: 'btn btn-primary ' + add_class_active(controller_name, 'users') %>
+    <%= link_to 'My Profile', edit_user_registration_path, class: 'btn btn-primary ' + add_class_active(controller_name, 'registrations') %>
   </li>
 </ul>

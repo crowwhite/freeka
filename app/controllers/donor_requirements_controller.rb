@@ -29,7 +29,7 @@ class DonorRequirementsController < ApplicationController
       @requirement = Requirement.find_by(id: params[:requirement_id])
       unless @requirement
         flash[:alert] = 'Requirement not found'
-        redirect_to(requirements_path)
+        redirect_to(requirements_path(filter: 'pending'))
       end
     end
 
