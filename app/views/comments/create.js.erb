@@ -1,2 +1,3 @@
 $('#add-comment').before("<%= escape_javascript render 'comment' %>")
 $('.text-area').val('')
+$('#flash').html("<%= escape_javascript render 'shared/flash' %>")
