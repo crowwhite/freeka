@@ -36,3 +36,8 @@ group :development, :test do
   gem 'capistrano-rails',                     '~> 1.1.1'
   gem 'byebug',                               '3.4.0'
 end
+
+group :production do
+  gem 'rails_12factor', '0.0.3'
+  gem 'pg', '0.17.1'
+end
