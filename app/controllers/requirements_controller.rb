@@ -88,7 +88,8 @@ class RequirementsController < ApplicationController
     end
 
     def requirement_params
-      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image: [:id, :attachment], files_attributes: [:id, :attachment], address_attributes: [:id, :street, :city, :country_code, :state_code])
+      params[:requirement][:files_attributes] = params[:requirement][:files_attributes].values.flatten if params[:requirement] && params[:requirement][:files_attributes].try(:is_a?, Hash)
+      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :attachment], files_attributes: [:id, :attachment, :_destroy], address_attributes: [:id, :street, :city, :country_code, :state_code])
     end
 
     def filter_params

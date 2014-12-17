@@ -11,7 +11,7 @@ class Attachment < ActiveRecord::Base
 
   # Validation
   validates_attachment_size :attachment, less_than: 10.megabyte
-  validates_attachment_content_type :attachment, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf", "text/html", "application/doc"], message: "is not valid"
+  validates_attachment_content_type :attachment, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf", "text/html", "application/doc"], message: "is not valid"
   validate :image_dimensions, if: :is_image
 
   def url(size)
