@@ -1,0 +1,11 @@
+<%= form_for([@requirement, @requirement.comments.build], remote: true) do |f| %>
+
+  <div class='field'>
+    <%= f.text_area :content, class: 'text-area' %>
+  </div>
+
+  <div>
+    <%= f.submit :Comment %>
+  </div>
+
+<% end %>

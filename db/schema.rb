@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210062309) do
+ActiveRecord::Schema.define(version: 20141215072732) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -57,6 +57,17 @@ ActiveRecord::Schema.define(version: 20141210062309) do
 
   add_index "category_requirements", ["category_id"], name: "index_category_requirements_on_category_id", using: :btree
   add_index "category_requirements", ["requirement_id"], name: "index_category_requirements_on_requirement_id", using: :btree
+
+  create_table "comments", force: true do |t|
+    t.text     "content"
+    t.integer  "requirement_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["requirement_id"], name: "index_comments_on_requirement_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "donor_requirements", force: true do |t|
     t.integer  "donor_id",                   null: false

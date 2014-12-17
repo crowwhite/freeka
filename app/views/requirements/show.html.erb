@@ -1,27 +1,70 @@
-<h2>Showing <%= @requirement.title %></h2>
-<% if current_user && current_user.id == @requirement.requestor_id && @requirement.pending? %>
-  <h4><%= link_to 'Edit', edit_requirement_path(@requirement) %></h4>
-<% end %>
+<br>
+<br>
+<div class="row">
+  <div class="row">
+    <div class="col-md-6 border-black height-800">
+      <h2><%= @requirement.title %>
+        <% if owner(@requirement) %>
+          <%= link_to 'Edit', edit_requirement_path(@requirement), class: 'btn btn-primary btn-xs' %>
+        <% end %>
+      </h2>
+      <div class="scroll-auto height-725">
+        <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg', class: 'pull-left' %>
+        <p><%= @requirement.details %></p>
+        <h4>Attached Files: </h4>
+        <% @requirement.files.each do |attachment| %>
+          <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
+        <% end %>
+        <br>
+        <div>
+          <strong>Share this request: </strong>
+          <div class="fb-share-button" data-href=<%= requirement_url(@requirement) %> data-layout="button_count"></div>
+        </div>
+        <br>
+        <div class='col-md-12'>
+          <div class='pull-left'>
+            <strong>Interested Donors: </strong>
+            <span class='large-font'><%= @requirement.donor_requirements.size %></span>
+          </div>
+          <div class='pull-right'>
+            <% if current_user && @requirement.interested_donors.include?(current_user) %>
+              <%= link_to 'Withdraw Interest', requirement_uninterest_path(@requirement), method: :delete, class: 'btn btn-primary' %>
+            <% else %>
+              <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+        <% if @requirement.interested_donors.size > 0 %>
+          <ul id='donor-list'>
+            <% @requirement.interested_donors.each do |donor| %>
+              <li><%= donor.name %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-6">
 
-<h3>Title: </h3><%= @requirement.title %>
-<h3>Details: </h3><%= @requirement.details %>
-<h3>Expiration Date: </h3><%= @requirement.expiration_date %>
-<!-- TODO: please fix -->
-<!-- Fixed -->
-<h3>Location: </h3><%= Carmen::Country.coded(@requirement.address.country_code).name %>
-<h3>Status: </h3><%= @requirement.status %>
-<% if current_user && current_user.id == @requirement.requestor_id && @requirement.pending? %>
-  <h3>Enabled/Disabled: </h3><%= 'Enabled' if @requirement.enabled %>
-  <%= render 'state', locals: { requirement: @requirement } %>
-  <h3>Delete: </h3><%= link_to 'delete', @requirement, method: :delete, data: { confirm: 'Are you sure?' } %>
-  <%= render 'shared/requirement/links' %>
-<% end %>
-<h3>Files: </h3>
-<% @requirement.files.each do |attachment| %>
-  <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
-<% end %>
-<% if @requirement.image %>
-  <%= image_tag @requirement.image.url(:medium) %>
-<% else %>
-  <strong>No image</strong>
-<% end %>
+      <div class="well height-800">
+        <h2>Comments</h2>
+        <div class="scroll-auto height-630">
+          <ul id="comments">
+            <%= render @requirement.comments.includes(:user) %>
+            <li id="add-comment">
+              <%= render 'comments/new_comment' %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-12'>
+      <%= link_to 'Back', :back, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+<br>

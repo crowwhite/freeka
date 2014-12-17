@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       put 'fulfill'
       put 'reject_donor', as: :reject_current_donor_of
     end
+    resources :comments, only: :create
   end
 
   resources :donations, only: :index do
