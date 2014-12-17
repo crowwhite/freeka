@@ -5,7 +5,7 @@ class DonationsController < ApplicationController
   before_action :load_donations, only: [:donate]
 
   def index
-    @donations = current_user.donations.includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+    @donations = current_user.donations.includes(:donor_requirements, :files).order('donor_requirements.created_at DESC').page params[:page]
     render 'requirements/index'
   end
 
