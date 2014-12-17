@@ -38,7 +38,7 @@ class RequirementsController < ApplicationController
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
       @requirement.attach_display_image(params[:requirement][:image]) if params[:requirement][:image]
-      redirect_to requirements_path, notice: 'Requirement created'
+      redirect_to @requirements, notice: 'Requirement created'
     else
       flash.now[:alert] = 'Some errors prevented the creation of requirement'
       render :new
