@@ -1,6 +1,6 @@
 <% if @person_logged_in = current_user || current_admin %>
   <li id='user-logged-in-options'>
-    <%= link_to @person_logged_in.name, '#' %>
+    <%= link_to @person_logged_in.name.capitalize, '#' %>
     <ul>
       <li>
         <%= link_to 'My Account', requirements_path({ filter: 'pending' }) %>

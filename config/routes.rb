@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post 'search', on: :collection
     get 'filter', on: :collection
     resources :donor_requirements, only: :create
+    put 'mark_donated', to: 'donor_requirements#mark_donated'
     delete 'uninterest', to: 'donor_requirements#destroy'
     member do
       put 'toggle_state'

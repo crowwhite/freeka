@@ -13,15 +13,18 @@
   display: none;
   position: absolute;
   right: 0px;
-  top: 70px;
+  top: 60px;
   background-color: white;
   padding: 10px;
   width: 125px;
   border: 1px solid black;
   z-index: 1;
+  border-top: none;
 }
 
 #user-logged-in-options a {
+  padding-top: 0;
+  padding-bottom: 0;
   text-decoration: none;
 }
 

@@ -2,10 +2,17 @@
   <meta property="og:title" content="<%= @requirement.title %>"/>
 <% end %>
 <%= render 'shared/fb_scripts' %>
-<br>
-<br>
 <div class="row">
   <div class="row">
+    <div class='row'>
+      <div class='col-md-9'>
+        <%= render 'layouts/category_menu' %>
+      </div>
+      <div class='col-md-3'>
+        <%= render 'layouts/search_bar' %>
+      </div>
+    </div>
+    <br>
     <div class="col-md-6 border-black height-800">
       <h2><%= @requirement.title %>
         <% if owner(@requirement) %>
@@ -31,8 +38,14 @@
             <span class='large-font'><%= @requirement.donor_requirements.size %></span>
           </div>
           <div class='pull-right'>
-            <% if current_user && @requirement.interested_donors.include?(current_user) %>
-              <%= link_to 'Withdraw Interest', requirement_uninterest_path(@requirement), method: :delete, class: 'btn btn-primary' %>
+            <% @donor_requirement = @requirement.donor_requirements.find_by(donor_id: current_user.try(:id)) %>
+            <% if @donor_requirement %>
+              <% if @donor_requirement.donated? %>
+                <div> You have already donated this item. </div>
+              <% else %>
+                <%= link_to 'Fulfill', requirement_mark_donated_path(@requirement), method: :put, class: 'btn btn-primary' %>
+                <%= link_to 'Withdraw Interest', requirement_uninterest_path(@requirement), method: :delete, class: 'btn btn-primary' %>
+              <% end %>
             <% else %>
               <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary' %>
             <% end %>

@@ -10,6 +10,7 @@ class DonorRequirement < ActiveRecord::Base
   after_create :make_current!, if: -> { DonorRequirement.where(requirement_id: requirement_id).where.not(status: Requirement.statuses[:fulfilled]).one? }
   before_destroy :prevent_if_fulfilled
   after_destroy :update_requirement_status_after_destroy, :update_donors
+  after_destroy :add_comment_on_requirement
 
   aasm column: :status, enum: true do
     state :interested, initial: true
@@ -19,9 +20,10 @@ class DonorRequirement < ActiveRecord::Base
 
     event :donate do
       after do
-        requirement.update_donor_and_reject_interested_donors
+        requirement.comments.create(content: 'I have donted the item.', user_id: self.donor_id)
       end
       transitions from: :current, to: :donated
+      transitions from: :interested, to: :donated
     end
 
     event :show_interest do
@@ -39,28 +41,33 @@ class DonorRequirement < ActiveRecord::Base
     end
   end
 
-  def update_requirement_status_after_create
-    requirement.process! if requirement.may_process?
-  end
+  private
+    def update_requirement_status_after_create
+      requirement.process! if requirement.may_process?
+    end
 
-  def update_requirement_status_after_destroy
-    requirement.unprocess! unless DonorRequirement.exists?(requirement_id: requirement.id)
-  end
+    def update_requirement_status_after_destroy
+      requirement.unprocess! unless DonorRequirement.exists?(requirement_id: requirement.id)
+    end
 
-  def update_donors
-    donors = requirement.donor_requirements
-    unless donors.detect(&:current?) || donors.detect(&:donated?)
-      donors.sort_by(&:created_at).first.try(:make_current!)
-      donors.each do |donor|
-        donor.show_interest! if donor.may_show_interest?
+    def update_donors
+      donors = requirement.donor_requirements
+      unless donors.detect(&:current?) || donors.detect(&:donated?)
+        donors.sort_by(&:created_at).first.try(:make_current!)
+        donors.each do |donor|
+          donor.show_interest! if donor.may_show_interest?
+        end
       end
     end
-  end
 
-  def prevent_if_fulfilled
-    if requirement.fulfilled?
-      errors.add(:base, 'You cannot remove interest from successful donation')
-      false
+    def prevent_if_fulfilled
+      if requirement.fulfilled?
+        errors.add(:base, 'You cannot remove interest from successful donation')
+        false
+      end
     end
-  end
+
+    def add_comment_on_requirement
+      requirement.comments.create(content: 'I have withdrawn interest from this request.', user_id: self.donor_id)
+    end
 end

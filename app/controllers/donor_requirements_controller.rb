@@ -1,6 +1,7 @@
 class DonorRequirementsController < ApplicationController
 
-  before_action :set_requirement, only: [:create, :destroy]
+  before_action :set_requirement, only: [:create, :destroy, :mark_donated]
+  before_action :set_donor_requirement, only: [:destroy, :mark_donated]
   before_action :restrict_owner, only: :create
   before_action :authenticate_user!
 
@@ -15,13 +16,20 @@ class DonorRequirementsController < ApplicationController
   end
 
   def destroy
-    @donor_requirement = @requirement.donor_requirements.find_by(donor_id: current_user.id)
     if @donor_requirement.destroy
-      flash[:notice] = 'successfully withdrawn interest'
+      flash[:notice] = 'Successfully withdrawn interest'
     else
-      flash[:alert] = 'could not remove interest'
+      flash[:alert] = 'Could not remove interest'
     end
     redirect_to @requirement
+  end
+
+  def mark_donated
+    if @donor_requirement.donate!
+      redirect_to @requirement, notice: 'You have successfully donated the item'
+    else
+      redirect_to @requirement, alert: 'Failed to mark it donated'
+    end
   end
 
   private
@@ -29,6 +37,14 @@ class DonorRequirementsController < ApplicationController
       @requirement = Requirement.find_by(id: params[:requirement_id])
       unless @requirement
         flash[:alert] = 'Requirement not found'
+        redirect_to(requirements_path(filter: 'pending'))
+      end
+    end
+
+    def set_donor_requirement
+      @donor_requirement = @requirement.donor_requirements.find_by(donor_id: current_user.id)
+      unless @donor_requirement
+        flash[:alert] = 'Interest not shown for this requirement'
         redirect_to(requirements_path(filter: 'pending'))
       end
     end
