@@ -7,31 +7,13 @@
     </button>
     <%= link_to 'Freeka', root_path, class: 'navbar-brand' %>
   </div>
-    <% if current_admin %>
-      <% action = '/admins/requirements/search' %>
-    <% else %>
-      <% action = '/requirements/search' %>
-    <% end %>
-
-    <%= form_tag(action, method: :post, class: "navbar-form navbar-left") do %>
-      <input type="text" name="requirement[search]" class="form-control col-lg-8" placeholder="Search">
-      <%= hidden_field_tag 'requirement[controller_action]', @controller_action %>
-    <% end %>
-    <ul class="nav navbar-nav navbar-right">
-      <%= render 'shared/users/sign_up_in' %>
-    </ul>
-  </div>
-</div>
-<div class="row">
-  <div class='center'>
+  <div class='col-md-6'>
     <ul id='main_menu'>
 
       <% categories = Category.roots.enabled.includes(:enabled_sub_categories) %>
     <% categories.each do |category| %>
       <li>
-        <!-- <div class="custom"> -->
           <%= render 'shared/requirement/category_link', locals: { category: category } %>
-        <!-- </div> -->
         <% if !category.enabled_sub_categories.empty? %>
           <ul>
             <% category.enabled_sub_categories.each do |sub_category| %>
@@ -43,4 +25,18 @@
     <% end %>
     </ul>
   </div>
+  <% if current_admin %>
+    <% action = '/admins/requirements/search' %>
+  <% else %>
+    <% action = '/requirements/search' %>
+  <% end %>
+  <div class='col-md-2'>
+    <%= form_tag(action, method: :post, class: "navbar-form navbar-left") do %>
+      <input type="text" name="requirement[search]" class="form-control" placeholder="Search">
+      <%= hidden_field_tag 'requirement[controller_action]', @controller_action %>
+    <% end %>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <%= render 'shared/users/sign_up_in' %>
+  </ul>
 </div>
