@@ -39,15 +39,23 @@
           </div>
           <div class='pull-right'>
             <% @donor_requirement = @requirement.donor_requirements.find_by(donor_id: current_user.try(:id)) %>
-            <% if @donor_requirement %>
-              <% if @donor_requirement.donated? %>
-                <div> You have already donated this item. </div>
-              <% else %>
-                <%= link_to 'Fulfill', requirement_mark_donated_path(@requirement), method: :put, class: 'btn btn-primary' %>
-                <%= link_to 'Withdraw Interest', requirement_uninterest_path(@requirement), method: :delete, class: 'btn btn-primary' %>
-              <% end %>
+            <% if @requirement.fulfilled? %>
+              <div> This requirement has been fulfilled. </div>
             <% else %>
-              <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary' %>
+              <% if @donor_requirement %>
+                <% if @donor_requirement.donated? %>
+                  <div> You have already donated this item. </div>
+                <% else %>
+                  <%= link_to 'Fulfill', requirement_mark_donated_path(@requirement), method: :put, class: 'btn btn-primary' %>
+                  <%= link_to 'Withdraw Interest', requirement_uninterest_path(@requirement), method: :delete, class: 'btn btn-primary' %>
+                <% end %>
+              <% else %>
+                <% if owner(@requirement) %>
+                  <%= link_to 'Fulfill', fulfill_requirement_path(@requirement), method: :put, class: 'btn btn-primary' %>
+                <% else %>
+                  <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary' %>
+                <% end %>
+              <% end %>
             <% end %>
           </div>
         </div>

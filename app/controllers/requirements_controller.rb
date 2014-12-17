@@ -4,7 +4,11 @@ class RequirementsController < ApplicationController
   before_action :check_if_owner, only: [:edit, :update, :reject_donor, :destroy]
 
   def index
-    @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+    if params[:filter]
+      @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+    else
+      @requirements = current_user.requirements.includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+    end
   end
 
   def search
@@ -65,7 +69,11 @@ class RequirementsController < ApplicationController
   end
 
   def fulfill
-    flash.now[:alert] = 'This request has no donors, you can probably delete it.' unless @requirement.fulfill!
+    if @requirement.fulfill!
+      redirect_to @requirement, notice: 'Successfully fulfilled the requirement.'
+    else
+      redirect_to @requirement, alert: 'Could not fulfill the requirement.'
+    end
   end
 
   def reject_donor
