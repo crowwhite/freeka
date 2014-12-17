@@ -5,4 +5,4 @@ Rails.application.config.assets.version = '1.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-Rails.application.config.assets.precompile += %w( active_link.js bootstrap.js sub_categories.js sub_region_select.js sub_category_select.js multifile-master/jQuery.MultiFile.min.js )
+Rails.application.config.assets.precompile += %w( link.js bootstrap.js sub_region_select.js sub_category_select.js multifile-master/jQuery.MultiFile.min.js )
