@@ -53,7 +53,7 @@ class DonorRequirementsController < ApplicationController
       if current_user
         redirect_to(@requirement, alert: 'Cannot show interest on your own request') if @requirement.requestor_id == current_user.id
       else
-        redirect_to @requirement, alert: 'Please log in to show interest.'
+        redirect_to @requirement, alert: 'Please SignIn/SignUp to show interest.'
       end
     end
 end
