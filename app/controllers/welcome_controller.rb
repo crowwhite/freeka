@@ -10,7 +10,7 @@ class WelcomeController < ApplicationController
   end
 
   def filter
-    @requirements = Requirement.with_category(filter_params).page params[:page]
+    @requirements = Requirement.with_category(filter_params).enabled.live.with_status_not(Requirement.statuses[:fulfilled]).page params[:page]
     flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
     render 'requirements/index'
   end

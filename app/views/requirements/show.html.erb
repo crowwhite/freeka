@@ -36,7 +36,7 @@
         </div>
         <br>
         <div class='col-md-12'>
-          <div class='pull-left'>
+          <div class='pull-left row'>
             <strong>Interested Donors: </strong>
             <span class='large-font'><%= @requirement.donor_requirements.size %></span>
           </div>
@@ -73,7 +73,7 @@
     </div>
     <div class="col-md-6">
 
-      <div class="well height-800">
+      <div class="well height-800 top-pad-0">
         <h2>Comments</h2>
         <div class="scroll-auto height-630">
           <ul id="comments">
@@ -87,8 +87,10 @@
     </div>
   </div>
   <div class='row'>
-    <div class='col-md-12'>
-      <%= link_to 'Back', :back, class: 'btn btn-primary' %>
+    <div class='row'>
+      <div class='col-md-12'>
+        <%= link_to 'Back', :back, class: 'btn btn-primary' %>
+      </div>
     </div>
   </div>
 </div>

@@ -25,33 +25,32 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  
+  <br>
   <div class="field">
     <%= f.label :Bio, for: :about_me %><br>
     <%= f.text_area :about_me %>
   </div>
-
+  <br>
   <div class="field">
     <%= f.label :address %><br>
     <%= f.text_area :address %>
   </div>
-
+  <br>
   <div class="field mandatory">
     <%= f.label :contact_no %><br>
     <%= f.text_field :contact_no %>
   </div>
-
+  <br>
+  <div class="field">
+    <%= f.label :New_password, for: :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+  <br>
   <div class="field">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "off" %>
@@ -62,3 +61,5 @@
     <%= link_to 'Cancel', edit_user_registration_path, class: 'btn btn-sm btn-default' %>
   </div>
 <% end %>
+<br>
+<br>

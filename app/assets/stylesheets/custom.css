@@ -8,6 +8,14 @@
   font-size: 30px;
 }
 
+.top-pad-0 {
+  padding-top: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
 #user-logged-in-options > ul {
   list-style-type: none;
   display: none;
