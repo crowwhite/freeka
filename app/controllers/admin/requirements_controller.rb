@@ -20,7 +20,7 @@ class Admin::RequirementsController < Admin::BaseController
   end
 
   def filter
-    @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).page params[:page]
+    @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", Requirement.statuses[filter_params[:value]]).page params[:page]
     flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
     @controller_action = params[:requirement][:controller_action]
     render :index

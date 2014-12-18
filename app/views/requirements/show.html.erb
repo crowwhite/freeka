@@ -17,7 +17,7 @@
     <br>
     <div class="col-md-6 border-black height-800">
       <h2><%= @requirement.title %>
-        <% if owner(@requirement) %>
+        <% if owner(@requirement) && @requirement.donor_requirements.size == 0 && !@requirement.fulfilled? %>
           <%= link_to 'Edit', edit_requirement_path(@requirement), class: 'btn btn-primary btn-xs' %>
         <% end %>
       </h2>
@@ -85,13 +85,13 @@
 
       <div class="well height-800 top-pad-0">
         <h2>Comments</h2>
-        <div class="scroll-auto height-630">
+        <div class="height-630">
           <ul id="comments">
             <%= render @requirement.comments.includes(:user) %>
             <li id="add-comment">
-              <%= render 'comments/new_comment' %>
             </li>
           </ul>
+          <%= render 'comments/new_comment' %>
         </div>
       </div>
     </div>

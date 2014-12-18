@@ -2,9 +2,11 @@
   <li id='user-logged-in-options'>
     <%= link_to @person_logged_in.name.capitalize, '#' %>
     <ul>
-      <li>
-        <%= link_to 'My Account', requirements_path({ filter: 'pending' }) %>
-      </li>
+      <% if !current_admin %>
+        <li>
+          <%= link_to 'My Account', requirements_path({ filter: 'pending' }) %>
+        </li>
+      <% end %>
       <li>
         <%= link_to 'sign out', destroy_user_session_path, method: :delete %>
       </li>
