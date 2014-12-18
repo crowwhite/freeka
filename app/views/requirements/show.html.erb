@@ -22,6 +22,8 @@
       <div class="scroll-auto height-725">
         <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg', class: 'pull-left' %>
         <p><%= @requirement.details %></p>
+        <strong>Requestor Bio: </strong>
+        <p><%= @requirement.person.about_me %></p>
         <h4>Attached Files: </h4>
         <% @requirement.files.each do |attachment| %>
           <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>

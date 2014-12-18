@@ -118,6 +118,10 @@ li.rejected {
   font-size: 14px;
 }
 
+.large-on-hover:hover {
+  height: 130px;
+}
+
 img {
   width: 100%;
 }
