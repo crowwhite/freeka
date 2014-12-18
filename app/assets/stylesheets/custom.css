@@ -1,5 +1,5 @@
 #donor-list {
-  width: 100px;
+  width: 200px;
   height: 75px;
   overflow: auto;
 }
@@ -127,7 +127,7 @@ li.rejected {
 }
 
 .large-on-hover:hover {
-  height: 130px;
+  height: 150px;
 }
 
 img {
@@ -230,6 +230,15 @@ input[type='submit'] {
 
 .center {
   margin: 0 20px;
+}
+
+.align-center {
+  text-align: center;
+  /*margin: 60px;*/
+}
+
+.small-font {
+  font-size: 14px;
 }
 
 #main_menu {

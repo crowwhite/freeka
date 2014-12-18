@@ -1,5 +1,6 @@
 <% content_for :head do %>
   <meta property="og:title" content="<%= @requirement.title %>"/>
+  <meta property="og:description" content="<%= @requirement.details.truncate(400) %>"/>
 <% end %>
 <%= javascript_include_tag 'faliure_link' %>
 <%= render 'shared/fb_scripts' %>
@@ -23,8 +24,17 @@
       <div class="scroll-auto height-725">
         <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg', class: 'pull-left' %>
         <p><%= @requirement.details %></p>
+        <strong>Requestor Name: </strong>
+        <%= @requirement.person.name %>
+        <br>
+        <br>
         <strong>Requestor Bio: </strong>
-        <p><%= @requirement.person.about_me %></p>
+        <%= @requirement.person.about_me %>
+        <br>
+        <br>
+        <strong>Expiration Date: </strong>
+        <%= @requirement.expiration_date.strftime("%d %b %Y") %>
+        <br>
         <h4>Attached Files: </h4>
         <% @requirement.files.each do |attachment| %>
           <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>

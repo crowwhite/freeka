@@ -63,6 +63,8 @@ class DonorRequirement < ActiveRecord::Base
       if requirement.fulfilled?
         errors.add(:base, 'You cannot remove interest from or donate to successful donation.')
         false
+      else
+        true
       end
     end
 

@@ -44,7 +44,7 @@
         <% @requirements.each do |requirement| %>
           <div class="col-md-4">
             <div class="equal-height">
-              <div class='top-black'>
+              <div class='top-black align-center'>
                 <span title='Interested Donors' class='pull-left highlight-round'>
                   <strong>
                     <% if requirement.donor_requirements.size > 0 %>
@@ -52,6 +52,10 @@
                     <% end %>
                   </strong>
                 </span>
+                <text class='small-font'>
+                  Expiring at:
+                  <%= requirement.expiration_date.strftime("%d %b %Y") %>
+                </text>
                 <span title='No of files attached' class="pull-right highlight-round">
                   <strong>
                     <% if requirement.files.size > 0 %>
@@ -66,7 +70,8 @@
                   <strong title="<%= requirement.title %>"><%= link_to requirement.title.truncate(33), requirement %></strong>
                 </div>
                 <div class="description">
-                  <strong><%= requirement.address.city + ': ' %></strong>
+                  <strong><%= requirement.address.city %></strong>
+                  <br>
                   <text>
                     <%= requirement.details.truncate(250) %>
                   </text>
