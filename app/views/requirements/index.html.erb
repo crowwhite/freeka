@@ -61,15 +61,17 @@
                 </span>
               </div>
               <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg' %>
-              <div class="bottom-black">
+              <%= content_tag :div, class: "bottom-black " + ((requirement.details.length > 150) ? 'large-on-hover' : '') do %>
                 <div class="title">
                   <strong><%= link_to requirement.title, requirement %></strong>
                 </div>
                 <div class="description">
                   <strong><%= requirement.address.city + ': ' %></strong>
-                  <%= requirement.details.truncate(100) %>
+                  <text>
+                    <%= requirement.details.truncate(250) %>
+                  </text>
                 </div>
-              </div>
+              <% end %>
             </div>
           </div>
         <% end %>
