@@ -9,7 +9,17 @@ class WelcomeController < ApplicationController
     render 'requirements/index'
   end
 
+  def filter
+    @requirements = Requirement.with_category(filter_params).page params[:page]
+    flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
+    render 'requirements/index'
+  end
+
   private
+    def filter_params
+      params.require(:category_filter)
+    end
+
     def check_if_admin
       if current_admin
         redirect_to admins_welcome_index_path

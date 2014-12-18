@@ -18,21 +18,6 @@ class RequirementsController < ApplicationController
     render :index
   end
 
-  # def filter
-  #   @controller_action = params[:requirement][:controller_action]
-  #   if @controller_action.split('#')[0] == 'welcome'
-  #     @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).page params[:page]
-  #   elsif current_user
-  #     @requirements = Requirement.public_send("with_#{ filter_params[:criteria] }", filter_params[:value]).where(requestor_id: current_user.id).page params[:page]
-  #   end
-  #   flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
-  #   if current_admin
-  #     render 'admin/requirements/index'
-  #   else
-  #     render :index
-  #   end
-  # end
-
   def new
     @requirement = current_user.requirements.build
     @requirement.build_address
@@ -42,7 +27,7 @@ class RequirementsController < ApplicationController
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
       @requirement.attach_display_image(params[:requirement][:image]) if params[:requirement][:image]
-      redirect_to @requirements, notice: 'Requirement created'
+      redirect_to @requirement, notice: 'Requirement created'
     else
       flash.now[:alert] = 'Some errors prevented the creation of requirement'
       render :new
@@ -97,11 +82,7 @@ class RequirementsController < ApplicationController
 
     def requirement_params
       params[:requirement][:files_attributes] = params[:requirement][:files_attributes].values.flatten if params[:requirement] && params[:requirement][:files_attributes].try(:is_a?, Hash)
-      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :attachment], files_attributes: [:id, :attachment, :_destroy], address_attributes: [:id, :street, :city, :country_code, :state_code])
-    end
-
-    def filter_params
-      params.require(:requirement).require(:filter).permit(:criteria, :value)
+      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, files_attributes: [:id, :attachment, :_destroy], address_attributes: [:id, :street, :city, :country_code, :state_code])
     end
 
     def allow_only_owner

@@ -1,5 +1,5 @@
 <% if current_admin %>
   <%= link_to locals[:category].name, filter_admins_requirements_path(requirement: { filter: { criteria: :category, value: locals[:category].id }, controller_action: @controller_action }) %>
 <% else %>
-  <%= link_to locals[:category].name, filter_requirements_path(requirement: { filter: { criteria: :category, value: locals[:category].id }, controller_action: @controller_action }) %>
+  <%= link_to locals[:category].name, filter_requirements_path(category_filter: locals[:category].id) %>
 <% end %>

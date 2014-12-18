@@ -63,7 +63,7 @@
               <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg' %>
               <%= content_tag :div, class: "bottom-black " + ((requirement.details.length > 150) ? 'large-on-hover' : '') do %>
                 <div class="title">
-                  <strong><%= link_to requirement.title, requirement %></strong>
+                  <strong title="<%= requirement.title %>"><%= link_to requirement.title.truncate(33), requirement %></strong>
                 </div>
                 <div class="description">
                   <strong><%= requirement.address.city + ': ' %></strong>

@@ -42,11 +42,11 @@ class DonorRequirement < ActiveRecord::Base
 
   private
     def update_requirement_status_after_create
-      requirement.process! if requirement.may_process?
+      # requirement.process! if requirement.may_process?
     end
 
     def update_requirement_status_after_destroy
-      requirement.unprocess! unless DonorRequirement.exists?(requirement_id: requirement.id)
+      # requirement.unprocess! unless DonorRequirement.exists?(requirement_id: requirement.id)
     end
 
     def update_donors

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :requirements do
     post 'search', on: :collection
-    get 'filter', on: :collection
+    get 'filter', on: :collection, to: 'welcome#filter'
     resources :donor_requirements, only: :create
     put 'mark_donated', to: 'donor_requirements#mark_donated'
     delete 'uninterest', to: 'donor_requirements#destroy'

@@ -30,7 +30,7 @@
         <td>
           <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>
         </td>
-        <td><%= requirement.status %></td>
+        <td><%= requirement.status.humanize %></td>
         <%= render 'state', locals: { requirement: requirement } %>
         <%= content_tag :td, id: 'donors' do %>
           <%= render 'donors', locals: { requirement: requirement } %>
