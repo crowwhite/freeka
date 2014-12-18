@@ -1,10 +1,14 @@
 class RequirementsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :fulfill, :reject_donor]
   before_action :load_requirement, only: [:edit, :update, :show, :destroy, :toggle_interest, :fulfill, :reject_donor]
-  before_action :check_if_owner, only: [:edit, :update, :reject_donor, :destroy]
+  before_action :allow_only_owner, only: [:edit, :update, :reject_donor, :destroy, :fulfill]
 
   def index
-    @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+    if params[:filter]
+      @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+    else
+      @requirements = current_user.requirements.includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+    end
   end
 
   def search
@@ -65,7 +69,11 @@ class RequirementsController < ApplicationController
   end
 
   def fulfill
-    flash.now[:alert] = 'This request has no donors, you can probably delete it.' unless @requirement.fulfill!
+    if @requirement.fulfill!
+      redirect_to @requirement, notice: 'Successfully fulfilled the requirement.'
+    else
+      redirect_to @requirement, alert: 'Could not fulfill the requirement.'
+    end
   end
 
   def reject_donor
@@ -96,7 +104,7 @@ class RequirementsController < ApplicationController
       params.require(:requirement).require(:filter).permit(:criteria, :value)
     end
 
-    def check_if_owner
+    def allow_only_owner
       if current_user.id != @requirement.requestor_id
         flash[:alert] = 'Not authorised to use this page'
         redirect_to @requirement

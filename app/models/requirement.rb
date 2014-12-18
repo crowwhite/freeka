@@ -47,12 +47,11 @@ class Requirement < ActiveRecord::Base
 
     event :fulfill do
       after do
-        update_donor_and_reject_interested_donors
-      end
-      before do
-        !pending?
+        comments.create(content: 'Requirement has been fulfilled. Thank You all.', user_id: requestor_id)
+        thank_users
       end
       transitions from: :in_process, to: :fulfilled
+      transitions from: :pending, to: :fulfilled
     end
   end
 
@@ -98,6 +97,15 @@ class Requirement < ActiveRecord::Base
   end
 
   private
+
+    def thank_users
+      donor_requirements.interested.includes(:user).each do |donor_requirement|
+        DonorMailer.thank_interested_donor(donor_requirement.user, self).deliver
+      end
+      donor_requirements.donated.includes(:user).each do |donor_requirement|
+        DonorMailer.thank_fulfilling_donor(donor_requirement.user, self).deliver
+      end
+    end
 
     def date_not_in_past
       errors.add(:expiration_date, 'cannot be a past date') if expiration_date < Date.today
