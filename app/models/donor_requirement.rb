@@ -11,13 +11,13 @@ class DonorRequirement < ActiveRecord::Base
   after_destroy :update_requirement_status_after_destroy, :update_donors
   after_destroy :add_comment_on_requirement
 
-  aasm column: :status, enum: true do
+  aasm column: :status, enum: true, whiny_transitions: false do
     state :interested, initial: true
     state :donated
     state :rejected
     state :current
 
-    event :donate do
+    event :donate, guard: :prevent_if_fulfilled do
       after do
         requirement.comments.create(content: 'I have donted the item.', user_id: self.donor_id)
       end
@@ -61,7 +61,7 @@ class DonorRequirement < ActiveRecord::Base
 
     def prevent_if_fulfilled
       if requirement.fulfilled?
-        errors.add(:base, 'You cannot remove interest from successful donation')
+        errors.add(:base, 'You cannot remove interest from or donate to successful donation.')
         false
       end
     end

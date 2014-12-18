@@ -1,7 +1,7 @@
 class RequirementsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :fulfill, :reject_donor]
   before_action :load_requirement, only: [:edit, :update, :show, :destroy, :toggle_interest, :fulfill, :reject_donor]
-  before_action :check_if_owner, only: [:edit, :update, :reject_donor, :destroy]
+  before_action :allow_only_owner, only: [:edit, :update, :reject_donor, :destroy, :fulfill]
 
   def index
     if params[:filter]
@@ -104,7 +104,7 @@ class RequirementsController < ApplicationController
       params.require(:requirement).require(:filter).permit(:criteria, :value)
     end
 
-    def check_if_owner
+    def allow_only_owner
       if current_user.id != @requirement.requestor_id
         flash[:alert] = 'Not authorised to use this page'
         redirect_to @requirement
