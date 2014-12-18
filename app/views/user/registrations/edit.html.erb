@@ -38,8 +38,18 @@
 
   
   <div class="field">
-    <%= f.label :about_me %><br>
+    <%= f.label :Bio, for: :about_me %><br>
     <%= f.text_area :about_me %>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_area :address %>
+  </div>
+
+  <div class="field mandatory">
+    <%= f.label :contact_no %><br>
+    <%= f.text_field :contact_no %>
   </div>
 
   <div class="field">

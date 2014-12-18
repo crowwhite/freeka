@@ -1,6 +1,7 @@
 <% content_for :head do %>
   <meta property="og:title" content="<%= @requirement.title %>"/>
 <% end %>
+<%= javascript_include_tag 'faliure_link' %>
 <%= render 'shared/fb_scripts' %>
 <div class="row">
   <div class="row">

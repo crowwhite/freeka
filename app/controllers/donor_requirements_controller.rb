@@ -50,6 +50,10 @@ class DonorRequirementsController < ApplicationController
     end
 
     def restrict_owner
-      redirect_to(@requirement, alert: 'Cannot show interest on your own request') if @requirement.requestor_id == current_user.id
+      if current_user
+        redirect_to(@requirement, alert: 'Cannot show interest on your own request') if @requirement.requestor_id == current_user.id
+      else
+        redirect_to @requirement, alert: 'Please log in to show interest.'
+      end
     end
 end
