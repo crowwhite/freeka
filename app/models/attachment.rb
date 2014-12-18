@@ -15,7 +15,11 @@ class Attachment < ActiveRecord::Base
   validate :image_dimensions, if: :is_image
 
   def url(size)
-    attachment.url(size)
+    if is_image
+      attachment.url(size)
+    else
+      attachment.url(:original)
+    end
   end
 
     def is_image
