@@ -6,14 +6,16 @@
 <%= render 'shared/fb_scripts' %>
 <div class="row">
   <div class="row">
-    <div class='row'>
-      <div class='col-md-9'>
-        <%= render 'layouts/category_menu' %>
+    <% if !current_admin %>
+      <div class='row'>
+        <div class='col-md-9'>
+          <%= render 'layouts/category_menu' %>
+        </div>
+        <div class='col-md-3'>
+          <%= render 'layouts/search_bar' %>
+        </div>
       </div>
-      <div class='col-md-3'>
-        <%= render 'layouts/search_bar' %>
-      </div>
-    </div>
+    <% end %>
     <br>
     <div class="col-md-6 border-black height-800">
       <h2><%= @requirement.title %>
@@ -66,7 +68,9 @@
                 <% if owner(@requirement) %>
                   <%= link_to 'Fulfill', fulfill_requirement_path(@requirement), method: :put, class: 'btn btn-primary' %>
                 <% else %>
-                  <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary' %>
+                  <% if !current_admin %>
+                    <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary' %>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
@@ -91,7 +95,9 @@
             <li id="add-comment">
             </li>
           </ul>
-          <%= render 'comments/new_comment' %>
+          <% if !current_admin %>
+            <%= render 'comments/new_comment' %>
+          <% end %>
         </div>
       </div>
     </div>
