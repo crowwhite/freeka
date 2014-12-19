@@ -2,7 +2,11 @@ class Admin::RequirementsController < Admin::BaseController
   before_action :load_requirement, only: :toggle_state
 
   def index
-    @requirements = Requirement.order(:expiration_date).page params[:page]
+    if params[:filter]
+      @requirements = Requirement.public_send(params[:filter]).order(:expiration_date).page params[:page]
+    else
+      @requirements = Requirement.order(:expiration_date).page params[:page]
+    end
   end
 
   def toggle_state
@@ -20,9 +24,8 @@ class Admin::RequirementsController < Admin::BaseController
   end
 
   def filter
-    @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", Requirement.statuses[filter_params[:value]]).page params[:page]
+    @requirements = Requirement.with_category(filter_params).page params[:page]
     flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
-    @controller_action = params[:requirement][:controller_action]
     render :index
   end
 
@@ -36,6 +39,6 @@ class Admin::RequirementsController < Admin::BaseController
     end
 
     def filter_params
-      params.require(:requirement).require(:filter).permit(:criteria, :value)
+      params.require(:category_filter)
     end
 end

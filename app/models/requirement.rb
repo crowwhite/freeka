@@ -4,13 +4,13 @@ class Requirement < ActiveRecord::Base
   enum status: { pending: 0, in_process: 1, fulfilled: 2 }
 
   # Association
-  has_one :image, -> { rewhere(attacheable_type: :Image) }, as: :attacheable, class_name: :Attachment, dependent: :destroy
-  has_many :files, as: :attacheable, class_name: :Attachment, dependent: :destroy
-  belongs_to :address, foreign_key: :location_id
+  has_one :image, -> { where(attacheable_sub_type: :Image) }, as: :attacheable, class_name: :Attachment, dependent: :destroy
+  has_many :files, -> { where(attacheable_sub_type: :File) }, as: :attacheable, class_name: :Attachment, dependent: :destroy
+  belongs_to :address, foreign_key: :location_id, dependent: :destroy
   belongs_to :person, foreign_key: :requestor_id
-  has_many :category_requirements
+  has_many :category_requirements, dependent: :destroy
   has_many :categories, through: :category_requirements
-  has_many :donor_requirements
+  has_many :donor_requirements, dependent: :destroy
   has_many :interested_donors, through: :donor_requirements, source: :user
   has_many :comments, dependent: :destroy
 
@@ -86,13 +86,6 @@ class Requirement < ActiveRecord::Base
       elsif donor_requirement.current?
         donor_requirement.donate!
       end
-    end
-  end
-
-  def attach_display_image(image_file)
-    image = create_image(attachment: image_file)
-    if image.id
-      image.update_column(:attacheable_type, :Image)
     end
   end
 

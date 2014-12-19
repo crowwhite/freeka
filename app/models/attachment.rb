@@ -4,7 +4,7 @@ class Attachment < ActiveRecord::Base
   belongs_to :attacheable, polymorphic: true
   has_attached_file :attachment, styles: lambda { |attachment|
                     attachment.instance.is_image ? {:thumb => "200x200#", :medium => "300x300#"} : {} },
-                    default_url: 'http://beyondplm.com/wp-content/uploads/2011/07/Picture-351.png'
+                    default_url: 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg'
 
   # Callback
   after_validation :clean_error_duplication
@@ -28,10 +28,11 @@ class Attachment < ActiveRecord::Base
   private
 
     def image_dimensions
-      dimensions = Paperclip::Geometry.from_file(self.attachment.queued_for_write[:original].path)
-
-      errors.add(:attachment, "Width must be between 300px to 700px") unless dimensions.width <= 700 && dimensions.width >= 300
-      errors.add(:attachment, "Height must be between 300px to 700px") unless dimensions.height <= 700 && dimensions.height >= 300
+      if image = self.attachment.queued_for_write[:original]
+        dimensions = Paperclip::Geometry.from_file(image.path)
+        errors.add(:attachment, "Width must be between 300px to 700px") unless dimensions.width <= 700 && dimensions.width >= 300
+        errors.add(:attachment, "Height must be between 300px to 700px") unless dimensions.height <= 700 && dimensions.height >= 300
+      end
     end
 
     def clean_error_duplication

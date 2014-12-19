@@ -12,7 +12,7 @@
   </li>
   <li>
     <div class='link'>
-      <%= link_to 'All Requirements', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 'pending' }, controller_action: @controller_action }) %>
+      <%= link_to 'All Requirements', admins_requirements_path({ filter: 'pending' }) %>
     </div>
   </li>
 </ul> 

@@ -14,7 +14,6 @@ class RequirementsController < ApplicationController
   def search
     @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
-    @controller_action = params[:requirement][:controller_action]
     render :index
   end
 
@@ -26,7 +25,6 @@ class RequirementsController < ApplicationController
   def create
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
-      @requirement.attach_display_image(params[:requirement][:image]) if params[:requirement][:image]
       redirect_to @requirement, notice: 'Requirement created'
     else
       flash.now[:alert] = 'Some errors prevented the creation of requirement'
@@ -36,7 +34,6 @@ class RequirementsController < ApplicationController
 
   def update
     if @requirement.update(requirement_params)
-      @requirement.attach_display_image(params[:requirement][:image]) if params[:requirement][:image]
       redirect_to @requirement, notice: 'Requirement updated'
     else
       flash.now[:alert] = 'Updation of requirement failed'
@@ -82,7 +79,7 @@ class RequirementsController < ApplicationController
 
     def requirement_params
       params[:requirement][:files_attributes] = params[:requirement][:files_attributes].values.flatten if params[:requirement] && params[:requirement][:files_attributes].try(:is_a?, Hash)
-      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, files_attributes: [:id, :attachment, :_destroy], address_attributes: [:id, :street, :city, :country_code, :state_code])
+      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy], address_attributes: [:id, :street, :city, :country_code, :state_code])
     end
 
     def allow_only_owner
