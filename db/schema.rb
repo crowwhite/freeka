@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141215072732) do
+ActiveRecord::Schema.define(version: 20141219061027) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20141215072732) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
+    t.string   "attacheable_sub_type",    default: "File"
   end
 
   add_index "attachments", ["requirement_id"], name: "index_attachments_on_requirement_id", using: :btree

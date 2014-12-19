@@ -1,7 +1,7 @@
 <ul id="status_filter" class='active-buttons'>
   <% if current_admin %>
-    <li><%= link_to 'Pending', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 'pending' }, controller_action: @controller_action }), class: 'btn btn-primary ' + add_class_active(params[:requirement][:filter][:value], 'pending'), role: 'button' %></li>
-    <li><%= link_to 'Fulfilled', filter_admins_requirements_path(requirement: { filter: { criteria: :status, value: 'fulfilled' }, controller_action: @controller_action }), class: 'btn btn-primary ' + add_class_active(params[:requirement][:filter][:value], 'fulfilled'), role: 'button' %></li>
+    <li><%= link_to 'Pending', admins_requirements_path({ filter: 'pending' }), class: 'btn btn-primary ' + add_class_active(params[:filter], 'pending'), role: 'button' %></li>
+    <li><%= link_to 'Fulfilled', admins_requirements_path({ filter: 'fulfilled' }), class: 'btn btn-primary ' + add_class_active(params[:filter], 'fulfilled'), role: 'button' %></li>
   <% else %>
     <li><%= link_to 'Pending', requirements_path({ filter: 'pending' }), class: 'btn btn-primary ' + add_class_active(params[:filter], 'pending'), role: 'button' %></li>
     <li><%= link_to 'Fulfilled', requirements_path({ filter: 'fulfilled' }), class: 'btn btn-primary ' + add_class_active(params[:filter], 'fulfilled'), role: 'button' %></li>

@@ -33,7 +33,6 @@
           </div>
         <% end %>
         <br>
-        <% @controller_action ||= [controller_name, action_name].join('#') %>
       </div>
     </div>
   </div>
@@ -64,7 +63,7 @@
                   </strong>
                 </span>
               </div>
-              <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://www.bmotorsports.com/shop/images/product-unavailable.jpg' %>
+              <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg' %>
               <%= content_tag :div, class: "bottom-black " + ((requirement.details.length > 150) ? 'large-on-hover' : '') do %>
                 <div class="title">
                   <strong title="<%= requirement.title %>"><%= link_to requirement.title.truncate(33), requirement %></strong>
