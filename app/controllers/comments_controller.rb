@@ -14,10 +14,7 @@ class CommentsController < ApplicationController
   private
     def load_requirement
       @requirement = Requirement.find_by(id: params[:requirement_id])
-      unless @requirement
-        flash[:alert] = 'Requirement not found'
-        redirect_to(root_path)
-      end
+      redirect_to root_path, alert: 'Requirement not found' unless @requirement
     end
 
     def comment_params

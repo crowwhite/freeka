@@ -22,9 +22,10 @@ class Attachment < ActiveRecord::Base
     end
   end
 
-    def is_image
-      ["image/jpg", "image/jpeg", "image/png", "image/gif"].include?(attachment.content_type)
-    end
+  def is_image
+    ["image/jpg", "image/jpeg", "image/png", "image/gif"].include?(attachment.content_type)
+  end
+
   private
 
     def image_dimensions

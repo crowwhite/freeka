@@ -1,8 +1,7 @@
 <%= javascript_include_tag 'sub_region_select' %>
 <%= javascript_include_tag 'sub_category_select' %>
-<%= javascript_include_tag 'link' %>
 <% unless @requirement.new_record? %>
-  <%= javascript_include_tag 'remove_file' %>
+  <%= javascript_include_tag 'link' %>
 <% end %>
 <%= javascript_include_tag 'multifile-master/jQuery.MultiFile.min.js' %>
 <div class="well bs-component col-md-6">

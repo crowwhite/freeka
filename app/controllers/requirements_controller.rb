@@ -1,7 +1,7 @@
 class RequirementsController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :destroy, :fulfill, :reject_donor]
-  before_action :load_requirement, only: [:edit, :update, :show, :destroy, :toggle_interest, :fulfill, :reject_donor]
-  before_action :allow_only_owner, only: [:edit, :update, :reject_donor, :destroy, :fulfill]
+  before_action :authenticate_user!, only: [:index, :new, :edit, :create, :update, :fulfill]
+  before_action :load_requirement, only: [:edit, :update, :show, :fulfill]
+  before_action :allow_only_owner, only: [:edit, :update, :fulfill]
 
   def index
     if params[:filter]
@@ -12,7 +12,7 @@ class RequirementsController < ApplicationController
   end
 
   def search
-    @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    @requirements = Requirement.search(Riddle::Query.escape(params[:requirement][:search]))[].page params[:page]
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     render :index
   end
@@ -41,15 +41,6 @@ class RequirementsController < ApplicationController
     end
   end
 
-  def destroy
-    if @requirement.destroy
-      flash[:notice] = "Requirement destroyed!"
-    else
-      flash[:alert] = "Requirement could not be deleted"
-    end
-    redirect_to requirements_path(filter: 'pending')
-  end
-
   def fulfill
     if @requirement.fulfill!
       redirect_to @requirement, notice: 'Successfully fulfilled the requirement.'
@@ -58,23 +49,10 @@ class RequirementsController < ApplicationController
     end
   end
 
-  def reject_donor
-    if @requirement.reject_current_donor
-      flash[:notice] = 'Donor Rejected'
-      @requirement.update_donors
-    else
-      flash[:alert] = "Donor couldn't be rejected"
-    end
-    redirect_to requirements_path(filter: 'pending')
-  end
-
   private
     def load_requirement
       @requirement = Requirement.find_by(id: params[:id])
-      unless @requirement
-        flash[:alert] = 'Requirement not found'
-        redirect_to(requirements_path(filter: 'pending'))
-      end
+      redirect_to requirements_path(filter: 'pending'), alert: 'Requirement not found' unless @requirement
     end
 
     def requirement_params
@@ -83,9 +61,6 @@ class RequirementsController < ApplicationController
     end
 
     def allow_only_owner
-      if current_user.id != @requirement.requestor_id
-        flash[:alert] = 'Not authorised to use this page'
-        redirect_to @requirement
-      end
+      redirect_to @requirement, alert: 'Not authorised to use this page' if current_user.id != @requirement.requestor_id
     end
 end

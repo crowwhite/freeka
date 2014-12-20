@@ -35,18 +35,12 @@ class DonorRequirementsController < ApplicationController
   private
     def set_requirement
       @requirement = Requirement.find_by(id: params[:requirement_id])
-      unless @requirement
-        flash[:alert] = 'Requirement not found'
-        redirect_to(requirements_path(filter: 'pending'))
-      end
+      redirect_to requirements_path(filter: 'pending'), alert: 'Requirement not found' unless @requirement
     end
 
     def set_donor_requirement
       @donor_requirement = @requirement.donor_requirements.find_by(donor_id: current_user.id)
-      unless @donor_requirement
-        flash[:alert] = 'Interest not shown for this requirement'
-        redirect_to(requirements_path(filter: 'pending'))
-      end
+      redirect_to requirements_path(filter: 'pending'), alert: 'Interest not shown for this requirement' unless @donor_requirement
     end
 
     def restrict_owner

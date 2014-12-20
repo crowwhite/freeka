@@ -15,7 +15,7 @@
   <tbody>
     <% @requirements.each do |requirement| %>
       <tr>
-        <td><%= link_to requirement.title, requirement %></td>
+        <td><%= link_to requirement.title, admins_requirement_path(requirement) %></td>
         <td><%= requirement.details.truncate(30) %></td>
         <td><%= requirement.expiration_date %></td>
         <td>

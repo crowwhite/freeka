@@ -16,11 +16,6 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
-  def destroy
-    flash[:alert] = 'Could not destroy User' unless @user.destroy
-    redirect_to admins_users_path
-  end
-
   def toggle_status
     if @user.update_column(:enabled, update_params[:enabled] == 'true')
       flash.now[:notice] = "Updated state to #{ @user.enabled ? :active : :inactive }"
@@ -39,9 +34,7 @@ class Admin::UsersController < Admin::BaseController
   private
     def load_user
       @user = User.find_by(id: params[:id])
-      unless @user
-        redirect_to admins_users_path, alert: 'User not found'
-      end
+      redirect_to admins_users_path, alert: 'User not found' unless @user
     end
 
     def update_params

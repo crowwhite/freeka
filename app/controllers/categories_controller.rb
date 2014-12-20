@@ -13,8 +13,6 @@ class CategoriesController < ApplicationController
   private
     def set_category
       @category = Category.find_by(id: params[:id])
-      unless @category
-        redirect_to categories_path, alert: 'Category not found'
-      end
+      redirect_to categories_path, alert: 'Category not found' unless @category
     end
 end
