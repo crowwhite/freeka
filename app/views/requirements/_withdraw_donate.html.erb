@@ -1,0 +1,6 @@
+<% if @donor_requirement.donated? %>
+  <div> You have already donated this item. </div>
+<% else %>
+  <%= link_to 'Donate', requirement_mark_donated_path(@requirement), method: :put, class: 'btn btn-primary' %>
+  <%= link_to 'Withdraw Interest', requirement_uninterest_path(@requirement), method: :delete, class: 'btn btn-primary' %>
+<% end %>

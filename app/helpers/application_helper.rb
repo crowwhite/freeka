@@ -8,4 +8,8 @@ module ApplicationHelper
     current_selection == value ? 'active' : ''
   end
 
+  def display_page
+    @display_page || controller_name
+  end
+
 end

@@ -17,9 +17,20 @@ class RequirementsController < ApplicationController
     render :index
   end
 
+  def filter
+    @requirements = Requirement.with_category(filter_params).enabled.live.with_status_not(Requirement.statuses[:fulfilled]).page params[:page]
+    @display_page = 'welcome'
+    flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
+    render 'requirements/index'
+  end
+
   def new
     @requirement = current_user.requirements.build
     @requirement.build_address
+  end
+
+  def show
+    @donor_requirement = @requirement.donor_requirements.find_by(donor_id: current_user.try(:id))
   end
 
   def create
@@ -62,5 +73,9 @@ class RequirementsController < ApplicationController
 
     def allow_only_owner
       redirect_to @requirement, alert: 'Not authorised to use this page' if current_user.id != @requirement.requestor_id
+    end
+
+    def filter_params
+      params.require(:category_filter)
     end
 end

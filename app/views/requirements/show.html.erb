@@ -6,16 +6,14 @@
 <%= render 'shared/fb_scripts' %>
 <div class="row">
   <div class="row">
-    <% if !current_admin %>
-      <div class='row'>
-        <div class='col-md-9'>
-          <%= render 'layouts/category_menu' %>
-        </div>
-        <div class='col-md-3'>
-          <%= render 'layouts/search_bar' %>
-        </div>
+    <div class='row'>
+      <div class='col-md-9'>
+        <%= render 'layouts/category_menu' %>
       </div>
-    <% end %>
+      <div class='col-md-3'>
+        <%= render 'layouts/search_bar' %>
+      </div>
+    </div>
     <br>
     <div class="col-md-6 border-black height-800">
       <h2><%= @requirement.title %>
@@ -53,35 +51,19 @@
             <span class='large-font'><%= @requirement.donor_requirements.size %></span>
           </div>
           <div class='pull-right'>
-            <% @donor_requirement = @requirement.donor_requirements.find_by(donor_id: current_user.try(:id)) %>
             <% if @requirement.fulfilled? %>
               <div> This requirement has been fulfilled. </div>
             <% else %>
               <% if @donor_requirement %>
-                <% if @donor_requirement.donated? %>
-                  <div> You have already donated this item. </div>
-                <% else %>
-                  <%= link_to 'Fulfill', requirement_mark_donated_path(@requirement), method: :put, class: 'btn btn-primary' %>
-                  <%= link_to 'Withdraw Interest', requirement_uninterest_path(@requirement), method: :delete, class: 'btn btn-primary' %>
-                <% end %>
+                <%= render 'withdraw_donate' %>
               <% else %>
-                <% if owner(@requirement) %>
-                  <%= link_to 'Fulfill', fulfill_requirement_path(@requirement), method: :put, class: 'btn btn-primary' %>
-                <% else %>
-                  <% if !current_admin %>
-                    <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary' %>
-                  <% end %>
-                <% end %>
+                <%= render 'interest_or_fulfill' %>
               <% end %>
             <% end %>
           </div>
         </div>
         <% if @requirement.interested_donors.size > 0 %>
-          <ul id='donor-list'>
-            <% @requirement.interested_donors.each do |donor| %>
-              <li><%= donor.name %></li>
-            <% end %>
-          </ul>
+          <%= render partial: 'donor', collection: @requirement.interested_donors %>
         <% end %>
       </div>
     </div>
@@ -95,9 +77,7 @@
             <li id="add-comment">
             </li>
           </ul>
-          <% if !current_admin %>
-            <%= render 'comments/new_comment' %>
-          <% end %>
+          <%= render 'comments/new_comment' %>
         </div>
       </div>
     </div>

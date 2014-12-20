@@ -3,7 +3,7 @@
   <div class='container'>
     <div class='container'>
       <div class='row'>
-        <% if controller_name == 'welcome' %>
+        <% if display_page == 'welcome' %>
           <div class='row'>
             <div class='col-md-9'>
               <%= render 'layouts/category_menu' %>
@@ -15,7 +15,7 @@
         <% end %>
         <div class='row'>
           <div class='col-md-6'>
-            <% unless controller_name == 'welcome' %>
+            <% unless display_page == 'welcome' %>
               <%= render 'requirements/user_pages_select' %>
             <% end %>
           </div>
@@ -25,7 +25,7 @@
             <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
           </div>
         </div>
-        <% unless controller_name == 'welcome' || controller_name == 'users' || controller_name == 'donations' %>
+        <% unless display_page == 'welcome' || display_page == 'users' || display_page == 'donations' %>
           <div class='row'>
             <div class='col-md-4'>
               <%= render 'shared/requirement/status_select' %>
