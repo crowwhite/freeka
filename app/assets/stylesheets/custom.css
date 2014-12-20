@@ -4,6 +4,10 @@
   overflow: auto;
 }
 
+.no-decoration {
+  text-decoration: none;
+}
+
 .navbar-brand {
   font-size: 30px;
 }
@@ -14,6 +18,10 @@
 
 .full-width {
   width: 100%;
+}
+
+.round-corners {
+  border-radius: 4px;
 }
 
 #user-logged-in-options > ul {
@@ -286,7 +294,7 @@ input[type='submit'] {
   #main_menu > li > ul > li > a:hover {
     color: #bd0707;
   }
-  ul a {
+  #main_menu a {
     text-decoration: none;
     color: black;
   }
@@ -301,4 +309,12 @@ input[type='submit'] {
   }
   #main_menu > li:hover {
     background-color: white;
+  }
+
+  #admin-nav > li:hover {
+    background-color: #aaa;
+  }
+
+  #admin-nav a {
+    text-decoration: none;
   }
