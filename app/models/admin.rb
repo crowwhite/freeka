@@ -10,6 +10,7 @@ class Admin < Person
       end
     end
 
+    #FIXME_AB: Not sure why we are restricting to only one admin
     def prevent_admin_creation_if_it_exists
       if Admin.exists?
         errors.add(:base, "only one admin can exist")

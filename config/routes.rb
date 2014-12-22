@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  #FIXME_AB: /admin should take me to admin login page.
   devise_for :admins, controllers: { confirmations: 'user/confirmations' }
   devise_for :users, controllers: { registrations: 'user/registrations', confirmations: 'user/confirmations' }
   resources :categories, only: [:index, :show] do

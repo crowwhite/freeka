@@ -4,6 +4,10 @@ class RequirementsController < ApplicationController
   before_action :allow_only_owner, only: [:edit, :update, :fulfill]
 
   def index
+    #FIXME_AB: in both statements we are repeating many things. we can do it in a better way like:
+    # @requirements = current_user.requirements
+    # @requirements.public_send(params[:filter]) if params[:filter]
+    # @requirements.includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
     if params[:filter]
       @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
     else
@@ -12,15 +16,18 @@ class RequirementsController < ApplicationController
   end
 
   def search
+    #FIXME_AB: Simplify following statement
     @requirements = Requirement.search(Riddle::Query.escape(params[:requirement][:search]))[].page params[:page]
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     render :index
   end
 
   def filter
+    #FIXME_AB: Again repeatation ?
     @requirements = Requirement.with_category(filter_params).enabled.live.with_status_not(Requirement.statuses[:fulfilled]).page params[:page]
     @display_page = 'welcome'
     flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
+    #FIXME_AB: why not render :index ?
     render 'requirements/index'
   end
 

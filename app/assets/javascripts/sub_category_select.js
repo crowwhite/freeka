@@ -5,6 +5,7 @@ $(function () {
     $.ajax({
       type: "GET",
       dataType: "html",
+      // FIXME_AB: Don't hardcode urls in JS. Pass them to jS using data attributes from erb
       url: '/categories/sub_categories',
       data: { 'parent_id': _this.value },
       success: function (response) {
