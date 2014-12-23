@@ -48,16 +48,18 @@
                   <strong>
                     <% if requirement.donor_requirements.size > 0 %>
                       <%= requirement.donor_requirements.size %>
+                      <%= image_tag 'http://www.iconshock.com/img_jpg/SUNNYDAY/general/jpg/256/group_icon.jpg', class: 'icon' %>
                     <% end %>
                   </strong>
                 </span>
                 <text class='small-font'>
-                  Expiring at:
+                  Needed By:
                   <%= requirement.expiration_date.strftime("%d %b %Y") %>
                 </text>
                 <span title='No of files attached' class="pull-right highlight-round">
                   <strong>
                     <% if requirement.files.size > 0 %>
+                      <%= image_tag 'http://ptw.greenless.com/android/GREENLESS%20UI/Email/res/drawable-hdpi/ic_mms_attachment_small.png', class: 'icon' %>
                       <%= requirement.files.size %>
                     <% end %>
                   </strong>

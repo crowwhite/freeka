@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :admins, controllers: { confirmations: 'user/confirmations' }
-  devise_for :users, controllers: { registrations: 'user/registrations', confirmations: 'user/confirmations' }
+  devise_for :users, controllers: { registrations: 'user/registrations', confirmations: 'user/confirmations', sessions: 'user/sessions' }
   resources :categories, only: [:index, :show] do
     get 'sub_categories', on: :collection
   end

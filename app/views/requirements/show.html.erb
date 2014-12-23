@@ -28,10 +28,10 @@
         <%= link_to @requirement.person.name, '#' %>
         <br>
         <br>
-        <strong>Expiration Date: </strong>
+        <strong>Needed By: </strong>
         <%= @requirement.expiration_date.strftime("%d %b %Y") %>
         <br>
-        <h4>Attached Files: </h4>
+        <h4>Supported Documents: </h4>
         <% @requirement.files.each do |attachment| %>
           <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
         <% end %>
