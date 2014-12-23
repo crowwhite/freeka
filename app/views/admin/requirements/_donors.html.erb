@@ -2,7 +2,7 @@
   <% locals[:requirement].interested_donors.each do |donor| %>
     <li class="donor">
       <strong>Name: </strong><span id=<%= 'donor' + donor.id.to_s %>><%= donor.name %></span><br>
-      <div id=<%= "current_donor" if donor.donor_requirement(locals[:requirement].id).current? %>>
+      <div>
         <strong>Email: </strong><%= donor.email %><br>
         <strong>Contact #: </strong><%= donor.contact_no %><br>
       </div>

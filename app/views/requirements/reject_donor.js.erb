@@ -1,2 +1,0 @@
-$(<% '#donors' + @requirement.id.to_s %>).html("<%= escape_javascript render 'requirements/donors', locals: { requirement: @requirement } %>")
-$('#flash').html("<%= escape_javascript render 'shared/flash' %>")

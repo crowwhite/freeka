@@ -1,17 +1,15 @@
 module ApplicationHelper
 
   def owner(requirement)
-    if current_user
-      requirement.requestor_id == current_user.id
-    end
+    requirement.requestor_id == current_user.id if current_user
   end
 
   def add_class_active(current_selection, value)
-    if current_selection == value
-      'active'
-    else
-      ''
-    end
+    current_selection == value ? 'active' : ''
+  end
+
+  def display_page
+    @display_page || controller_name
   end
 
 end

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :requirements do
     post 'search', on: :collection
-    get 'filter', on: :collection, to: 'welcome#filter'
+    get 'filter', on: :collection
     resources :donor_requirements, only: :create
     put 'mark_donated', to: 'donor_requirements#mark_donated'
     delete 'uninterest', to: 'donor_requirements#destroy'
@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       put 'toggle_status', on: :member
     end
     resources :welcome, only: :index
-    resources :requirements, only: :index do
+    resources :requirements, only: [:index, :show] do
       put 'toggle_state', on: :member
       post 'search', on: :collection
       get 'filter', on: :collection

@@ -1,11 +1,15 @@
-<%= form_for([@requirement, @requirement.comments.build], remote: true) do |f| %>
+<% if current_user %>
+  <%= form_for([@requirement, @requirement.comments.build], remote: true) do |f| %>
 
-  <div class='field'>
-    <%= f.text_area :content, class: 'text-area full-width' %>
-  </div>
+    <div class='field'>
+      <%= f.text_area :content, class: 'text-area full-width' %>
+    </div>
 
-  <div>
-    <%= f.submit :Comment %>
-  </div>
+    <div>
+      <%= f.submit :Comment %>
+    </div>
 
+  <% end %>
+<% else %>
+  <span>Please login to post comment</span>
 <% end %>
