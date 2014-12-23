@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'request_tile' %>
 <% @requirements ||= @donations %>
 <div class="bs-docs-section">
   <div class='container'>
@@ -41,7 +42,7 @@
       <div class="container">
         <div class="row">
         <% @requirements.each do |requirement| %>
-          <div class="col-md-4">
+          <div class="col-md-4 request-tile">
             <div class="equal-height">
               <div class='top-black align-center'>
                 <span title='Interested Donors' class='pull-left highlight-round'>
