@@ -1,8 +1,12 @@
 class Admin::RequirementsController < Admin::BaseController
-  before_action :load_requirement, only: :toggle_state
+  before_action :load_requirement, only: [:toggle_state, :show]
 
   def index
-    @requirements = Requirement.order(:expiration_date).page params[:page]
+    if params[:filter]
+      @requirements = Requirement.public_send(params[:filter]).order(:expiration_date).page params[:page]
+    else
+      @requirements = Requirement.order(:expiration_date).page params[:page]
+    end
   end
 
   def toggle_state
@@ -14,28 +18,24 @@ class Admin::RequirementsController < Admin::BaseController
   end
 
   def search
-    @requirements = Requirement.search(params[:requirement][:search]).page params[:page]
+    @requirements = Requirement.search(Riddle::Query.escape(params[:requirement][:search])).page params[:page]
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     render :index
   end
 
   def filter
-    @requirements = Requirement.public_send("with_#{ filter_params[:criteria]}", filter_params[:value]).page params[:page]
+    @requirements = Requirement.with_category(filter_params).page params[:page]
     flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
-    @controller_action = params[:requirement][:controller_action]
     render :index
   end
 
   private
     def load_requirement
       @requirement = Requirement.find_by(id: params[:id])
-      unless @requirement
-        flash[:alert] = 'requirement not found'
-        redirect_to(admins_requirements_path)
-      end
+      redirect_to admins_requirements_path, alert: 'Requirement not found' unless @requirement
     end
 
     def filter_params
-      params.require(:requirement).require(:filter).permit(:criteria, :value)
+      params.require(:category_filter)
     end
 end

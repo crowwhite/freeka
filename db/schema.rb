@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210085201) do
+ActiveRecord::Schema.define(version: 20141219061027) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -25,12 +25,15 @@ ActiveRecord::Schema.define(version: 20141210085201) do
 
   create_table "attachments", force: true do |t|
     t.integer  "requirement_id"
+    t.integer  "attacheable_id"
+    t.string   "attacheable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "desc_file_file_name"
-    t.string   "desc_file_content_type"
-    t.integer  "desc_file_file_size"
-    t.datetime "desc_file_updated_at"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "attacheable_sub_type",    default: "File"
   end
 
   add_index "attachments", ["requirement_id"], name: "index_attachments_on_requirement_id", using: :btree
@@ -55,6 +58,17 @@ ActiveRecord::Schema.define(version: 20141210085201) do
 
   add_index "category_requirements", ["category_id"], name: "index_category_requirements_on_category_id", using: :btree
   add_index "category_requirements", ["requirement_id"], name: "index_category_requirements_on_requirement_id", using: :btree
+
+  create_table "comments", force: true do |t|
+    t.text     "content"
+    t.integer  "requirement_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["requirement_id"], name: "index_comments_on_requirement_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "donor_requirements", force: true do |t|
     t.integer  "donor_id",                   null: false
@@ -107,7 +121,6 @@ ActiveRecord::Schema.define(version: 20141210085201) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "delta",           default: true, null: false
-    t.integer  "image_id"
   end
 
 end

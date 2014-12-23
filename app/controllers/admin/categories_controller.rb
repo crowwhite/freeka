@@ -33,8 +33,7 @@ class Admin::CategoriesController < Admin::BaseController
 
   def update
     if @category.update(category_params)
-      flash[:notice] = 'Category successfully updated'
-      redirect_to admins_categories_path
+      redirect_to admins_categories_path, notice: 'Category successfully updated'
     else
       flash.now[:alert] = 'Some errors were encountered in Category updation'
       render :edit
@@ -52,10 +51,7 @@ class Admin::CategoriesController < Admin::BaseController
   private
     def set_category
       @category = Category.find_by(id: params[:id])
-      unless @category
-        flash[:alert] = 'Category not found'
-        redirect_to admins_categories_path
-      end
+      redirect_to admins_categories_path, alert: 'Category not found' unless @category
     end
 
     def category_params

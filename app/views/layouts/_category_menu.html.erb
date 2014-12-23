@@ -1,0 +1,15 @@
+<ul id='main_menu'>
+  <% categories = Category.roots.enabled.includes(:enabled_sub_categories) %>
+  <% categories.each do |category| %>
+    <li>
+        <%= render 'shared/requirement/category_link', locals: { category: category } %>
+      <% if !category.enabled_sub_categories.empty? %>
+        <ul>
+          <% category.enabled_sub_categories.each do |sub_category| %>
+            <li><%= render 'shared/requirement/category_link', locals: { category: sub_category } %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

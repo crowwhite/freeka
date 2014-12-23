@@ -15,7 +15,7 @@
   <tbody>
     <% @requirements.each do |requirement| %>
       <tr>
-        <td><%= link_to requirement.title, requirement %></td>
+        <td><%= link_to requirement.title, admins_requirement_path(requirement) %></td>
         <td><%= requirement.details.truncate(30) %></td>
         <td><%= requirement.expiration_date %></td>
         <td>
@@ -30,7 +30,7 @@
         <td>
           <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>
         </td>
-        <td><%= requirement.status %></td>
+        <td><%= requirement.status.humanize %></td>
         <%= render 'state', locals: { requirement: requirement } %>
         <%= content_tag :td, id: 'donors' do %>
           <%= render 'donors', locals: { requirement: requirement } %>

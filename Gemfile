@@ -26,7 +26,6 @@ group :test do
   gem 'factory_girl_rails',                   '4.5.0'
   gem 'rspec-activemodel-mocks',              '1.0.1'
 end
-
   
 group :development, :test do
   gem 'capistrano',                           '~> 3.1.0'

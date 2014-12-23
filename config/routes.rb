@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post 'search', on: :collection
     get 'filter', on: :collection
     resources :donor_requirements, only: :create
+    put 'mark_donated', to: 'donor_requirements#mark_donated'
     delete 'uninterest', to: 'donor_requirements#destroy'
     member do
       put 'toggle_state'
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
       put 'fulfill'
       put 'reject_donor', as: :reject_current_donor_of
     end
+    resources :comments, only: :create
   end
 
   resources :donations, only: :index do
@@ -35,7 +37,7 @@ Rails.application.routes.draw do
       put 'toggle_status', on: :member
     end
     resources :welcome, only: :index
-    resources :requirements, only: :index do
+    resources :requirements, only: [:index, :show] do
       put 'toggle_state', on: :member
       post 'search', on: :collection
       get 'filter', on: :collection

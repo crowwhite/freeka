@@ -1,82 +1,86 @@
-<%= render 'shared/requirement/my_links' %>
+<% @requirements ||= @donations %>
 <div class="bs-docs-section">
-  <div class='row'>
-    <div class='row'>
-      <div class='col-lg-12 pull-left'>
-        <h1>Requirements</h1>
-      </div>
-      <div class="col-lg-12 pull-right">
-        <%= link_to 'New Requirement', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
+  <div class='container'>
+    <div class='container'>
+      <div class='row'>
+        <% if display_page == 'welcome' %>
+          <div class='row'>
+            <div class='col-md-9'>
+              <%= render 'layouts/category_menu' %>
+            </div>
+            <div class='col-md-3'>
+              <%= render 'layouts/search_bar' %>
+            </div>
+          </div>
+        <% end %>
+        <div class='row'>
+          <div class='col-md-6'>
+            <% unless display_page == 'welcome' %>
+              <%= render 'requirements/user_pages_select' %>
+            <% end %>
+          </div>
+          <div class='col-md-4'>
+          </div>
+          <div class="col-md-2">
+            <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
+          </div>
+        </div>
+        <% unless display_page == 'welcome' || display_page == 'users' || display_page == 'donations' %>
+          <div class='row'>
+            <div class='col-md-4'>
+              <%= render 'shared/requirement/status_select' %>
+            </div>
+          </div>
+        <% end %>
+        <br>
       </div>
     </div>
-    <% @controller_action ||= [controller_name, action_name].join('#') %>
-    <% if @controller_action == 'requirements#index' %>
-      <%= render 'shared/requirement/status_select' %>
-    <% end %>
   </div>
   <div class="row">
-    <div class='col-lg-12'>
-      <table class="table table-hover table-responsive">
-        <thead>
-          <th>Title</th>
-          <th>Details</th>
-          <th>Expiration Date</th>
-          <th>Address</th>
-          <th>Categories</th>
-          <% if @controller_action == 'welcome#index' %>
-            <th>Show Interest</th>
-          <% elsif @controller_action == 'requirements#index' %>
-            <th>Status</th>
-            <th>Action</th>
-            <th>Donors</th>
-          <% end %>
-          <th>Share</th>
-        </thead>
-        <tbody>
-          <% @requirements.each do |requirement| %>
-            <tr>
-              <td><%= link_to requirement.title, requirement %></td>
-              <td><%= requirement.details.truncate(20) %></td>
-              <td><%= requirement.expiration_date %></td>
-              <td>
-                <%= requirement.address.street %><br>
-                <%= requirement.address.city %><br>
-                <% country = Carmen::Country.coded(requirement.address.country_code) %>
-                <% if !country.subregions.empty? %>
-                  <%= country.subregions.coded(requirement.address.state_code).name.truncate(10) %><br>
-                <% end %>
-                <%= country.name %>
-              </td>
-              <td>
-                <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>
-              </td>
-              <% if @controller_action == 'welcome#index' %>
-                <td>
-                  <%= content_tag :span, id: 'interest' + requirement.id.to_s do %>
-                    <%= render 'requirements/interest', locals: { requirement: requirement } %>
-                  <% end %>
-                </td>
-              <% elsif @controller_action == 'requirements#index' %>
-                <td><%= requirement.status %></td>
-                <td>
-                  <% if requirement.pending? %>
-                    <%= link_to 'delete', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                  <% else %>
-                    <%= content_tag :div, id: 'fulfill' + requirement.id.to_s do %>
-                      <%= render 'requirements/fulfill', locals: { requirement: requirement } %>
+    <div class='col-md-12'>
+      <div class="container">
+        <div class="row">
+        <% @requirements.each do |requirement| %>
+          <div class="col-md-4">
+            <div class="equal-height">
+              <div class='top-black align-center'>
+                <span title='Interested Donors' class='pull-left highlight-round'>
+                  <strong>
+                    <% if requirement.donor_requirements.size > 0 %>
+                      <%= requirement.donor_requirements.size %>
                     <% end %>
-                  <% end %>
-                <%= content_tag :td, id: 'donors' + requirement.id.to_s do %>
-                  <%= render 'requirements/donors', locals: { requirement: requirement } %>
-                <% end %>
+                  </strong>
+                </span>
+                <text class='small-font'>
+                  Expiring at:
+                  <%= requirement.expiration_date.strftime("%d %b %Y") %>
+                </text>
+                <span title='No of files attached' class="pull-right highlight-round">
+                  <strong>
+                    <% if requirement.files.size > 0 %>
+                      <%= requirement.files.size %>
+                    <% end %>
+                  </strong>
+                </span>
+              </div>
+              <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg' %>
+              <%= content_tag :div, class: "bottom-black " + ((requirement.details.length > 150) ? 'large-on-hover' : '') do %>
+                <div class="title">
+                  <strong title="<%= requirement.title %>"><%= link_to requirement.title.truncate(33), requirement %></strong>
+                </div>
+                <div class="description">
+                  <strong><%= requirement.address.city %></strong>
+                  <br>
+                  <text>
+                    <%= requirement.details.truncate(250) %>
+                  </text>
+                </div>
               <% end %>
-              <td>
-                <div class="fb-share-button" data-href="https://google.com" data-layout="button_count"></div>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+            </div>
+          </div>
+        <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

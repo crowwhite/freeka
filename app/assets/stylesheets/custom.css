@@ -1,5 +1,167 @@
+#donor-list {
+  width: 200px;
+  height: 100px;
+  overflow: auto;
+}
+
+.navbar-brand {
+  font-size: 30px;
+}
+
+.top-pad-0 {
+  padding-top: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+#user-logged-in-options > ul {
+  list-style-type: none;
+  display: none;
+  position: absolute;
+  right: 0px;
+  top: 30px;
+  background-color: white;
+  padding: 10px;
+  width: 125px;
+  border: 1px solid black;
+  z-index: 1;
+  border-top: none;
+}
+
+#user-logged-in-options a {
+  padding-top: 0;
+  padding-bottom: 0;
+  text-decoration: none;
+}
+
+#user-logged-in-options > ul > li:first-child {
+  border-bottom: 1px solid black;
+}
+
+#user-logged-in-options {
+  font-size: 18px;
+  color: black;
+  width: 125px;
+  position: relative;
+  margin-right: 55px;
+}
+
+#user-logged-in-options > a {
+  text-decoration: none;
+}
+
+#user-logged-in-options:hover > ul {
+  display: block;
+}
+
+#user-logged-in-options:hover {
+  background-color: white;
+}
+
+.highlight-grey-border {
+  background-color: #DEDEDC;
+}
+
+#comments {
+  max-height: 600px;
+  list-style-type: none;
+  overflow: auto;
+}
+
+.scroll-auto {
+  overflow: auto;
+}
+
+.height-800 {
+  height: 800px;
+  overflow: auto;
+}
+
+.height-630 {
+  height: 630px;
+}
+
+.height-725 {
+  height: 725px;
+}
+
+.border-black {
+  border: 1px solid #aaa;
+}
+.large-font {
+  font-size: 20px;
+}
+
 li.rejected {
   color: red;
+}
+
+.equal-height {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.bottom-black {
+  background-color: black;
+  color: white;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  opacity: 0.75;
+  padding-left: 5px;
+  font-size: 20px;
+  height: 90px;
+}
+.title {
+  text-transform: capitalize;
+}
+
+.description {
+  font-size: 14px;
+}
+
+.large-on-hover:hover {
+  height: 150px;
+}
+
+img {
+  width: 100%;
+}
+
+.top-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.top-black {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  background-color: black;
+  opacity: 0.75;
+  height: 25px;
+  font-size: 18px;
+}
+
+.highlight-round {
+  width: 20px;
+  margin: 0;
+  background-color: black;
+  color: white;
+  border-radius: 2px;
+  text-align: center;
+
 }
 
 div.custom {
@@ -14,11 +176,11 @@ table.parent > tbody > tr {
   background-color: #D8D8D8;
 }
 
-#status_filter {
+ul.active-buttons {
+  padding-left: 0;
   list-style-type: none;
 }
-#status_filter > li {
-  padding: 10px;
+ul.active-buttons > li {
   display: inline-block;
 }
 .circle { 
@@ -63,3 +225,80 @@ div.right {
 input[type='submit'] {
   color: black !important;
 }
+
+.navbar {
+  margin-bottom: 0 !important;
+}
+
+.center {
+  margin: 0 20px;
+}
+
+.align-center {
+  text-align: center;
+  /*margin: 60px;*/
+}
+
+.small-font {
+  font-size: 14px;
+}
+
+#main_menu {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  #main_menu > li{
+    display: inline-block;
+    margin-left: -2px;
+    background-color: #D3D3D3;
+    position: relative;
+  }
+  #main_menu > li > a {
+    padding: 6px 20px;
+    font: italic 18px/35px Georgia;
+  }
+  #main_menu > li:first-child { 
+    margin-left: 0;
+  }
+  #main_menu > li > ul {
+    list-style-type: none;
+    width: 178px;
+    padding: 10px;
+    display: none;
+    background-color: white;
+    position: absolute;
+    border: 1px solid black;
+    top: 35px;
+    left: -1px;
+  }
+  #main_menu > li > ul > li:first-child {
+    border-top-style: none;
+  }
+  #main_menu > li > ul > li {
+  }
+  #main_menu > li > ul > li > a {
+    font: italic 14px Georgia;
+    padding: 5px 0;
+    display: block;
+  }
+  #main_menu > li > ul > li > a:hover {
+    color: #bd0707;
+  }
+  ul a {
+    text-decoration: none;
+    color: black;
+  }
+  #main_menu > li:hover > ul {
+    display: block;
+    z-index: 1;
+  }
+  #main_menu > li:hover > a {
+    color: #8c8c8c;
+    background-color: white;
+    padding-bottom: 10px;
+  }
+  #main_menu > li:hover {
+    background-color: white;
+  }
