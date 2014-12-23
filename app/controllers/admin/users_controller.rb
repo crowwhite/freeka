@@ -4,7 +4,11 @@ class Admin::UsersController < Admin::BaseController
   before_action :load_user, only: [:edit, :update, :destroy, :show, :toggle_status]
 
   def index
-    @users = User.where.not(id: current_admin.id).order(:name)
+    if params[:filter]
+      @users = User.public_send(params[:filter]).where.not(id: current_admin.id).order(:name).page params[:page]
+    else
+      @users = User.where.not(id: current_admin.id).order(:name).page params[:page]
+    end
   end
 
   def update
@@ -26,7 +30,7 @@ class Admin::UsersController < Admin::BaseController
 
   def search
     @search = search_params
-    @users = User.public_send("with_#{ @search[:criteria] }_like", @search[:text]).order(@search[:criteria])
+    @users = User.public_send("with_#{ @search[:criteria] }_like", @search[:text]).order(@search[:criteria]).page params[:page]
     flash.now[:alert] = 'No results found' if @users.empty?
     render :index
   end

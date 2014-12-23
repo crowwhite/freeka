@@ -1,5 +1,12 @@
 <%= javascript_include_tag 'loading_button' %>
-<h1>Listing Users</h1>
+<div class='row'>
+  <h1 class='col-md-6'>Listing Users</h1>
+  <div class='col-md-3'></div>
+  <div class='col-md-3'>
+    <br>
+    <%= render 'status_select' %>
+  </div>
+</div>
 <div class="form right">
   <h3>Search by</h3>
   <%= form_tag('/admins/users/search', method: :post) do %>
@@ -9,9 +16,6 @@
     </select>
     <input name="user[search][text]" type="text" value=<%= @search[:text] if @search %> >
     <%= submit_tag 'Search' %>
-  <% end %>
-  <% if @search %>
-    <%= link_to 'All Users', admins_users_path %>
   <% end %>
 </div>
 <table class='table'>
@@ -34,3 +38,4 @@
     </tr>
   <% end %>
 </table>
+<%= paginate @users %>
