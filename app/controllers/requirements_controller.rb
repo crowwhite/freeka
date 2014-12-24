@@ -5,9 +5,9 @@ class RequirementsController < ApplicationController
 
   def index
     if params[:filter] == 'pending'
-      @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
+      @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files, :image, :address).order(created_at: :desc).page params[:page]
     elsif params[:filter] == 'fulfilled'
-      @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files).order(updated_at: :desc).page params[:page]
+      @requirements = current_user.requirements.public_send(params[:filter]).includes(:donor_requirements, :files, :image, :address).order(updated_at: :desc).page params[:page]
     else
       @requirements = current_user.requirements.includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
     end
