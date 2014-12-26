@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'loading_button' %>
 <h1>Listing Users</h1>
 <div class="form right">
   <h3>Search by</h3>
@@ -16,29 +17,20 @@
 <table class='table'>
   <th>Name</th>
   <th>Email</th>
-  <th>Type</th>
-  <th>Address</th>
-  <th>Contact number</th>
-  <th>About me</th>
   <th>#Requests</th>
   <th>#Donations</th>
   <th>Enable/Disable</th>
-  <th colspan="2">Edit</th>
+  <th>Edit</th>
   <% @users.each do |user| %>
     <tr>
-      <td><%= link_to user.name, admins_user_path(user) %></td>
+      <td><%= link_to user.display_name, admins_user_path(user) %></td>
       <td><%= user.email %></td>
-      <td><%= user.type %></td>
-      <td><%= user.address %></td>
-      <td><%= user.contact_no %></td>
-      <td><%= user.about_me %></td>
       <td><%= user.requirements.size %></td>
       <td><%= user.donations.size %></td>
-      <%= content_tag :td, id: 'status' + user.id.to_s do %>
+      <%= content_tag :td, id: 'status' + user.id.to_s, class: 'loader' do %>
         <%= render 'status', locals: { user: user } %>
       <% end %>
       <td><%= render 'update', locals: { user: user } %></td>
-      <td><%= render 'delete', locals: { user: user } %></td>
     </tr>
   <% end %>
 </table>

@@ -1,7 +1,26 @@
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
 #donor-list {
   width: 200px;
   height: 100px;
   overflow: auto;
+}
+
+.no-decoration {
+  text-decoration: none;
 }
 
 .navbar-brand {
@@ -14,6 +33,10 @@
 
 .full-width {
   width: 100%;
+}
+
+.round-corners {
+  border-radius: 4px;
 }
 
 #user-logged-in-options > ul {
@@ -150,18 +173,24 @@ img {
   color: white;
   background-color: black;
   opacity: 0.75;
-  height: 25px;
+  height: 33px;
   font-size: 18px;
 }
 
 .highlight-round {
-  width: 20px;
+  width: 35px;
   margin: 0;
   background-color: black;
   color: white;
   border-radius: 2px;
   text-align: center;
+  font-size: 16px;
+}
 
+.icon {
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-block;
 }
 
 div.custom {
@@ -286,7 +315,7 @@ input[type='submit'] {
   #main_menu > li > ul > li > a:hover {
     color: #bd0707;
   }
-  ul a {
+  #main_menu a {
     text-decoration: none;
     color: black;
   }
@@ -301,4 +330,12 @@ input[type='submit'] {
   }
   #main_menu > li:hover {
     background-color: white;
+  }
+
+  #admin-nav > li:hover {
+    background-color: #aaa;
+  }
+
+  #admin-nav a {
+    text-decoration: none;
   }

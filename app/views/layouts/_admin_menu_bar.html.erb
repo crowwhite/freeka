@@ -8,6 +8,23 @@
     <%= link_to 'Freeka', root_path, class: 'navbar-brand' %>
   </div>
   <div class='collapse navbar-collapse col-md-6'>
+    <ul class='nav navbar-nav' id='admin-nav'>
+      <li>
+        <div class='link'>
+          <%= link_to 'Categories', admins_categories_path %>
+        </div>
+      </li>
+      <li>
+        <div class='link'>
+          <%= link_to 'All Users', admins_users_path %>
+        </div>
+      </li>
+      <li>
+        <div class='link'>
+          <%= link_to 'All Requirements', admins_requirements_path({ filter: 'pending' }) %>
+        </div>
+      </li>
+    </ul>
   </div>
   <div class='col-md-2'>
   </div>
