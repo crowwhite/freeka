@@ -12,4 +12,8 @@ module ApplicationHelper
     @display_page || controller_name
   end
 
+  def add_class_enabled_or_disabled(object_value, comparison_value)
+    object_value == comparison_value ? 'active-object' : 'inactive-object'
+  end
+
 end

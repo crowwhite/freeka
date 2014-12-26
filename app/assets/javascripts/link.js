@@ -11,11 +11,11 @@ Link.prototype.bindEvents = function() {
 };
 
 Link.prototype.markForRemoval = function(link) {
-  var link = $(link);
-  var hiddenField = link.nextAll(".hidden_field").first();
-  var linkTextElements = link.find('.remove-text');
-  linkTextElements.toggleClass('hiddenn').toggleClass('selected');
-  hiddenField.val(linkTextElements.filter('.selected').attr('data-remove'));
+  var $link = $(link);
+  var $hiddenField = $link.nextAll(".hidden_field").first();
+  var $linkTextElements = $link.find('.remove-text');
+  $linkTextElements.toggleClass('hiddenn').toggleClass('selected');
+  $hiddenField.val($linkTextElements.filter('.selected').attr('data-remove'));
 };
 
 $(function() {

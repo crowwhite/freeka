@@ -1,5 +1,5 @@
 <% if locals[:user].enabled %>
-  <%= link_to 'disable', toggle_status_admins_user_path(locals[:user], user: { enabled: false }), method: :put, remote: true, class: 'btn btn-default btn-sm loader-btn' %>
+  <%= link_to 'disable', toggle_status_admins_user_path(locals[:user], user: { enabled: false }), method: :put, remote: true, class: 'btn btn-default btn-sm loader-btn ' + add_class_enabled_or_disabled(locals[:user].enabled, true) %>
 <% else %>
-  <%= link_to 'enable', toggle_status_admins_user_path(locals[:user], user: { enabled: true }), method: :put, remote: true, class: 'btn btn-primary btn-sm loader-btn' %>
+  <%= link_to 'enable', toggle_status_admins_user_path(locals[:user], user: { enabled: true }), method: :put, remote: true, class: 'btn btn-primary btn-sm loader-btn ' + add_class_enabled_or_disabled(locals[:user].enabled, true) %>
 <% end %>

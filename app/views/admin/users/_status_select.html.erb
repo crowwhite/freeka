@@ -1,11 +1,11 @@
 <ul class='active-buttons'>
   <li>
-    <%= link_to 'Enabled', admins_users_path(filter: 'active'), class: 'btn btn-primary ' + add_class_active(params[:filter], 'active'), role: 'button' %>
+    <%= link_to 'Enabled', '#', class: 'btn btn-primary status-button', role: 'button', data: { hide: 'inactive-object' }  %>
   </li>
   <li>
-    <%= link_to 'Disabled', admins_users_path(filter: 'inactive'), class: 'btn btn-primary ' + add_class_active(params[:filter], 'inactive'), role: 'button' %>
+    <%= link_to 'Disabled', '#', class: 'btn btn-primary status-button', role: 'button', data: { hide: 'active-object' } %>
   </li>
   <li>
-    <%= link_to 'All', admins_users_path(filter: 'all'), class: 'btn btn-primary ' + add_class_active(params[:filter], 'all'), role: 'button' %>
+    <%= link_to 'All', admins_users_path, class: 'btn btn-primary ' + add_class_active(params[:filter], 'all'), role: 'button' %>
   </li>
 </ul>
