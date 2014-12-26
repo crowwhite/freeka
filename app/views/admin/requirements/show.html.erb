@@ -17,7 +17,7 @@
         <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg', class: 'pull-left' %>
         <p><%= @requirement.details %></p>
         <strong>Requestor Name: </strong>
-        <%= @requirement.person.name %>
+        <%= @requirement.person.display_name %>
         <br>
         <br>
         <strong>Requestor Bio: </strong>
@@ -46,7 +46,7 @@
         <% if @requirement.interested_donors.size > 0 %>
           <ul id='donor-list'>
             <% @requirement.interested_donors.each do |donor| %>
-              <li><%= donor.name %></li>
+              <li><%= donor.display_name %></li>
             <% end %>
           </ul>
         <% end %>

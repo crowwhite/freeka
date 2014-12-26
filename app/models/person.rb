@@ -30,8 +30,8 @@ class Person < ActiveRecord::Base
     type == 'Admin'
   end
 
-  def donor_requirement(requirement_id)
-    donor_requirements.find { |dr| dr.requirement_id == requirement_id }
+  def display_name
+    name.capitalize
   end
 
 end
