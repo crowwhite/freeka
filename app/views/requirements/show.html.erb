@@ -25,11 +25,11 @@
         <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg', class: 'pull-left' %>
         <p><%= @requirement.details %></p>
         <strong>Requestor: </strong>
-        <%= link_to @requirement.person.name, '#' %>
+        <%= link_to @requirement.person.display_name, '#' %>
         <br>
         <br>
         <strong>Needed By: </strong>
-        <%= @requirement.expiration_date.strftime("%d %b %Y") %>
+        <%= @requirement.expiration_date %>
         <br>
         <h4>Supported Documents: </h4>
         <% @requirement.files.each do |attachment| %>

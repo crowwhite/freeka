@@ -1,7 +1,7 @@
 <ul class="donor">
   <% locals[:requirement].interested_donors.each do |donor| %>
     <li class="donor">
-      <strong>Name: </strong><span id=<%= 'donor' + donor.id.to_s %>><%= donor.name %></span><br>
+      <strong>Name: </strong><span id=<%= 'donor' + donor.id.to_s %>><%= donor.display_name %></span><br>
       <div>
         <strong>Email: </strong><%= donor.email %><br>
         <strong>Contact #: </strong><%= donor.contact_no %><br>

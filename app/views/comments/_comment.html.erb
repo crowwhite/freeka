@@ -1,5 +1,5 @@
 <% comment ||= @comment %>
 <li class='highlight-grey-border round-corners'>
-  <strong>&nbsp;<%= comment.user.name.capitalize %></strong> commented on <%= comment.created_at.strftime("%d %b %Y at %I:%M %p") %>
+  <strong>&nbsp;<%= comment.user.display_name %></strong> commented on <%= comment.created_at %>
   <pre class='highlight-grey-border'><%= comment.content %></pre>
 </li>
