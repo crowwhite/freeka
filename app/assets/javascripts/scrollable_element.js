@@ -38,6 +38,7 @@ ScrollableElement.prototype.getElements = function() {
     data: { 'page': $('#page').val(), 'ajax': true },
     success: function (response) {
       $('#page').remove();
+      $('#tiles-not-loaded').remove();
       _this.containerElementHeight = _this.$containerElement.height();
       _this.$containerElement.append(response);
     },
