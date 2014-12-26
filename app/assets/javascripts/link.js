@@ -1,5 +1,5 @@
-function Link(classOfLink) {
-  this.$links = $('.' + classOfLink)
+function Link(linkClass) {
+  this.$links = $('.' + linkClass);
 };
 
 Link.prototype.bindEvents = function() {
@@ -7,7 +7,7 @@ Link.prototype.bindEvents = function() {
   this.$links.on('click', function(event) {
     event.preventDefault();
     _this.markForRemoval(this);
-  })
+  });
 };
 
 Link.prototype.markForRemoval = function(link) {

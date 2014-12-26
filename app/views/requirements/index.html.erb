@@ -1,4 +1,5 @@
 <%= javascript_include_tag 'request_tile' %>
+<%= javascript_include_tag 'scrollable_element' %>
 <% @requirements ||= @donations %>
 <div class="bs-docs-section">
   <div class='container'>
@@ -40,51 +41,11 @@
   <div class="row">
     <div class='col-md-12'>
       <div class="container">
-        <div class="row">
-        <% @requirements.each do |requirement| %>
-          <div class="col-md-4 request-tile">
-            <div class="equal-height">
-              <div class='top-black align-center'>
-                <span title='Interested Donors' class='pull-left highlight-round'>
-                  <strong>
-                    <% if requirement.donor_requirements.size > 0 %>
-                      <%= requirement.donor_requirements.size %>
-                      <%= image_tag 'http://www.iconshock.com/img_jpg/SUNNYDAY/general/jpg/256/group_icon.jpg', class: 'icon' %>
-                    <% end %>
-                  </strong>
-                </span>
-                <text class='small-font'>
-                  Needed By:
-                  <%= requirement.expiration_date.strftime("%d %b %Y") %>
-                </text>
-                <span title='No of files attached' class="pull-right highlight-round">
-                  <strong>
-                    <% if requirement.files.size > 0 %>
-                      <%= image_tag 'http://ptw.greenless.com/android/GREENLESS%20UI/Email/res/drawable-hdpi/ic_mms_attachment_small.png', class: 'icon' %>
-                      <%= requirement.files.size %>
-                    <% end %>
-                  </strong>
-                </span>
-              </div>
-              <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg' %>
-              <%= content_tag :div, class: "bottom-black " + ((requirement.details.length > 150) ? 'large-on-hover' : '') do %>
-                <div class="title">
-                  <strong title="<%= requirement.title %>"><%= link_to requirement.title.truncate(33), requirement %></strong>
-                </div>
-                <div class="description">
-                  <strong><%= requirement.address.city %></strong>
-                  <br>
-                  <text>
-                    <%= requirement.details.truncate(250) %>
-                  </text>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
+        <div class="row" id='requirement-tiles'>
+          <%= render 'requirements/requirement' %>
         </div>
       </div>
     </div>
   </div>
 </div>
-<%= paginate @requirements %>
+<%#= paginate @requirements %>
