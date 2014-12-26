@@ -1,5 +1,5 @@
-function Link(classOfLink) {
-  this.$links = $('.' + classOfLink)
+function Link(linkClass) {
+  this.$links = $('.' + linkClass);
 };
 
 Link.prototype.bindEvents = function() {
@@ -7,14 +7,14 @@ Link.prototype.bindEvents = function() {
   this.$links.on('click', function(event) {
     event.preventDefault();
     _this.markForRemoval(this);
-  })
+  });
 };
 
 Link.prototype.markForRemoval = function(link) {
   var link = $(link);
   var hiddenField = link.nextAll(".hidden_field").first();
   var linkTextElements = link.find('.remove-text');
-  linkTextElements.toggleClass('hiddenn').toggleClass('selected');
+  linkTextElements.toggleClass('hidden').toggleClass('selected');
   hiddenField.val(linkTextElements.filter('.selected').attr('data-remove'));
 };
 

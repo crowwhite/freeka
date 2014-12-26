@@ -9,7 +9,10 @@ $(function () {
       data: { 'parent_id': _this.value },
       success: function (response) {
         $('#sub_category_select').html(response)
+      },
+      error: function() {
+        $('#flash').empty().append($('<div>', { html: 'Could not load sub-categories. Please select a category again.', class: 'alert alert-danger', role: 'alert' }))
       }
-    })
-  })
+    });
+  });
 });

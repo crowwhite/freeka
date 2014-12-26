@@ -10,24 +10,26 @@ function ScrollableElement(remainingPixels, url, $containerElement) {
 ScrollableElement.prototype.bindEvents = function() {
   var _this = this;
   _this.$windowObject.on('scroll', function() {
-    var pixelsLeftAtBottom = $('body').height() - _this.$windowObject.scrollTop() - _this.$windowObject.height();
-    if(pixelsLeftAtBottom < _this.remainingPixels && _this.runOncePerUpdation() && !_this.waitForResponse) {
-      _this.waitForResponse = true;
-      _this.loadMoreElements();
-    }
+    _this.loadMoreElements();
   });
+}
+
+ScrollableElement.prototype.loadMoreElements = function() {
+  var pixelsLeftAtBottom = $('body').height() - this.$windowObject.scrollTop() - this.$windowObject.height();
+  if(pixelsLeftAtBottom < this.remainingPixels && this.runOncePerUpdation() && !this.waitForResponse) {
+    this.waitForResponse = true;
+    this.getElements();
+  }
 }
 
 ScrollableElement.prototype.runOncePerUpdation = function() {
   if(this.$containerElement.height() == this.containerElementHeight) {
     return false;
   }
-  else {
-    return true;
-  }
+  return true;
 }
 
-ScrollableElement.prototype.loadMoreElements = function() {
+ScrollableElement.prototype.getElements = function() {
   var _this = this;
   $.ajax({
     type: "GET",
@@ -38,8 +40,14 @@ ScrollableElement.prototype.loadMoreElements = function() {
       $('#page').remove();
       _this.containerElementHeight = _this.$containerElement.height();
       _this.$containerElement.append(response);
+    },
+    complete: function() {
       _this.waitForResponse = false;
-;    }
+    },
+    error: function() {
+      $('#tiles-not-loaded').remove();
+      $('body').append($('<div>', { html: 'Some thing went wrong while fetching more records. Please refresh the page.', class: 'alert alert-danger', role: 'alert', id: 'tiles-not-loaded' }))
+    }
   });
 }
 
