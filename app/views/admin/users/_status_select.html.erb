@@ -6,6 +6,6 @@
     <%= link_to 'Disabled', '#', class: 'btn btn-primary status-button', role: 'button', data: { hide: 'active-object' } %>
   </li>
   <li>
-    <%= link_to 'All', admins_users_path, class: 'btn btn-primary ' + add_class_active(params[:filter], 'all'), role: 'button' %>
+    <%= link_to 'All', '#', class: 'btn btn-primary status-button hidden', role: 'button', id: 'all-users', data: { hide: 'none' } %>
   </li>
 </ul>
