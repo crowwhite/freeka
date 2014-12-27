@@ -13,56 +13,74 @@
   <div class='container'>
     <div class='container'>
       <div class='row'>
-        <h2>Edit Profile</h2>
+        <div id='profile'>
+          <h2>
+            Edit Profile
+            <%= link_to 'View Public Profile', user_path(resource), remote: true, class: 'btn btn-xs btn-primary' %>
+          </h2>
 
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-          <%= devise_error_messages! %>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= devise_error_messages! %>
 
 
-          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+
+            <div class="field">
+              <%= f.label :name %><br>
+              <%= f.text_field :name %>
+            </div>
+            <br>
+            <div class="field">
+              <%= f.label :Bio, for: :about_me %><br>
+              <%= f.text_area :about_me %>
+            </div>
+            <br>
+            <div class="field">
+              <%= f.label :address %><br>
+              <%= f.text_area :address %>
+            </div>
+            <br>
+            <div class="field mandatory">
+              <%= f.label :contact_no %><br>
+              <%= f.text_field :contact_no %>
+            </div>
+            <br>
+            <div class"field">
+              <div></div>
+              <% if f.object.image %>
+                <%= image_tag f.object.image.url(:thumb), class: 'icon' %>
+              <% end %>
+              <%= f.fields_for :image, f.object.image || f.object.build_image do |image| %>
+                <%= image.label :attachment %>
+                <%= image.file_field :attachment %>
+              <% end %>
+              <div class='col-md-6'></div>
+              <div class='col-md-3'></div>
+            </div>
+            <br>
+            <div class="field">
+              <%= f.label :New_password, for: :password %> <i>(leave blank if you don't want to change it)</i><br />
+              <%= f.password_field :password, autocomplete: "off" %>
+            </div>
+            <br>
+            <div class="field">
+              <%= f.label :password_confirmation %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            </div>
+            <br>
+            <div class="field">
+              <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+              <%= f.password_field :current_password, autocomplete: "off" %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "Update" %>
+              <%= link_to 'Cancel', edit_user_registration_path, class: 'btn btn-sm btn-default' %>
+            </div>
           <% end %>
-
-          <div class="field">
-            <%= f.label :name %><br>
-            <%= f.text_field :name %>
-          </div>
-          <br>
-          <div class="field">
-            <%= f.label :Bio, for: :about_me %><br>
-            <%= f.text_area :about_me %>
-          </div>
-          <br>
-          <div class="field">
-            <%= f.label :address %><br>
-            <%= f.text_area :address %>
-          </div>
-          <br>
-          <div class="field mandatory">
-            <%= f.label :contact_no %><br>
-            <%= f.text_field :contact_no %>
-          </div>
-          <br>
-          <div class="field">
-            <%= f.label :New_password, for: :password %> <i>(leave blank if you don't want to change it)</i><br />
-            <%= f.password_field :password, autocomplete: "off" %>
-          </div>
-          <br>
-          <div class="field">
-            <%= f.label :password_confirmation %><br />
-            <%= f.password_field :password_confirmation, autocomplete: "off" %>
-          </div>
-          <br>
-          <div class="field">
-            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-            <%= f.password_field :current_password, autocomplete: "off" %>
-          </div>
-
-          <div class="actions">
-            <%= f.submit "Update" %>
-            <%= link_to 'Cancel', edit_user_registration_path, class: 'btn btn-sm btn-default' %>
-          </div>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>

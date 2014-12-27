@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     put 'donate', on: :member
   end
 
+  resources :users, only: :show
+
   namespace :admin, path: 'admins', as: :admins do
     resources :categories, except: :show do
       put 'toggle_status', on: :member

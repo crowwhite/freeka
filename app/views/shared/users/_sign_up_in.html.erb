@@ -1,6 +1,6 @@
 <% if @person_logged_in = current_user || current_admin %>
   <li id='user-logged-in-options'>
-    <%= link_to @person_logged_in.name.capitalize, '#' %>
+    <%= link_to @person_logged_in.display_name, user_path(@person_logged_in) %>
     <ul>
       <% if !current_admin %>
         <li>
