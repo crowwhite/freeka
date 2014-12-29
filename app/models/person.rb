@@ -17,12 +17,16 @@ class Person < ActiveRecord::Base
   # Fixed
   #FIXME_AB: Lets make a constant RegExp hash in initializers to keep all regexp one place, so that we can resuse them.
   # Fixed
+  #FIXME_AB: regexp should be extracted as constant hash so that can be reused. Something like REGEXP[:password] = /\S/
+  #FIXME_AB: Also in FE we are not displaying that spaces are not allowed. How would user get to know about this.
   validates :password, format: { with: Validator::PASSWORD, message: 'No white spaces allowed' }, on: :create
   #FIXME_AB: No max limit on contact number.
   # Fixed
   validates :contact_no, numericality: true, allow_blank: true
   validates :contact_no, length: { minimum: 10, maximum: 12 }
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
+  #FIXME_AB: What about email validations?
+  #FIXME_AB: Are we allowing special chars in name? We should have sensible validations on all models.
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable

@@ -1,3 +1,4 @@
+#FIXME_AB: We should have index on parent_id field.
 class Category < ActiveRecord::Base
 
   attr_accessor :is_sub_category
@@ -13,9 +14,11 @@ class Category < ActiveRecord::Base
   # Fixed
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
             dependent: :restrict_with_error
+  #FIXME_AB: Is the following association correct? where it is checking for subcategories?            
   has_many :enabled_sub_categories, -> { where enabled: true }, class_name: Category,
             foreign_key: :parent_id
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
+  #FIXME_AB: As far as I am seeing the requirement form, one requirement can belongs to one category only. If yes, then why do we need has_many associations
   has_many :requirements, through: :category_requirements, dependent: :restrict_with_error
   has_many :category_requirements, dependent: :restrict_with_error
 
@@ -33,16 +36,19 @@ class Category < ActiveRecord::Base
   end
 
   def toggle_status_of_sub_categories
+    #FIXME_AB: The name of the method doesn't match with the work this method is doing
     sub_categories.update_all(enabled: enabled)
   end
 
   def toggle_status_of_requirements
+    #FIXME_AB: The name of the method doesn't match with the work this method is doing
     requirements.update_all(enabled: enabled)
   end
 
   private
 
     def ensure_parent_is_not_a_sub_category
+      #FIXME_AB: why adding error on parent_id. User doesn't know about parent_id
       errors.add(:parent_id, "category can't be a sub category") unless parent_category.parent_id.nil?
     end
 end

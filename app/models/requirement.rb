@@ -6,6 +6,7 @@ class Requirement < ActiveRecord::Base
   enum status: { pending: 0, fulfilled: 2 }
 
   # Association
+  #FIXME_AB: Following two associations are wrong. We have a better way.
   has_one :image, -> { where(attacheable_sub_type: :Image) }, as: :attacheable, class_name: :Attachment, dependent: :destroy
   has_many :files, -> { where(attacheable_sub_type: :File) }, as: :attacheable, class_name: :Attachment, dependent: :destroy
   belongs_to :address, foreign_key: :location_id, dependent: :destroy
@@ -28,6 +29,7 @@ class Requirement < ActiveRecord::Base
   #FIXME_AB: I guess following validation should be on create only
   # Fixed : It is needed in both create and update
   validate :date_not_in_past, unless: :status_changed?
+  #FIXME_AB: Why do we have validations on only two fields?
 
   # Callbacks
   #FIXME_AB: before_destroy :check_destroyable. Such method name should be independent of states
@@ -39,7 +41,10 @@ class Requirement < ActiveRecord::Base
   scope :enabled, -> { where(enabled: true) }
   #FIXME_AB: I doubt if this is a right way of making scope, Is this scope chainable?
   # Fixed: Yes this is chainable
+  #FIXME_AB: Ideally we should pass objects, in this case we should pass category object
+  #FIXME_AB: Moreover I think we don't need following scope. Just have similar association in category like category.requirements
   scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
+  #FIXME_AB: What is the meaning of following scope?
   scope :with_status_not, ->(status) { where.not(status: status) }
   #FIXME_AB: Use Time.current.to_date
   # Fixed
@@ -51,6 +56,7 @@ class Requirement < ActiveRecord::Base
 
     event :fulfill do
       after do
+        #FIXME_AB: Any better way to do this?
         comments.create(content: 'Requirement has been fulfilled. Thank You all.', user_id: requestor_id)
         thank_users
       end
@@ -58,17 +64,10 @@ class Requirement < ActiveRecord::Base
     end
   end
 
-  def donor_requirement(user_id)
-    donor_requirements.find { |dr| dr.donor_id == user_id }
-  end
-
-  def donor
-    donor_requirements.find(&:donated?).try(:user)
-  end
-
   private
 
     def thank_users
+      #FIXME_AB: Lets us delayed job for sending emails
       donor_requirements.interested.includes(:user).each do |donor_requirement|
         DonorMailer.thank_interested_donor(donor_requirement.user, self).deliver
       end

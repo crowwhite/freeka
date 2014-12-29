@@ -24,8 +24,10 @@ class DonorRequirement < ActiveRecord::Base
 
   private
 
+    #FIXME_AB: method name is not good. what to prevent?
     def prevent_if_fulfilled
       if requirement.fulfilled?
+        #FIXME_AB: Message is not clear
         errors.add(:base, 'You cannot remove interest from or donate to successful donation.')
         false
       else
@@ -34,6 +36,7 @@ class DonorRequirement < ActiveRecord::Base
     end
 
     def add_comment_on_requirement(comment = '')
+    #FIXME_AB: Method naming issues
       requirement.comments.create(content: comment || 'I have withdrawn interest from this request.', user_id: self.donor_id)
     end
 end
