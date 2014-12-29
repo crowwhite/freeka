@@ -1,21 +1,27 @@
 #FIXME_AB: You should also have index on type and enabled column in db
+# Fixed: I feel it should only be on enabled column since there is no search on type of user
 class Person < ActiveRecord::Base
 
   TYPES = %w(Admin User)
 
   #FIXME_AB: What if I destroy this Person, what would happen to his associated records?
-  has_many :requirements, foreign_key: :requestor_id
+  # Fixed
+  has_many :requirements, dependent: :destroy, foreign_key: :requestor_id
   #FIXME_AB: I am not sure about the following association name. please make 
-  has_many :donor_requirements, foreign_key: :donor_id
-  has_many :donations, through: :donor_requirements, source: :requirement
+  # Couldn't think of a better name
+  has_many :donor_requirements, dependent: :destroy, foreign_key: :donor_id
+  has_many :donations, through: :donor_requirements, dependent: :destroy, source: :requirement
 
   validates :name, :contact_no, presence: true
   # TODO: Use regexp to validate password.
   # Fixed
   #FIXME_AB: Lets make a constant RegExp hash in initializers to keep all regexp one place, so that we can resuse them.
-  validates :password, format: { with: /\S/, message: 'No white spaces allowed' }, on: :create
+  # Fixed
+  validates :password, format: { with: Validator::PASSWORD, message: 'No white spaces allowed' }, on: :create
   #FIXME_AB: No max limit on contact number.
+  # Fixed
   validates :contact_no, numericality: true, allow_blank: true
+  validates :contact_no, length: { minimum: 10, maximum: 12 }
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
 
   devise :database_authenticatable,

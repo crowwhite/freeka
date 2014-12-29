@@ -12,6 +12,7 @@ class Admin < Person
 
     def prevent_admin_creation_if_it_exists
       #FIXME_AB: Why can't we have two admins, was this a requirement?
+      # Fixed: Yes, it was a requirement
       if Admin.exists?
         errors.add(:base, "only one admin can exist")
         false

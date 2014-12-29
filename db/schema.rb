@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141219061027) do
+ActiveRecord::Schema.define(version: 20141229104703) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20141219061027) do
   end
 
   add_index "people", ["email"], name: "index_people_on_email", unique: true, using: :btree
+  add_index "people", ["enabled"], name: "index_people_on_enabled", using: :btree
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
   add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
 

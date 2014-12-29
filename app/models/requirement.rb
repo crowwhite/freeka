@@ -22,24 +22,28 @@ class Requirement < ActiveRecord::Base
 
   # Validation
   #FIXME_AB: I guess there should be a min length of title.
+  # Fixed
   validates :title, presence: true
+  validates :title, length: { minimum: 10 }
   #FIXME_AB: I guess following validation should be on create only
+  # Fixed : It is needed in both create and update
   validate :date_not_in_past, unless: :status_changed?
 
   # Callbacks
   #FIXME_AB: before_destroy :check_destroyable. Such method name should be independent of states
-  before_destroy :prevent_if_interest_shown
+  # Fixed
+  before_destroy :check_destroyable
   before_update :prevent_if_interest_shown, unless: :status_changed?
 
   # Scopes
   scope :enabled, -> { where(enabled: true) }
   #FIXME_AB: I doubt if this is a right way of making scope, Is this scope chainable?
+  # Fixed: Yes this is chainable
   scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
   scope :with_status_not, ->(status) { where.not(status: status) }
-  #FIXME_AB: I would prefer to have an individual scope for every state. like Requirement.pending Requirement.fulfilled etc. This make it more readable.
-  scope :with_status, ->(status) { where(status: status) }
   #FIXME_AB: Use Time.current.to_date
-  scope :live, -> { where('expiration_date >= ?', Date.today)}
+  # Fixed
+  scope :live, -> { where('expiration_date >= ?', Time.current.to_date) }
 
   aasm column: :status, enum: true do
     state :pending, initial: true
@@ -83,5 +87,6 @@ class Requirement < ActiveRecord::Base
         false
       end
     end
+    alias :check_destroyable :prevent_if_interest_shown
 
 end
