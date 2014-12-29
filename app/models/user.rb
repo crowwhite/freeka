@@ -7,7 +7,7 @@ class User < Person
   scope :inactive, -> { where enabled: false }
 
   has_many :comments, dependent: :destroy
-  has_one :image, as: :attacheable, class_name: :Attachment
+  has_one :image, as: :attacheable, dependent: :destroy, class_name: :Attachment
 
   accepts_nested_attributes_for :image
 end
