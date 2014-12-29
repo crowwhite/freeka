@@ -15,12 +15,14 @@ Link.prototype.markForRemoval = function(link) {
   var $link = $(link);
   var $hiddenField = $link.nextAll(".hidden_field").first();
   var $linkTextElements = $link.find('.remove-text');
-  $linkTextElements.toggleClass('hiddenn').toggleClass('selected');
+  $linkTextElements.toggleClass('hidden').toggleClass('selected');
   $hiddenField.val($linkTextElements.filter('.selected').attr('data-remove'));
   // FIXME_AB: Any specific reason you spelled hidden as hiddenn?
+  //earlier there was some problem now Fixed
 };
 
 $(function() {
   // FIXME_AB: Since we are creating only on object on the page, should we follow constructor pattern here for link class?
+  // Probably we would need it somewhere else too. So used
   (new Link('remove').bindEvents());
 });

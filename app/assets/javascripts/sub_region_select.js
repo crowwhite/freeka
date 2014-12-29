@@ -8,6 +8,7 @@ $(function () {
       type: "GET",
       dataType: "html",
      // FIXME_AB: Don't hardcode urls in JS. Pass them to jS using data attributes from erb
+     // tobefixed
       url: '/addresses/sub_region',
       data: { 'parent_region': _this.value },
       success: function (response) {

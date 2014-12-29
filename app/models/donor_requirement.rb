@@ -25,10 +25,12 @@ class DonorRequirement < ActiveRecord::Base
   private
 
     #FIXME_AB: method name is not good. what to prevent?
+    # It seems meaningful when seen from calling end.
     def prevent_if_fulfilled
       if requirement.fulfilled?
         #FIXME_AB: Message is not clear
-        errors.add(:base, 'You cannot remove interest from or donate to successful donation.')
+        # Fixed
+        errors.add(:base, 'You cannot remove interest from successful donation.')
         false
       else
         true
