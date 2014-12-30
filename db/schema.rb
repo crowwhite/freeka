@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141219061027) do
+ActiveRecord::Schema.define(version: 20141230103011) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -70,6 +70,20 @@ ActiveRecord::Schema.define(version: 20141219061027) do
   add_index "comments", ["requirement_id"], name: "index_comments_on_requirement_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0
+    t.integer  "attempts",   default: 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "donor_requirements", force: true do |t|
     t.integer  "donor_id",                   null: false
     t.integer  "requirement_id",             null: false
@@ -107,6 +121,7 @@ ActiveRecord::Schema.define(version: 20141219061027) do
   end
 
   add_index "people", ["email"], name: "index_people_on_email", unique: true, using: :btree
+  add_index "people", ["enabled"], name: "index_people_on_enabled", using: :btree
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
   add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
 

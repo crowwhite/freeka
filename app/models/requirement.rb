@@ -58,10 +58,10 @@ class Requirement < ActiveRecord::Base
 
     def thank_users
       donor_requirements.interested.includes(:user).each do |donor_requirement|
-        DonorMailer.thank_interested_donor(donor_requirement.user, self).deliver
+        DonorMailer.delay.thank_interested_donor(donor_requirement.user, self)
       end
       donor_requirements.donated.includes(:user).each do |donor_requirement|
-        DonorMailer.thank_fulfilling_donor(donor_requirement.user, self).deliver
+        DonorMailer.delay.thank_fulfilling_donor(donor_requirement.user, self)
       end
     end
 
