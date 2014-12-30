@@ -12,6 +12,6 @@ class User::RegistrationsController < Devise::RegistrationsController
     end
 
     def configure_account_update_params
-      devise_parameter_sanitizer.for(:account_update) << [:name, :about_me, :address, :contact_no]
+      devise_parameter_sanitizer.for(:account_update) << [:name, :about_me, :address, :contact_no, image_attributes: [:id, :attachment]]
     end
 end

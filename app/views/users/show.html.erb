@@ -1,0 +1,28 @@
+<div class='row'>
+  <h1 class='col-md-6'><%= @user.display_name %></h1>
+</div>
+<div class='row'>
+  <div class='col-md-4'>
+    <h3>Bio</h3>
+    <% if @user.about_me.empty? %>
+    <i>No information available about this user.</i>
+    <% else %>
+      <%= @user.about_me %>
+    <% end %>
+  </div>
+  <div class='col-md-2'></div>
+  <div class='col-md-4'>
+    <%= image_tag (@user.image && @user.image.url(:thumb)) || 'https://jobcase.com/assets/profile_placeholder-faf3cf5ab272e5637914f24578e5a5bd.png' %>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-6'>
+    <strong>Total Number of Requests Posted: <%= @user.requirements.size %></strong>
+  </div>
+</div>
+<br>
+<div class='row'>
+  <div class='col-md-2'>
+    <%= link_to 'Back', :back, class: 'btn btn-primary' %>
+  </div>
+</div>

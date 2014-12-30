@@ -3,42 +3,16 @@
 <table class="table table-striped">
   <thead>
     <th>Title</th>
-    <th>Details</th>
     <th>Expiration Date</th>
-    <th>Address</th>
     <th>Categories</th>
-    <th>Status</th>
-    <th>Enable/Disable</th>
-    <th>Donors</th>
-    <th>Requestor</th>
   </thead>
   <tbody>
     <% @requirements.each do |requirement| %>
       <tr>
         <td><%= link_to requirement.title, admins_requirement_path(requirement) %></td>
-        <td><%= requirement.details.truncate(30) %></td>
         <td><%= requirement.expiration_date %></td>
         <td>
-          <%= requirement.address.street %><br>
-          <%= requirement.address.city %><br>
-          <% country = Carmen::Country.coded(requirement.address.country_code) %>
-          <% if !country.subregions.empty? %>
-            <%= country.subregions.coded(requirement.address.state_code).name.truncate(10) %><br>
-          <% end %>
-          <%= country.name %>
-        </td>
-        <td>
           <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>
-        </td>
-        <td><%= requirement.status.humanize %></td>
-        <%= render 'state', locals: { requirement: requirement } %>
-        <%= content_tag :td, id: 'donors' do %>
-          <%= render 'donors', locals: { requirement: requirement } %>
-        <% end %>
-        <td>
-          <%= requirement.person.display_name %><br>
-          <%= requirement.person.email %><br>
-          <%= requirement.person.contact_no %>
         </td>
       </tr>
     <% end %>
