@@ -53,7 +53,7 @@
         <h2>Comments</h2>
         <div class="height-630">
           <ul id="comments">
-            <%= render @requirement.comments.includes(:user) %>
+            <%= render partial: 'comments/comment', collection: @requirement.comments.includes(:user) %>
             <li id="add-comment">
             </li>
           </ul>
