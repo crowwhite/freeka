@@ -197,6 +197,12 @@ img {
   display: inline-block;
 }
 
+.display-icon {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
 div.custom {
   display: inline-block;
 }
@@ -337,9 +343,14 @@ input[type='submit'] {
   }
 
   #admin-nav > li:hover {
-    background-color: #aaa;
+    background-color: #D8D8D8;
   }
 
   #admin-nav a {
     text-decoration: none;
+    height: 70px;
+  }
+
+  #admin-nav li {
+    padding: 0px !important;
   }
