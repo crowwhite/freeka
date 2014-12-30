@@ -1,3 +1,5 @@
 <td><%= locals[:category].name %></td>
 <td><%= link_to 'Edit', edit_admins_category_path(locals[:category]) %></td>
-<%= render 'admin/categories/status', locals: { category: locals[:category] } %>
+<%= content_tag :td, id: 'status' + locals[:category].id.to_s, class: 'loader' do %>
+  <%= render 'admin/categories/status', locals: { category: locals[:category] } %>
+<% end %>
