@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.down {
+  transform: rotate(90deg);
+}
+
 #donor-list {
   width: 200px;
   height: 100px;

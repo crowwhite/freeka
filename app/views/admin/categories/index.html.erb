@@ -33,6 +33,9 @@
   <tbody>
     <% @categories.each do |category| %>
       <tr>
+        <td>
+        <span class='glyphicon glyphicon-chevron-right down'></span>
+        </td>
         <% if controller_name == 'sub_categories' %>
           <td><%= category.parent_category.name %></td>
         <% end %>

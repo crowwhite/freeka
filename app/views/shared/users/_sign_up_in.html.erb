@@ -2,7 +2,7 @@
   <li id='user-logged-in-options'>
     <div class='row'>
       <div class='col-md-3'>
-        <% if @person_logged_in.image %>
+        <% if current_user && @person_logged_in.image %>
           <%= image_tag @person_logged_in.image.url(:thumb), class: 'display-icon' %>
         <% end %>
       </div>

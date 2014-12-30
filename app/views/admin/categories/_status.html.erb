@@ -1,7 +1,7 @@
 <%= content_tag :div, class: 'loader-btn' do %>
   <% if locals[:category].enabled %>
-    <%= link_to 'disable', toggle_status_admins_category_path(locals[:category], category: { enabled: false }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %></td>
+    <%= link_to 'disable', toggle_status_admins_category_path(locals[:category], category: { enabled: false }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %>
   <% else %>
-    <%= link_to 'enable', toggle_status_admins_category_path(locals[:category], category: { enabled: true }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %></td>
+    <%= link_to 'enable', toggle_status_admins_category_path(locals[:category], category: { enabled: true }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %>
   <% end %>
 <% end %>
