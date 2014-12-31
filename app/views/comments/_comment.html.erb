@@ -1,5 +1,5 @@
 <% comment ||= @comment %>
 <li class='highlight-grey-border round-corners'>
-  <strong>&nbsp;<%= link_to comment.user.display_name, user_path(@requirement.person) %></strong> commented on <%= comment.created_at %>
+  <strong>&nbsp;<%= link_to comment.user.display_name, user_path(comment.user) %></strong> commented on <%= comment.created_at %>
   <pre class='highlight-grey-border'><%= comment.content %></pre>
 </li>
