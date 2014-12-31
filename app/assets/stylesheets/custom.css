@@ -27,6 +27,10 @@
   overflow: auto;
 }
 
+.category-status {
+  width: 105px;
+}
+
 .no-decoration {
   text-decoration: none;
 }

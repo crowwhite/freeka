@@ -4,7 +4,7 @@
 <div class='row'>
   <div class='col-md-4'>
     <h3>Bio</h3>
-    <% if @user.about_me.empty? %>
+    <% if @user.about_me.nil? || @user.about_me.empty? %>
     <i>No information available about this user.</i>
     <% else %>
       <%= @user.about_me %>

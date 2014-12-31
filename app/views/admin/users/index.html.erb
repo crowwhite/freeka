@@ -25,10 +25,10 @@
   <th>#Requests</th>
   <th>#Donations</th>
   <th>Enable/Disable</th>
-  <th>Edit</th>
+  <th></th>
   <% @users.each do |user| %>
     <tr>
-      <td><%= link_to user.display_name, admins_user_path(user) %></td>
+      <td><%= link_to user.display_name, user_path(user) %></td>
       <td><%= user.email %></td>
       <td><%= user.requirements.size %></td>
       <td><%= user.donations.size %></td>
