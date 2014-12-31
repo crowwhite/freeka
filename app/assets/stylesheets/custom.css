@@ -21,6 +21,18 @@
   transform: rotate(90deg);
 }
 
+.icon-for-sub-category {
+  width: 20px;
+}
+
+.no-color {
+  background-color: white !important;
+}
+
+.no-border {
+  border: 1px solid white !important;
+}
+
 #donor-list {
   width: 200px;
   height: 100px;

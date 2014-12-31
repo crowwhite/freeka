@@ -1,4 +1,5 @@
 <%= javascript_include_tag 'loading_button' %>
+<%= javascript_include_tag 'drop_down_icon' %>
 <%= link_to 'Show Categories', admins_categories_path, class: 'btn btn-default', role: 'button' %>
 <%= link_to 'Show Sub Categories', admins_sub_categories_path, class: 'btn btn-default', role: 'button' %>
 
@@ -22,6 +23,7 @@
 <table class="table parent">
   <thead>
     <tr>
+      <th></th>
       <% if controller_name == 'sub_categories' %>
         <th>Parent Category</th>
       <% end %>
@@ -32,15 +34,31 @@
 
   <tbody>
     <% @categories.each do |category| %>
-      <tr>
-        <td>
-        <span class='glyphicon glyphicon-chevron-right down'></span>
-        </td>
+      <%= content_tag :tr, class: 'parent-item', data: { id: category.id } do %>
         <% if controller_name == 'sub_categories' %>
           <td><%= category.parent_category.name %></td>
+        <% else %>
+          <td class='icon-for-sub-category'>
+            <span class='glyphicon glyphicon-chevron-right'></span>
+          </td>
         <% end %>
         <%= render 'admin/categories/manage', locals: { category: category } %>
-      </tr>
+      <% end %>
+      <% if category.sub_categories.size > 0 %>
+        <% category.sub_categories.each do |sub_category| %>
+          <%= content_tag :tr, class: 'child no-color hidden ' + category.id.to_s do %>
+            <td class='text-right no-color'>--</td>
+            <%= render 'admin/categories/manage', locals: { category: sub_category } %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= content_tag :tr, class: 'child no-color hidden ' + category.id.to_s do %>
+          <td class='text-right'>--</td>
+          <td><strong>No child categories</strong></td>
+          <td></td>
+          <td></td>
+        <% end %>
+      <% end %>
     <% end %>
   </tbody>
 
