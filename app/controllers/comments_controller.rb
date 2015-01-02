@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     @comment = @requirement.comments.build(comment_params.merge(user_id: current_user.id))
     if @comment.save
       flash.now[:notice] = 'Comment added successfully'
+      render nothing: true
     else
       redirect_to @requirement, alert: 'Could not add comment'
     end

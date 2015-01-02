@@ -3,6 +3,8 @@
   <meta property="og:description" content="<%= @requirement.details.truncate(400) %>"/>
 <% end %>
 <%= javascript_include_tag 'faliure_link' %>
+<%= javascript_include_tag 'comment_adder' %>
+<%= javascript_include_tag 'http://js.pusher.com/2.2/pusher.min.js' %>
 <%= render 'shared/fb_scripts' %>
 <div class="row">
   <div class="row">
