@@ -1,3 +1,25 @@
 #FIXME_AB: Please add instructions to setup the project. 
-freeka
+Freeka
 ======
+
+Introduction
+============
+
+
+System Requirements
+===================
+
+
+
+How to Setup
+============
+
+
+
+Usage
+=====
+
+
+
+Some Helpful Tips
+=================
