@@ -19,7 +19,8 @@ class Person < ActiveRecord::Base
   # Fixed
   #FIXME_AB: regexp should be extracted as constant hash so that can be reused. Something like REGEXP[:password] = /\S/
   #FIXME_AB: Also in FE we are not displaying that spaces are not allowed. How would user get to know about this.
-  validates :password, format: { with: Validator::PASSWORD, message: 'No white spaces allowed' }, on: :create
+  # Fixed
+  validates :password, format: { with: VALIDATOR[:password], message: 'No white spaces allowed' }, on: :create
   #FIXME_AB: No max limit on contact number.
   # Fixed
   validates :contact_no, numericality: true, allow_blank: true

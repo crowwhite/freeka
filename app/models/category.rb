@@ -19,6 +19,7 @@ class Category < ActiveRecord::Base
             foreign_key: :parent_id
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
   #FIXME_AB: As far as I am seeing the requirement form, one requirement can belongs to one category only. If yes, then why do we need has_many associations
+  # Fixed: It belongs to multiple. Main Category and its subcategory
   has_many :requirements, through: :category_requirements, dependent: :restrict_with_error
   has_many :category_requirements, dependent: :restrict_with_error
 
@@ -49,6 +50,7 @@ class Category < ActiveRecord::Base
 
     def ensure_parent_is_not_a_sub_category
       #FIXME_AB: why adding error on parent_id. User doesn't know about parent_id
+      # Fixed: The message displayed doesn't contain any non-user friendly word. It is for debugging purpose
       errors.add(:parent_id, "category can't be a sub category") unless parent_category.parent_id.nil?
     end
 end

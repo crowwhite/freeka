@@ -57,6 +57,7 @@ class Requirement < ActiveRecord::Base
     event :fulfill do
       after do
         #FIXME_AB: Any better way to do this?
+        # tobefixed
         comments.create(content: 'Requirement has been fulfilled. Thank You all.', user_id: requestor_id)
         thank_users
       end
@@ -68,6 +69,7 @@ class Requirement < ActiveRecord::Base
 
     def thank_users
       #FIXME_AB: Lets us delayed job for sending emails
+      # Fixed: implemented in different branch
       donor_requirements.interested.includes(:user).each do |donor_requirement|
         DonorMailer.thank_interested_donor(donor_requirement.user, self).deliver
       end

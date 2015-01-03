@@ -1,6 +1,6 @@
 class DonorMailer < ActionMailer::Base
   #FIXME_AB: Don't hard code this email. we may have different email in different envs. This email should come from env. specific constants or it should be configurable 
-  default from: 
+  default from: MAILER[Rails.env.to_sym]
   #FIXME_AB: try to use email layout for common header footer.
 
   def thank_interested_donor(donor, requirement)
