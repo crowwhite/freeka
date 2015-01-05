@@ -220,7 +220,7 @@ DEPENDENCIES
   kaminari (= 0.16.1)
   mysql2 (= 0.3.16)
   paperclip (~> 4.2)
-  pusher
+  pusher (= 0.14.2)
   quiet_assets (= 1.0.3)
   rails (= 4.1.7)
   rails_12factor (= 0.0.3)
