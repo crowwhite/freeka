@@ -116,7 +116,7 @@
 }
 
 #comments {
-  max-height: 200px;
+  max-height: 240px;
   list-style-type: none;
   overflow: auto;
 }

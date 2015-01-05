@@ -12,7 +12,7 @@ $(function() {
   var pusher = new Pusher($('#app_key').val());
   var url = document.URL;
   var channel = pusher.subscribe('channel_' + url.substring(url.lastIndexOf('/') + 1));
-  channel.bind('new_comment', function(data) {
+  channel.bind('add_comment', function(data) {
     commentAdder(data);
   });
 })
