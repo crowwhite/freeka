@@ -59,7 +59,9 @@
           </div>
         </div>
         <% if @requirement.interested_donors.size > 0 %>
-          <%= render partial: 'donor', collection: @requirement.interested_donors %>
+          <ul id='donor-list'>
+            <%= render partial: 'donor', collection: @requirement.interested_donors %>
+          </ul>
         <% end %>
       </div>
     </div>
