@@ -1,5 +1,5 @@
 class Admin::RequirementsController < Admin::BaseController
-  layout 'admin'
+
   before_action :load_requirement, only: [:toggle_state, :show]
 
   def index

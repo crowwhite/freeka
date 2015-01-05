@@ -1,9 +1,9 @@
 class DonorRequirementsController < ApplicationController
 
-  before_action :set_requirement, only: [:create, :destroy, :mark_donated]
-  before_action :set_donor_requirement, only: [:destroy, :mark_donated]
-  before_action :restrict_owner, only: :create
   before_action :authenticate_user!
+  before_action :set_requirement, only: [:create, :destroy, :mark_donated]
+  before_action :restrict_owner, only: :create
+  before_action :set_donor_requirement, only: [:destroy, :mark_donated]
 
   def create
     @donor_requirement = @requirement.donor_requirements.build(donor_id: current_user.id)
