@@ -17,10 +17,30 @@
   cursor: pointer;
 }
 
+.down {
+  transform: rotate(90deg);
+}
+
+.icon-for-sub-category {
+  width: 20px;
+}
+
+.no-color {
+  background-color: white !important;
+}
+
+.no-border {
+  border: 1px solid white !important;
+}
+
 #donor-list {
   width: 200px;
   height: 100px;
   overflow: auto;
+}
+
+.category-status {
+  width: 105px;
 }
 
 .no-decoration {
@@ -197,6 +217,12 @@ img {
   display: inline-block;
 }
 
+.display-icon {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
 div.custom {
   display: inline-block;
 }
@@ -337,9 +363,14 @@ input[type='submit'] {
   }
 
   #admin-nav > li:hover {
-    background-color: #aaa;
+    background-color: #D8D8D8;
   }
 
   #admin-nav a {
     text-decoration: none;
+    height: 70px;
+  }
+
+  #admin-nav li {
+    padding: 0px !important;
   }

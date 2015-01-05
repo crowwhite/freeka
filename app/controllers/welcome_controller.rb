@@ -17,7 +17,7 @@ class WelcomeController < ApplicationController
 
     def check_if_admin
       if current_admin
-        redirect_to admins_welcome_index_path
+        redirect_to admins_requirements_path({ filter: 'pending' })
       end
     end
 

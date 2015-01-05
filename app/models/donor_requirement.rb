@@ -37,8 +37,7 @@ class DonorRequirement < ActiveRecord::Base
       end
     end
 
-    def add_comment_on_requirement(comment = '')
-    #FIXME_AB: Method naming issues
+    def add_comment_on_requirement(comment = nil)
       requirement.comments.create(content: comment || 'I have withdrawn interest from this request.', user_id: self.donor_id)
     end
 end

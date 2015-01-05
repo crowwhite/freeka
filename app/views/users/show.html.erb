@@ -1,28 +1,51 @@
-<div class='row'>
-  <h1 class='col-md-6'><%= @user.display_name %></h1>
-</div>
-<div class='row'>
-  <div class='col-md-4'>
-    <h3>Bio</h3>
-    <% if @user.about_me.empty? %>
-    <i>No information available about this user.</i>
-    <% else %>
-      <%= @user.about_me %>
-    <% end %>
+
+  <% if current_user == @user %>
+    <div class='container'>
+      <div class='row'>
+        <div class='col-md-6'>
+          <%= render 'requirements/user_pages_select' %>
+        </div>
+        <div class='col-md-4'>
+        </div>
+        <div class="col-md-2">
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class='container'>
+    <div class='container'>
+      <div class='row'>
+        <div class='row'>
+          <h1 class='col-md-6'><%= @user.display_name %></h1>
+        </div>
+        <div class='row'>
+          <div class='col-md-4'>
+            <h3>Bio</h3>
+            <% if @user.about_me.nil? || @user.about_me.empty? %>
+            <i>No information available about this user.</i>
+            <% else %>
+              <%= @user.about_me %>
+            <% end %>
+          </div>
+          <div class='col-md-2'></div>
+          <div class='col-md-4'>
+            <%= image_tag (@user.image && @user.image.url(:thumb)) || 'https://jobcase.com/assets/profile_placeholder-faf3cf5ab272e5637914f24578e5a5bd.png' %>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-6'>
+            <strong>Total Number of Requests Posted: <%= @user.requirements.size %></strong>
+          </div>
+        </div>
+        <br>
+        <div class='row'>
+          <div class='col-md-2'>
+            <%= link_to 'Back', :back, class: 'btn btn-primary' %>
+            <% if current_user == @user %>
+              <%= link_to 'Edit', edit_user_registration_path, class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class='col-md-2'></div>
-  <div class='col-md-4'>
-    <%= image_tag (@user.image && @user.image.url(:thumb)) || 'https://jobcase.com/assets/profile_placeholder-faf3cf5ab272e5637914f24578e5a5bd.png' %>
-  </div>
-</div>
-<div class='row'>
-  <div class='col-md-6'>
-    <strong>Total Number of Requests Posted: <%= @user.requirements.size %></strong>
-  </div>
-</div>
-<br>
-<div class='row'>
-  <div class='col-md-2'>
-    <%= link_to 'Back', :back, class: 'btn btn-primary' %>
-  </div>
-</div>

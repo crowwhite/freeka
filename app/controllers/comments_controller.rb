@@ -5,7 +5,10 @@ class CommentsController < ApplicationController
   def create
     @comment = @requirement.comments.build(comment_params.merge(user_id: current_user.id))
     if @comment.save
-      flash.now[:notice] = 'Comment added successfully'
+      respond_to do |format|
+        format.js { render nothing: true }
+        format.html { redirect_to @requirement, notice: 'Comment added successfully' }
+      end
     else
       redirect_to @requirement, alert: 'Could not add comment'
     end

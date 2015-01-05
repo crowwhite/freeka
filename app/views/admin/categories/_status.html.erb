@@ -1,9 +1,4 @@
-<% if locals[:category].enabled %>
-  <%= content_tag :td, id: 'status' + locals[:category].id.to_s do %>
-    <%= link_to 'disable', toggle_status_admins_category_path(locals[:category], category: { enabled: false }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %></td>
-  <% end %>
-<% else %>
-  <%= content_tag :td, id: 'status' + locals[:category].id.to_s do %>
-    <%= link_to 'enable', toggle_status_admins_category_path(locals[:category], category: { enabled: true }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %></td>
-  <% end %>
+<%= content_tag :div, class: 'loader-btn' do %>
+  <% action_text, enabled = locals[:category].enabled ? ['disable', false] : ['enable', true] %>
+  <%= link_to action_text, toggle_status_admins_category_path(locals[:category], category: { enabled: enabled }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %>
 <% end %>

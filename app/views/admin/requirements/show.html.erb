@@ -16,24 +16,19 @@
       <div class="scroll-auto height-725">
         <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg', class: 'pull-left' %>
         <p><%= @requirement.details %></p>
-        <strong>Requestor Name: </strong>
-        <%= @requirement.person.display_name %>
+        <strong>Requestor: </strong>
+        <%= link_to @requirement.person.display_name, user_path(@requirement.person) %>
         <br>
         <br>
-        <strong>Requestor Bio: </strong>
-        <%= @requirement.person.about_me %>
-        <br>
-        <br>
-        <strong>Expiration Date: </strong>
+        <strong>Needed By: </strong>
         <%= @requirement.expiration_date.strftime("%d %b %Y") %>
         <br>
-        <h4>Attached Files: </h4>
+        <h4>Supported Documents: </h4>
         <% @requirement.files.each do |attachment| %>
           <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
         <% end %>
         <br>
         <div>
-          <strong>Share this request: </strong>
           <div class="fb-share-button" data-href=<%= requirement_url(@requirement) %> data-layout="button_count"></div>
         </div>
         <br>
@@ -58,7 +53,7 @@
         <h2>Comments</h2>
         <div class="height-630">
           <ul id="comments">
-            <%= render @requirement.comments.includes(:user) %>
+            <%= render partial: 'comments/comment', collection: @requirement.comments.includes(:user) %>
             <li id="add-comment">
             </li>
           </ul>

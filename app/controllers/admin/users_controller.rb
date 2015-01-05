@@ -1,5 +1,4 @@
 class Admin::UsersController < Admin::BaseController
-  layout 'admin'
 
   before_action :load_user, only: [:edit, :update, :destroy, :show, :toggle_status]
 

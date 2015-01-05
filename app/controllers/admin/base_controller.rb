@@ -1,4 +1,6 @@
 class Admin::BaseController < ApplicationController
+  layout 'admin'
+
   before_action :allow_only_admin
 
   def allow_only_admin

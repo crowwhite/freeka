@@ -1,6 +1,15 @@
 <% if @person_logged_in = current_user || current_admin %>
   <li id='user-logged-in-options'>
-    <%= link_to @person_logged_in.display_name, user_path(@person_logged_in) %>
+    <div class='row'>
+      <div class='col-md-3'>
+        <% if current_user && @person_logged_in.image %>
+          <%= image_tag @person_logged_in.image.url(:thumb), class: 'display-icon' %>
+        <% end %>
+      </div>
+      <%= link_to user_path(@person_logged_in), class: 'col-md-9' do %>
+      <%= @person_logged_in.display_name %>
+    <% end %>
+    </div>
     <ul>
       <% if !current_admin %>
         <li>
