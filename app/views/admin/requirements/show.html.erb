@@ -14,7 +14,7 @@
         <% end %>
       </h2>
       <div class="scroll-auto height-725">
-        <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg', class: 'pull-left' %>
+        <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || default_requirement_image_url, class: 'pull-left' %>
         <p><%= @requirement.details %></p>
         <strong>Requestor: </strong>
         <%= link_to @requirement.person.display_name, user_path(@requirement.person) %>

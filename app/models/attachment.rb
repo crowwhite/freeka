@@ -1,7 +1,7 @@
 #FIXME_AB: Since it is a polymorphic table we should have composite  index on type and id field
 class Attachment < ActiveRecord::Base
   #FIXME_AB: Why do we need requirement_id
-  # tobefixed: We don't need it now. will remove it.
+  # Fixed
 
   # Association
   belongs_to :attacheable, polymorphic: true
@@ -10,7 +10,8 @@ class Attachment < ActiveRecord::Base
                     # Fixed: the #crops the picture wrt to centre where as > crops taking the start point as reference
                     attachment.instance.is_image ? { :thumb => "200x200#", :medium => "300x300#" } : {} },
                     #FIXME_AB: Why we have have specified this URL? do we have any better way?
-                    default_url: 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg'
+                    # Fixed
+                    default_url: '/give-charity-donations.jpg'
 
   # Callback
   after_validation :clean_error_duplication

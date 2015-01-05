@@ -9,7 +9,7 @@ class RequirementsController < ApplicationController
     # @requirements.public_send(params[:filter]) if params[:filter]
     # @requirements.includes(:donor_requirements, :files).order(created_at: :desc).page params[:page]
     # Fixed
-    @requirement = current_user.requirements
+    @requirements = current_user.requirements
     @requirements = @requirements.public_send(params[:filter]) if params[:filter]
     @requirements = @requirements.includes(:donor_requirements, :files, :image, :address)
     if params[:filter] == 'pending'

@@ -23,7 +23,7 @@
           </strong>
         </span>
       </div>
-      <%= image_tag (requirement.image && requirement.image.url(:thumb)) || 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg' %>
+      <%= image_tag (requirement.image && requirement.image.url(:thumb)) || default_requirement_image_url %>
       <%= content_tag :div, class: "bottom-black " + ((requirement.details.length > 150) ? 'large-on-hover' : '') do %>
         <div class="title">
           <strong title="<%= requirement.title %>"><%= link_to requirement.title.truncate(33), requirement %></strong>

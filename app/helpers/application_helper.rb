@@ -16,4 +16,8 @@ module ApplicationHelper
     object_value == comparison_value ? 'active-object' : 'inactive-object'
   end
 
+  def default_requirement_image_url
+    '/give-charity-donations.jpg'
+  end
+
 end

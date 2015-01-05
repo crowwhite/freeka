@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.padding-10 {
+  padding: 10px;
+}
+
 .down {
   transform: rotate(90deg);
 }
@@ -112,7 +116,7 @@
 }
 
 #comments {
-  max-height: 600px;
+  max-height: 200px;
   list-style-type: none;
   overflow: auto;
 }

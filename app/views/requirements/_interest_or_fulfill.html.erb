@@ -1,5 +1,5 @@
 <% if owner(@requirement) %>
-  <%= link_to 'Fulfilled', fulfill_requirement_path(@requirement), method: :put, class: 'btn btn-primary' %>
+  <%= link_to 'Fulfilled', fulfill_requirement_path(@requirement), method: :put, class: 'btn btn-primary btn-xs' %>
 <% else %>
-  <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary' %>
+  <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary btn-xs' %>
 <% end %>
