@@ -19,6 +19,9 @@ group :development do
   gem 'binding_of_caller',                    '~> 0.7.2'
   gem 'better_errors',                        '~> 1.1.0'
   gem 'quiet_assets',                         '1.0.3'
+  gem 'capistrano',                           '~> 3.1.0'
+  gem 'capistrano-bundler',                   '~> 1.1.2'
+  gem 'capistrano-rails',                     '~> 1.1.1'
 end
 
 group :test do
@@ -29,9 +32,6 @@ group :test do
 end
   
 group :development, :test do
-  gem 'capistrano',                           '~> 3.1.0'
-  gem 'capistrano-bundler',                   '~> 1.1.2'
-  gem 'capistrano-rails',                     '~> 1.1.1'
   gem 'byebug',                               '3.4.0'
 end
 

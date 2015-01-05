@@ -8,7 +8,7 @@ class Attachment < ActiveRecord::Base
   has_attached_file :attachment, styles: lambda { |attachment|
                     #FIXME_AB: Do you understand what does # or > mean when you specify thumbnail sizes
                     # Fixed: the #crops the picture wrt to centre where as > crops taking the start point as reference
-                    attachment.instance.is_image ? {:thumb => "200x200#", :medium => "300x300#"} : {} },
+                    attachment.instance.is_image ? { :thumb => "200x200#", :medium => "300x300#" } : {} },
                     #FIXME_AB: Why we have have specified this URL? do we have any better way?
                     default_url: 'http://2.bp.blogspot.com/-q-kaTpPqFc0/VAb_gK-IMWI/AAAAAAAAFk0/7oNpy4MBnXo/s1600/give-charity-donations.jpg'
 
@@ -16,6 +16,7 @@ class Attachment < ActiveRecord::Base
   after_validation :clean_error_duplication
 
   # Validation
+  # tobefixed size and content combine it
   validates_attachment_size :attachment, less_than: 10.megabyte
   #FIXME_AB: We are not displaying valid attachment types in frontend
   validates_attachment_content_type :attachment, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf", "text/html", "application/doc"], message: "is not valid"
