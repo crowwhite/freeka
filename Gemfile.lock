@@ -109,6 +109,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    pg (0.17.1)
     pusher (0.14.2)
       httpclient (~> 2.4)
       multi_json (~> 1.0)
@@ -220,6 +221,7 @@ DEPENDENCIES
   kaminari (= 0.16.1)
   mysql2 (= 0.3.16)
   paperclip (~> 4.2)
+  pg (= 0.17.1)
   pusher (= 0.14.2)
   quiet_assets (= 1.0.3)
   rails (= 4.1.7)
