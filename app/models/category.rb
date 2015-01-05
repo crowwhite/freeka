@@ -2,16 +2,12 @@
 class Category < ActiveRecord::Base
 
   attr_accessor :is_sub_category
-  # TODO: Rename to `roots`
-  # Fixed
   scope :roots, -> { where(parent_id: nil) }
   scope :with_status, ->(status) { where(enabled: status) }
   scope :enabled, -> { with_status(true) }
   scope :all_except, ->(id) { where.not(id: id) }
   scope :children, -> { where('parent_id IS NOT NULL') }
 
-  # TODO: Fix indentation
-  # Fixed
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
             dependent: :restrict_with_error
   #FIXME_AB: Is the following association correct? where it is checking for subcategories?            
@@ -51,6 +47,7 @@ class Category < ActiveRecord::Base
     def ensure_parent_is_not_a_sub_category
       #FIXME_AB: why adding error on parent_id. User doesn't know about parent_id
       # Fixed: The message displayed doesn't contain any non-user friendly word. It is for debugging purpose
+      #FIXME_AB: You should raise an exception then.
       errors.add(:parent_id, "category can't be a sub category") unless parent_category.parent_id.nil?
     end
 end

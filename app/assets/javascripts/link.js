@@ -17,8 +17,6 @@ Link.prototype.markForRemoval = function(link) {
   var $linkTextElements = $link.find('.remove-text');
   $linkTextElements.toggleClass('hidden').toggleClass('selected');
   $hiddenField.val($linkTextElements.filter('.selected').attr('data-remove'));
-  // FIXME_AB: Any specific reason you spelled hidden as hiddenn?
-  //earlier there was some problem now Fixed
 };
 
 $(function() {

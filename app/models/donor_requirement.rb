@@ -28,8 +28,6 @@ class DonorRequirement < ActiveRecord::Base
     # It seems meaningful when seen from calling end.
     def prevent_if_fulfilled
       if requirement.fulfilled?
-        #FIXME_AB: Message is not clear
-        # Fixed
         errors.add(:base, 'You cannot remove interest from successful donation.')
         false
       else
