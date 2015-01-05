@@ -2,42 +2,61 @@
   <meta property="og:title" content="<%= @requirement.title %>"/>
   <meta property="og:description" content="<%= @requirement.details.truncate(400) %>"/>
 <% end %>
-<%= javascript_include_tag 'faliure_link' %>
+<%= javascript_include_tag 'comment_adder' %>
 <%= render 'shared/fb_scripts' %>
 <div class="row">
   <div class="row">
+    <div class='row'>
+      <div class='col-md-9'>
+        <%= render 'layouts/category_menu' %>
+      </div>
+      <div class='col-md-3'>
+        <%= render 'layouts/search_bar' %>
+      </div>
+    </div>
     <br>
     <div class="col-md-6 border-black height-800">
-      <h2><%= @requirement.title %>
-        <% if owner(@requirement) && @requirement.donor_requirements.size == 0 && !@requirement.fulfilled? %>
-          <%= link_to 'Edit', edit_requirement_path(@requirement), class: 'btn btn-primary btn-xs' %>
-        <% end %>
+      <h2><%= @requirement.title.titleize %>
+        <span class="fb-share-button" data-href=<%= requirement_url(@requirement) %> data-layout="button_count"></span>
       </h2>
-      <div class="scroll-auto height-725">
+      <div class='row'>
+        <div class='col-md-6 text-right'>
+        </div>
+        <div class='col-md-6 text-right'>
+          <%= render 'requirements/interested_donors.html.erb' %>
+        </div>
+      </div>
+        <div class='col-md-12'>
         <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || default_requirement_image_url, class: 'pull-left' %>
-        <p><%= @requirement.details %></p>
+        </div>
+        <div class='col-md-12'>
+          <div class="well col-md-12">
+            <h2>Comments</h2>
+            <ul id="comments">
+              <%= render partial: 'comments/comment', collection: @requirement.comments.includes(:user) %>
+              <li id="add-comment">
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+      <div class='border-black height-800 scroll-auto padding-10'>
+        <p>
+          <%= @requirement.details %>
+        </p>
         <strong>Requestor: </strong>
         <%= link_to @requirement.person.display_name, user_path(@requirement.person) %>
         <br>
         <br>
         <strong>Needed By: </strong>
-        <%= @requirement.expiration_date.strftime("%d %b %Y") %>
+        <%= @requirement.expiration_date %>
         <br>
         <h4>Supported Documents: </h4>
         <% @requirement.files.each do |attachment| %>
           <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
         <% end %>
         <br>
-        <div>
-          <div class="fb-share-button" data-href=<%= requirement_url(@requirement) %> data-layout="button_count"></div>
-        </div>
-        <br>
-        <div class='col-md-12'>
-          <div class='pull-left row'>
-            <strong>Interested Donors: </strong>
-            <span class='large-font'><%= @requirement.donor_requirements.size %></span>
-          </div>
-        </div>
         <% if @requirement.interested_donors.size > 0 %>
           <ul id='donor-list'>
             <% @requirement.interested_donors.each do |donor| %>
@@ -45,19 +64,6 @@
             <% end %>
           </ul>
         <% end %>
-      </div>
-    </div>
-    <div class="col-md-6">
-
-      <div class="well height-800 top-pad-0">
-        <h2>Comments</h2>
-        <div class="height-630">
-          <ul id="comments">
-            <%= render partial: 'comments/comment', collection: @requirement.comments.includes(:user) %>
-            <li id="add-comment">
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </div>
@@ -69,7 +75,6 @@
     </div>
   </div>
 </div>
-
 <br>
 <br>
 <br>
