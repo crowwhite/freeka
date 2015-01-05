@@ -1,3 +1,4 @@
+// FIXME_AB: Why do we need this js, don't we have a better way?
 function RequestTile(tileClass) {
   this.$tiles = $('.' + tileClass);
 }

@@ -1,6 +1,7 @@
 function Link(linkClass) {
   this.$links = $('.' + linkClass);
 // FIXME_AB: can you add some comments what is the purpose of this Link class. Why we need this. Looks like Link is not the right name for the class
+// FIXME_AB: I can't judge what this class is doing
 };
 
 Link.prototype.bindEvents = function() {

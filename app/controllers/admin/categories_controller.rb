@@ -12,6 +12,7 @@ class Admin::CategoriesController < Admin::BaseController
 
   def edit
     if @category.parent_id
+      #FIXME_AB: Why do we need following instance variable. We can make it work without this. Please think
       @is_sub_category = true
     end
   end
@@ -23,6 +24,7 @@ class Admin::CategoriesController < Admin::BaseController
       @category.is_sub_category ? redirect_to(admins_sub_categories_path) : redirect_to(admins_categories_path)
     else
       if @category.is_sub_category
+        #FIXME_AB: we don't need this instance variable
         @is_sub_category = true
       end
       flash.now[:alert] = 'Some errors were encountered in Category creation'

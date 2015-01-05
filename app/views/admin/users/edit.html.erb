@@ -1,5 +1,7 @@
+<% #FIXME_AB: Why Email, don't you have name of user? -%>
 <h2>Edit <%= @user.email.to_s.humanize %></h2>
 <%= form_for(@user, url: { action: "update" }) do |f| %>
+<% #FIXME_AB: Following code for displaying error message should be extracted out so that can be used at other places. -%>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
