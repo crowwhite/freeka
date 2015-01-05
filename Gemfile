@@ -13,6 +13,7 @@ gem 'thinking-sphinx',                        '~> 3.1.1'
 gem 'therubyracer',                           '0.12.1'
 gem 'uglifier',                               '2.5.3'
 gem 'paperclip',                              '~> 4.2'
+gem 'pusher',                                 '0.14.2'
 
 group :development do
   gem 'binding_of_caller',                    '~> 0.7.2'
@@ -35,6 +36,6 @@ group :development, :test do
 end
 
 group :production do
-  gem 'rails_12factor', '0.0.3'
-  gem 'pg', '0.17.1'
+  gem 'rails_12factor',                       '0.0.3'
+  gem 'pg',                                   '0.17.1'
 end
