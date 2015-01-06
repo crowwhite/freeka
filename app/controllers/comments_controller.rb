@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     @comment = @requirement.comments.build(comment_params.merge(user_id: current_user.id))
     if @comment.save
       respond_to do |format|
-        format.js { render nothing: true }
+        format.js
         format.html { redirect_to @requirement, notice: 'Comment added successfully' }
       end
     else

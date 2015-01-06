@@ -25,19 +25,23 @@
         <span class="fb-share-button" data-href=<%= requirement_url(@requirement) %> data-layout="button_count"></span>
       </h2>
       <div class='row'>
-        <div class='col-md-6 text-right'>
-          <%= render 'interested_donors' %>
-        </div>
-        <div class='col-md-6 text-right'>
-          <% if @requirement.fulfilled? %>
-            <span> This requirement has been fulfilled. </span>
-          <% else %>
-            <% if @donor_requirement %>
-              <%= render 'withdraw_donate' %>
-            <% else %>
-              <%= render 'interest_or_fulfill' %>
+        <div class='col-md-12'>
+          <div class='col-md-6 text-right'>
+            <% if @requirement.pending? %>
+              <%= render 'interested_donors' %>
             <% end %>
-          <% end %>
+          </div>
+          <div class='col-md-6 text-right'>
+            <% if @requirement.fulfilled? %>
+              <span> This requirement has been fulfilled. </span>
+            <% else %>
+              <% if @donor_requirement %>
+                <%= render 'withdraw_donate' %>
+              <% else %>
+                <%= render 'interest_or_fulfill' %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
         <div class='col-md-12'>
@@ -70,6 +74,9 @@
         <h4>Supported Documents: </h4>
         <% @requirement.files.each do |attachment| %>
           <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
+        <% end %>
+        <% if @requirement.files.size == 0 %>
+          <span>No attached files.</span>
         <% end %>
         <br>
         <% if @requirement.interested_donors.size > 0 %>

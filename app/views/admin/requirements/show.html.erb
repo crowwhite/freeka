@@ -21,10 +21,14 @@
         <span class="fb-share-button" data-href=<%= requirement_url(@requirement) %> data-layout="button_count"></span>
       </h2>
       <div class='row'>
-        <div class='col-md-6 text-right'>
-        </div>
-        <div class='col-md-6 text-right'>
-          <%= render 'requirements/interested_donors.html.erb' %>
+        <div class='col-md-12'>
+          <div class='col-md-6 text-right'>
+          </div>
+          <div class='col-md-6 text-right'>
+            <% if @requirement.pending? %>
+              <%= render 'requirements/interested_donors.html.erb' %>
+            <% end %>
+          </div>
         </div>
       </div>
         <div class='col-md-12'>
@@ -57,11 +61,14 @@
         <% @requirement.files.each do |attachment| %>
           <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
         <% end %>
+        <% if @requirement.files.size == 0 %>
+          <span>No attached files.</span>
+        <% end %>
         <br>
         <% if @requirement.interested_donors.size > 0 %>
           <ul id='donor-list'>
             <% @requirement.interested_donors.each do |donor| %>
-              <li><%= donor.display_name %></li>
+              <li><%= link_to donor.display_name, user_path(donor) %></li>
             <% end %>
           </ul>
         <% end %>

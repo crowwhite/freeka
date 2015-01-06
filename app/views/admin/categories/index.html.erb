@@ -23,9 +23,10 @@
 <table class="table parent">
   <thead>
     <tr>
-      <th></th>
       <% if controller_name == 'sub_categories' %>
         <th>Parent Category</th>
+      <% else %>
+        <th></th>
       <% end %>
       <th>Name</th>
       <th colspan="3"></th>
