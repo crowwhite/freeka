@@ -80,7 +80,7 @@
         <% end %>
         <br>
         <% if @requirement.interested_donors.size > 0 %>
-          <h3>Donors</h3>
+          <h3>Interested Donors</h3>
           <ul id='donor-list'>
             <%= render partial: 'donor', collection: @requirement.interested_donors %>
           </ul>
