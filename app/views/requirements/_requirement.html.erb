@@ -39,4 +39,5 @@
     </div>
   </div>
 <% end %>
+<% params[:page] = 1 unless params[:page] %>
 <%= hidden_field_tag :page, params[:page].to_i + 1 %>

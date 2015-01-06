@@ -66,6 +66,7 @@
         <% end %>
         <br>
         <% if @requirement.interested_donors.size > 0 %>
+          <h3>Donors</h3>
           <ul id='donor-list'>
             <% @requirement.interested_donors.each do |donor| %>
               <li><%= link_to donor.display_name, user_path(donor) %></li>
