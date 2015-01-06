@@ -1,7 +1,3 @@
-# FIXME_AB: Please add instructions to setup the project. 
-# Fixed
-
-
 Freeka
 ======
 * This is a e-donation portal where users make request about their requirements. Potential donors can browse through the requests and contact them on the comment thread if they are interested to donate.

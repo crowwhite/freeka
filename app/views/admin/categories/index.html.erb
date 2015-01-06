@@ -1,8 +1,10 @@
+<% #FIXME_AB: Use content_for tag to include these js files in th html head tag -%>
 <%= javascript_include_tag 'loading_button' %>
 <%= javascript_include_tag 'drop_down_icon' %>
 <%= link_to 'Show Categories', admins_categories_path, class: 'btn btn-default', role: 'button' %>
 <%= link_to 'Show Sub Categories', admins_sub_categories_path, class: 'btn btn-default', role: 'button' %>
 
+<% #FIXME_AB: We need to merge subcategory creation and category creation together, to make it easy for user -%>
 <% if controller_name == 'sub_categories' %>
   <div class='link pull-right'>
     <%= link_to 'New Sub Category', new_admins_sub_category_path, class: 'btn btn-primary', role: 'button' %>
@@ -43,8 +45,10 @@
             <span class='glyphicon glyphicon-chevron-right'></span>
           </td>
         <% end %>
+        <% #FIXME_AB: You don't need to spicify full directory path if the partial is in the same directory -%>
         <%= render 'admin/categories/manage', locals: { category: category } %>
       <% end %>
+      <% #FIXME_AB: Its better to use category.sub_category.present? -%>
       <% if category.sub_categories.size > 0 %>
         <% category.sub_categories.each do |sub_category| %>
           <%= content_tag :tr, class: 'child no-color hidden ' + category.id.to_s do %>

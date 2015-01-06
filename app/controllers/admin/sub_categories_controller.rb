@@ -1,3 +1,4 @@
+#FIXME_AB: I don't think we need two controllers. one for category and other for sub category. The only difference is one has parent and other don't
 class Admin::SubCategoriesController < Admin::BaseController
 
   def index

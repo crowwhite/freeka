@@ -1,6 +1,7 @@
 function Link(linkClass) {
   this.$links = $('.' + linkClass);
 // FIXME_AB: can you add some comments what is the purpose of this Link class. Why we need this. Looks like Link is not the right name for the class
+// FIXME_AB: I can't judge what this class is doing
 };
 
 Link.prototype.bindEvents = function() {
@@ -17,8 +18,6 @@ Link.prototype.markForRemoval = function(link) {
   var $linkTextElements = $link.find('.remove-text');
   $linkTextElements.toggleClass('hidden').toggleClass('selected');
   $hiddenField.val($linkTextElements.filter('.selected').attr('data-remove'));
-  // FIXME_AB: Any specific reason you spelled hidden as hiddenn?
-  //earlier there was some problem now Fixed
 };
 
 $(function() {

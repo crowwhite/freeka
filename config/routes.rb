@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  #FIXME_AB: /admin should take me to admin login page.
-  # Fixed
   devise_scope :admin do
     get 'admin', to: 'devise/sessions#new'
   end

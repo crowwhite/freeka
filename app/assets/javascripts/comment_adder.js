@@ -1,4 +1,6 @@
+// FIXME_AB: You should have made it as comment class so that you can call "new Comment(data)" that way it would have been more OOPS way
 var commentAdder = function(data) {
+  // FIXME_AB: Don't hardcode urls in js
   var $linkToUser = $('<a>', { href: '/users/' + data.user_id, html: data.user_name });
   var $bold = $('<strong>', { html: '&nbsp;' });
   var $content = $('<pre>', { html: data.comment, class: 'highlight-grey-border' });

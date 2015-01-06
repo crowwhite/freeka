@@ -1,6 +1,6 @@
 #FIXME_AB: Through out the application You haven't handled the dependent option with associations. Please do that as per the requirement.
 class Requirement < ActiveRecord::Base
-  #FIXME_AB: There are indexes missing on requirements table, Please add required indexes
+  #FIXME_AB: There are indexes missing on requirements table, Please add required indexes to all tables as required
   include AASM
 
   enum status: { pending: 0, fulfilled: 2 }
@@ -22,18 +22,12 @@ class Requirement < ActiveRecord::Base
   accepts_nested_attributes_for :image, allow_destroy: true
 
   # Validation
-  #FIXME_AB: I guess there should be a min length of title.
-  # Fixed
   validates :title, presence: true
   validates :title, length: { minimum: 10 }
-  #FIXME_AB: I guess following validation should be on create only
-  # Fixed : It is needed in both create and update
   validate :date_not_in_past, unless: :status_changed?
   #FIXME_AB: Why do we have validations on only two fields?
 
   # Callbacks
-  #FIXME_AB: before_destroy :check_destroyable. Such method name should be independent of states
-  # Fixed
   before_destroy :check_destroyable
   before_update :prevent_if_interest_shown, unless: :status_changed?
 
@@ -46,8 +40,6 @@ class Requirement < ActiveRecord::Base
   scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
   #FIXME_AB: What is the meaning of following scope?
   scope :with_status_not, ->(status) { where.not(status: status) }
-  #FIXME_AB: Use Time.current.to_date
-  # Fixed
   scope :live, -> { where('expiration_date >= ?', Time.current.to_date) }
 
   aasm column: :status, enum: true do
@@ -68,8 +60,6 @@ class Requirement < ActiveRecord::Base
   private
 
     def thank_users
-      #FIXME_AB: Lets us delayed job for sending emails
-      # Fixed: implemented in different branch
       donor_requirements.interested.includes(:user).each do |donor_requirement|
         DonorMailer.thank_interested_donor(donor_requirement.user, self).deliver
       end
