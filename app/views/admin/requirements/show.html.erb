@@ -48,7 +48,9 @@
     <div class="col-md-6">
       <div class='border-black height-800 scroll-auto padding-10'>
         <p>
-          <%= @requirement.details %>
+          <pre>
+            <%= @requirement.details %>
+          </pre>
         </p>
         <strong>Requestor: </strong>
         <%= link_to @requirement.person.display_name, user_path(@requirement.person) %>
