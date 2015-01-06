@@ -22,9 +22,9 @@ class Requirement < ActiveRecord::Base
   accepts_nested_attributes_for :image, allow_destroy: true
 
   # Validation
-  validates :title, presence: true
+  validates :title, :expiration_date, presence: true
   validates :title, length: { minimum: 10 }
-  validate :date_not_in_past, unless: :status_changed?
+  validate :date_not_in_past, unless: :status_changed?, if: 'self.expiration_date'
   #FIXME_AB: Why do we have validations on only two fields?
 
   # Callbacks

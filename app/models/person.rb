@@ -15,6 +15,7 @@ class Person < ActiveRecord::Base
   validates :contact_no, length: { minimum: 10, maximum: 12 }
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
   #FIXME_AB: What about email validations?
+  # Fixed: it is provided by devise
   #FIXME_AB: Are we allowing special chars in name? We should have sensible validations on all models.
 
   devise :database_authenticatable,

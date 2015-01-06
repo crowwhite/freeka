@@ -2,12 +2,13 @@ require 'rails_helper'
 
 describe Category do
   describe 'relations' do
-    it { should have_many(:sub_categories)}
+    it { should have_many(:sub_categories) }
+    it { should have_many(:enabled_sub_categories) }
+    it { should belong_to(:parent_category) }
+    it { should have_many(:category_requirements).dependent(:restrict_with_error) }
+    it { should have_many(:requirements).through(:category_requirements).dependent(:restrict_with_error) }
   end
 
-  describe 'relations' do
-    it { should belong_to(:parent_category)}
-  end
 
   describe 'validations' do
     describe 'presence of name' do
