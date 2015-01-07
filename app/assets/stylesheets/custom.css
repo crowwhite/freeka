@@ -74,10 +74,6 @@
   text-decoration: none;
 }
 
-.navbar-brand {
-  font-size: 30px;
-}
-
 .top-pad-0 {
   padding-top: 0;
 }
@@ -243,6 +239,26 @@ img {
   display: inline-block;
 }
 
+.logo {
+  height: 50px;
+  width: 50px;
+}
+
+.brand-name {
+  color: #807E7E;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.brand-name:hover {
+  color: #807E7E !important;
+  text-decoration: none !important;
+}
+
+.top-display-icon {
+  padding-top: 15px;
+}
+
 .display-icon {
   width: 25px;
   height: 25px;
@@ -253,8 +269,13 @@ div.custom {
   display: inline-block;
 }
 
-ul.navbar-nav > li {
-  padding: 10px;
+ul.navbar-nav > li:hover {
+  cursor: pointer;
+  background-color: #D8D8D8;
+}
+
+.navbar-right {
+  margin: 0;
 }
 
 table.parent > tbody > tr {
@@ -394,7 +415,7 @@ input[type='submit'] {
 
   #admin-nav a {
     text-decoration: none;
-    height: 70px;
+    height: 50px;
   }
 
   #admin-nav li {
