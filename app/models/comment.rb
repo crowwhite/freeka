@@ -4,6 +4,8 @@ class Comment < ActiveRecord::Base
   belongs_to :requirement
   belongs_to :user
 
+  validates :content, presence: true
+
   after_create :push_comment
 
   private

@@ -1,11 +1,12 @@
 // FIXME_AB: Why do we need this js, don't we have a better way?
-function RequestTile(tileClass) {
-  this.$tiles = $('.' + tileClass);
+function RequestTile(containerClass, tileClass) {
+  this.$container = $('.' + containerClass);
+  this.tileClass = tileClass;
 }
 
 RequestTile.prototype.bindEvents = function() {
   var _this = this;
-  _this.$tiles.on('click', function() {
+  _this.$container.on('click', '.' + _this.tileClass,function() {
     _this.browseToLink(this);
   });
 }
@@ -15,5 +16,5 @@ RequestTile.prototype.browseToLink = function(tile) {
 }
 
 $(function() {
-  new RequestTile('request-tile').bindEvents();
+  new RequestTile('tiles', 'request-tile').bindEvents();
 });
