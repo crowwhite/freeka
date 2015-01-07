@@ -17,6 +17,29 @@
   cursor: pointer;
 }
 
+.requirement-description {
+  font-size: 14px !important;
+  background-color: white !important;
+}
+
+.padding-15 {
+  padding: 15px;
+}
+
+.requirement-heading {
+  font-size: 28px;
+  color: black;
+}
+
+.general-heading {
+  font-size: 22px;
+  color: black;
+}
+
+.requirement_show_page_image {
+  padding-left: 0;
+}
+
 .padding-10 {
   padding: 10px;
 }
@@ -116,7 +139,6 @@
 }
 
 #comments {
-  max-height: 240px;
   list-style-type: none;
   overflow: auto;
 }
