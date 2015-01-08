@@ -10,7 +10,6 @@
         <img src='http://www.afnic.fr/medias/images/actus/Logo-fr.png' class='logo'>Freeka
       </a>
     </div>
-    <%#= link_to 'Freeka', admins_welcome_index_path, class: 'navbar-brand' %>
   </div>
   <div class='collapse navbar-collapse col-md-6'>
     <ul class='nav navbar-nav' id='admin-nav'>
@@ -21,7 +20,7 @@
         <%= link_to 'All Users', admins_users_path %>
       </li>
       <li>
-        <%= link_to 'All Requirements', admins_requirements_path({ filter: 'pending' }) %>
+        <%= link_to 'All Requests', admins_requirements_path({ filter: 'pending' }) %>
       </li>
     </ul>
   </div>
