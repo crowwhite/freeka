@@ -26,12 +26,14 @@
         <%= f.label :title, class: 'col-md-2 control-label' %>*
         <div class="col-md-10">
           <%= f.text_field :title, class: 'form-control' %>
+          (Min 5 and Max 25 characters)
         </div>
       </div>
       <div class="field row form-group">
         <%= f.label :details, class: 'col-md-2 control-label' %>*
         <div class="col-md-10">
-          <%= f.text_area :details, class: 'form-control' %>
+          <%= f.text_area :details, class: 'form-control requirement-detail-box' %>
+          (Min 50 and Max 500 characters)
         </div>
       </div>
       <div class="field row form-group">
@@ -119,7 +121,7 @@
             <%= a.label :Image, for: :attachment, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
               <%= file_field_tag :attachment, name: 'requirement[image_attributes][attachment]', class: 'form-control' %>
-              (Size of the image should be atleast 300*300)
+              (Size of the image should be atleast 300*300 and below 700*700)
             </div>
           </div>
         <% end %>

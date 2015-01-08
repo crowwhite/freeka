@@ -13,6 +13,10 @@
     to { transform: scale(1) rotate(360deg);}
 }
 
+.requirement-detail-box {
+  height: 150px !important;
+}
+
 .request-tile:hover, .icon-for-sub-category:hover {
   cursor: pointer;
 }
