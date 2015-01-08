@@ -1,5 +1,6 @@
 #FIXME_AB: Since it is a polymorphic table we should have composite  index on type and id field
 class Attachment < ActiveRecord::Base
+  SIZES = [:thumb, :medium]
 
   # Association
   belongs_to :attacheable, polymorphic: true
@@ -18,7 +19,7 @@ class Attachment < ActiveRecord::Base
   validate :image_dimensions, if: :is_image
 
   def url(size = nil)
-    if size
+    if is_image && SIZES.include?(size)
       attachment.url(size)
     else
       attachment.url(:original)
