@@ -67,7 +67,7 @@ class RequirementsController < ApplicationController
 
   private
     def load_requirement
-      @requirement = Requirement.find_by(id: params[:id])
+      @requirement = Requirement.find_by(slug: params[:id])
       redirect_to requirements_path(filter: 'pending'), alert: 'Requirement not found' unless @requirement
     end
 

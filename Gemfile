@@ -12,6 +12,7 @@ gem 'therubyracer',                           '~>0.12.1'
 gem 'uglifier',                               '~>2.5.3'
 gem 'paperclip',                              '~>4.2'
 gem 'pusher',                                 '~>0.14.2'
+gem 'friendly_id',                            '~>5.0.0'
 
 group :development do
   gem 'binding_of_caller',                    '~>0.7.2'

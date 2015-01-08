@@ -1,5 +1,7 @@
 #FIXME_AB: Through out the application You haven't handled the dependent option with associations. Please do that as per the requirement.
 class Requirement < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :slugged
   #FIXME_AB: There are indexes missing on requirements table, Please add required indexes to all tables as required
   include AASM
 
