@@ -23,9 +23,9 @@ class RequirementsController < ApplicationController
   end
 
   def filter
-    @requirements = Requirement.with_category(filter_params).enabled.live.with_status_not(Requirement.statuses[:fulfilled]).page params[:page]
+    @requirements = Requirement.with_category(params[:category_name]).enabled.live.with_status_not(Requirement.statuses[:fulfilled]).page params[:page]
     @display_page = 'welcome'
-    flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
+    flash.now[:notice] = @requirements.empty? ? 'Nothing matched the filter' : 'Currently filtered by ' + params[:category_name].humanize
     render :index
   end
 

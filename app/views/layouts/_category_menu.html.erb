@@ -1,5 +1,6 @@
 <ul id='main_menu'>
   <% categories = Category.roots.enabled.includes(:enabled_sub_categories) %>
+  <% categories.to_ary.sort_by!(&:name) %>
   <% categories.each do |category| %>
     <li>
         <%= render 'shared/requirement/category_link', locals: { category: category } %>

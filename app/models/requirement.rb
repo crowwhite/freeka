@@ -38,7 +38,7 @@ class Requirement < ActiveRecord::Base
   # Fixed: Yes this is chainable
   #FIXME_AB: Ideally we should pass objects, in this case we should pass category object
   #FIXME_AB: Moreover I think we don't need following scope. Just have similar association in category like category.requirements
-  scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
+  scope :with_category, ->(category_name) { Category.find_by(name: category_name).requirements }
   #FIXME_AB: What is the meaning of following scope?
   scope :with_status_not, ->(status) { where.not(status: status) }
   scope :live, -> { where('expiration_date >= ?', Time.current.to_date) }
