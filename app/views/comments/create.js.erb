@@ -1,1 +1,2 @@
-$('.text-area').val('')
+$('#add-comment').before("<%= escape_javascript render 'comment' %>");
+$('.text-area').val('');

@@ -3,7 +3,7 @@
   <meta property="og:description" content="<%= @requirement.details.truncate(400) %>"/>
 <% end %>
 <%= javascript_include_tag 'faliure_link' %>
-<%= javascript_include_tag 'comment_adder' %>
+<%= javascript_include_tag 'push_notifier' %>
 <%= javascript_include_tag 'http://js.pusher.com/2.2/pusher.min.js' %>
 <%= render 'shared/fb_scripts' %>
 <div class="row">
@@ -108,6 +108,7 @@
     </div>
   </div>
 </div>
+<div class="notifier"></div>
 <%= hidden_field_tag :app_key, ENV['PUSHER_KEY'] %>
 <br>
 <br>
