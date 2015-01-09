@@ -1,4 +1,4 @@
 <%= content_tag :div, class: 'loader-btn' do %>
-  <% action_text, enabled = locals[:category].enabled ? ['disable', false] : ['enable', true] %>
+  <% action_text, enabled = locals[:category].enabled ? ['Disable', false] : ['Enable', true] %>
   <%= link_to action_text, toggle_status_admins_category_path(locals[:category], category: { enabled: enabled }), method: :put, remote: true, class: 'btn btn-default btn-xs', role: 'button' %>
 <% end %>

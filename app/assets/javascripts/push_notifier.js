@@ -22,7 +22,6 @@ var appendSocketId = function(elementId, $socket_id) {
 
 $(function() {
   var pusher = new Pusher($('#app_key').val());
-  var url = document.URL;
   var socketId = null;
   pusher.connection.bind('connected', function() {
     socketId = pusher.connection.socket_id;
