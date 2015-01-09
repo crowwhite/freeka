@@ -109,6 +109,7 @@
   </div>
 </div>
 <div class="notifier"></div>
+<%= hidden_field_tag :requirement_id, @requirement.id %>
 <%= hidden_field_tag :app_key, ENV['PUSHER_KEY'] %>
 <br>
 <br>

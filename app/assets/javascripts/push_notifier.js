@@ -16,7 +16,7 @@ var notifyOnPage = function(message) {
   $('body').append($popUpDiv);
 }
 
-var appendSocketId = function(elementId) {
+var appendSocketId = function(elementId, $socket_id) {
   $('#' + elementId).append($socket_id);
 }
 
@@ -27,9 +27,9 @@ $(function() {
   pusher.connection.bind('connected', function() {
     socketId = pusher.connection.socket_id;
     var $socket_id = $('<input>', { value: socketId, type: 'hidden', name: 'comment[socket_id]' })
-    appendSocketId('new_comment');
+    appendSocketId('new_comment', $socket_id);
   });
-  var channel = pusher.subscribe('channel_' + url.substring(url.lastIndexOf('/') + 1));
+  var channel = pusher.subscribe('channel_' + $('#requirement_id').val());
   channel.bind('add_comment', function(message) {
     notifyOnPage(message)
   });
