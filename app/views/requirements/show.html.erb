@@ -68,7 +68,7 @@
           <% end %>
         <% @requirement.files.each do |attachment| %>
           <br>
-          <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %>
+          <%= attachment.caption %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %>
         <% end %>
         </div>
         <div class="col-md-6 text-right">

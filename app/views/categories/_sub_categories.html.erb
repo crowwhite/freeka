@@ -7,7 +7,7 @@
     <% if defined?(locals) %>
       <%= select_tag('requirement[category_ids][]', options_for_select(parent_category.enabled_sub_categories.map { |category| [category.name, category.id] }, locals[:child_id]) )%>
     <% else %>
-      <%= select_tag('requirement[category_ids][]', options_for_select(parent_category.enabled_sub_categories.map { |category| [category.name, category.id] }))%>
+      <%= select_tag('requirement[category_ids][]', options_for_select(parent_category.enabled_sub_categories.map { |category| [category.name, category.id] }), prompt: 'Select sub category')%>
     <% end %>
   <% else %>
     <%= 'No sub category' %>

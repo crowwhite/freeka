@@ -72,8 +72,7 @@ class RequirementsController < ApplicationController
     end
 
     def requirement_params
-      params[:requirement][:files_attributes] = params[:requirement][:files_attributes].values.flatten if params[:requirement] && params[:requirement][:files_attributes].try(:is_a?, Hash)
-      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy], address_attributes: [:id, :street, :city, :country_code, :state_code])
+      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy, :caption], address_attributes: [:id, :street, :city, :country_code, :state_code])
     end
 
     def allow_only_owner

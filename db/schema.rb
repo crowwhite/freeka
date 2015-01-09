@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108104937) do
+ActiveRecord::Schema.define(version: 20150109060338) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20150108104937) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "attacheable_sub_type",    default: "File"
+    t.string   "caption",                 default: "",     null: false
   end
 
   create_table "categories", force: true do |t|

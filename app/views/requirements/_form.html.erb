@@ -4,13 +4,15 @@
   <%= javascript_include_tag 'link' %>
 <% end %>
 <%= javascript_include_tag 'multifile-master/jQuery.MultiFile.min.js' %>
-<div class="well bs-component col-md-6">
+<%= javascript_include_tag 'file_field.js' %>
+<div class='col-md-2'></div>
+<div class="well bs-component col-md-8">
   <%= form_for(@requirement, html: { class: 'form-horizontal', multipart: true }) do |f| %>
   <fieldset>
-    <legend>Requirement</legend>
+    <legend>Request</legend>
     <%= render 'shared/errors', locals: { object: @requirement } %>
       <div class="field row form-group">
-        <%= f.label :Category, for: :category_ids, class: 'col-md-2 control-label' %>*
+        <%= f.label 'Category*', for: :category_ids, class: 'col-md-2 control-label' %>
         <div class="col-md-10">
           <%= f.collection_select(:category_ids, Category.roots.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]', class: 'form-control'}) %>
         </div>
@@ -23,21 +25,21 @@
       </div>
 
       <div class="field row form-group">
-        <%= f.label :title, class: 'col-md-2 control-label' %>*
+        <%= f.label 'title*', class: 'col-md-2 control-label' %>
         <div class="col-md-10">
           <%= f.text_field :title, class: 'form-control' %>
           (Min 5 and Max 25 characters)
         </div>
       </div>
       <div class="field row form-group">
-        <%= f.label :details, class: 'col-md-2 control-label' %>*
+        <%= f.label 'details*', class: 'col-md-2 control-label' %>
         <div class="col-md-10">
           <%= f.text_area :details, class: 'form-control requirement-detail-box' %>
           (Min 50 and Max 500 characters)
         </div>
       </div>
       <div class="field row form-group">
-        <%= f.label :Require_Before, for: :expiration_date, class: 'col-md-2 control-label' %>*
+        <%= f.label 'Require_Before*', for: :expiration_date, class: 'col-md-2 control-label' %>
         <div class="col-md-10">
           <%= f.date_select :expiration_date, class: 'form-control' %>
         </div>
@@ -54,21 +56,21 @@
           </div>
 
           <div class="field row form-group">
-            <%= a.label :city, class: 'col-md-2 control-label' %>*
+            <%= a.label 'city*', class: 'col-md-2 control-label' %>
             <div class="col-md-10">
               <%= a.text_field :city, class: 'form-control' %>
             </div>  
           </div>
 
           <div class="field row form-group">
-            <%= a.label :country, for: :country_code, class: 'col-md-2 control-label' %>*
+            <%= a.label 'country*', for: :country_code, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
               <%= a.country_select :country_code, priority: %w(US CA), prompt: 'Please select a country', id: 'country_select', class: 'form-control' %>
             </div>
           </div>
 
           <div class="field row form-group">
-            <%= f.label :state, for: :state_code, class: 'col-md-2 control-label' %>*
+            <%= f.label 'state*', for: :state_code, class: 'col-md-2 control-label' %>
             <div id="subregion_select" class="col-md-10">
               <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
             </div>
@@ -77,43 +79,49 @@
         <% end %>
       </div>
 
-      <div class="field row form-group">
+      <div class="field row form-group" id='files'>
         <%= f.fields_for :files, (f.object.files if f.object.files.exists?) || f.object.files.build do |a| %>
           <div class="col-md-10">
-            <%= a.label :File, for: :file_attachment, class: 'col-md-2 control-label' %>
+            <%= a.label :File, for: :attachment, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <% unless @requirement.new_record? %>
-                <% if a.object.id %>
-                  <text><%= a.object.attachment.original_filename %></text>
-                  <a href="#" class='remove'>
-                    <span class='selected remove-text' data-remove='false'>X</span>
-                    <span class='hidden remove-text' data-remove='true'>Undo Remove</span>
-                  </a>
-                  <br>
-                  <%= a.hidden_field :_destroy, class: 'hidden_field' %>
-                <% else %>
-                  <text>No attached Files</text>
+              <div class='row'>
+                <div class='col-md-3'>
+                  <% unless @requirement.new_record? %>
+                    <% if a.object.id %>
+                      <text><%= a.object.caption %></text>
+                      <a href="#" class='remove'>
+                        <span class='selected remove-text' data-remove='false'>X</span>
+                        <span class='hidden remove-text' data-remove='true'>Undo Remove</span>
+                      </a>
+                      <br>
+                      <%= a.hidden_field :_destroy, class: 'hidden_field' %>
+                    <% else %>
+                      <%= a.file_field :attachment, class: 'form-control multi' %>
+                    <% end %>
+                  <% else %>
+                    <%= a.file_field :attachment, class: 'form-control multi' %>
+                  <% end %>
+                </div>
+                <!-- Caption -->
+                <% unless @requirement.new_record? %>
+                  <%= a.label :caption, class: 'col-md-2 control-label' %>
+                  <div class='col-md-6'>
+                    <%= a.text_field :caption, class: 'form-control' %>
+                  </div>
                 <% end %>
-              <% else %>
-                <%= a.file_field :file_attachment, multiple: true, name: 'requirement[files_attributes][][attachment]', class: 'form-control multi' %>
-                (Size of one file should not be more than 10 MB)
-              <% end %>
+              </div>
             </div>
           </div>
         <% end %>
       </div>
-      <div class='row form-group'>
-        <% unless @requirement.new_record? %>
-          <%= f.fields_for :files, f.object.files.build do |b| %>
-            <div class='col-md-2'>
-              <%= b.label 'Add files', for: :more_attachments %>
-            </div>
-            <div class='col-md-10'>
-              <%= b.file_field :more_attachments, multiple: true, name: "requirement[files_attributes]['new child'][][attachment]", class: 'form-control multi' %>
-              (Size of one file should not be more than 10 MB)
-            </div>
-          <% end %>
-        <% end %>
+      <div class='row'>
+        <div class='col-md-2'></div>
+        <div class='col-md-6'>
+          (Size of file should not be more than 10 MB, valid types are Image: jpg, jpeg, png, gif and for Documents: pdf, html, doc)
+        </div>
+        <div class='col-md-4'>
+          <%= link_to 'Add files..', '#', class: 'btn btn-primary btn-sm', id: 'add-files' %>
+        </div>
       </div>
       <div class="field row form-group">
         <%= f.fields_for :image, f.object.image || f.object.build_image do |a| %>
@@ -127,14 +135,13 @@
         <% end %>
       </div>
 
-      <div class="actions btn btn-primary">
-        <%= f.submit %>
+      <div class="actions row">
+        <div class='col-md-2'></div>
+        <div class='col-md-3'>
+          <%= f.submit %>
+        </div>
+          <%= link_to 'Cancel', requirements_path(filter: 'pending'), class: 'btn btn-primary btn-sm col-md-2' %>
       </div>
     </fieldset>
   <% end %>
-  <div class='row'>
-    <div class="col-md-6 shared links">
-      <%= link_to 'Cancel', requirements_path(filter: 'pending') %>
-    </div>
-  </div>
 </div>
