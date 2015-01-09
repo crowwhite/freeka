@@ -1,4 +1,4 @@
-<td><%= link_to locals[:category].name, admins_category_path(locals[:category]) %></td>
+<td><%= link_to locals[:category].name.humanize, admins_category_path(locals[:category]) %></td>
 <% if controller_name == 'sub_categories' %>
   <td><%= locals[:category].parent_category.name %></td>
 <% end %>
