@@ -96,19 +96,19 @@
                       <br>
                       <%= a.hidden_field :_destroy, class: 'hidden_field' %>
                     <% else %>
-                      <%= a.file_field :attachment, class: 'form-control multi' %>
+                      <%= a.file_field :attachment, class: ' ' %>
                     <% end %>
                   <% else %>
-                    <%= a.file_field :attachment, class: 'form-control multi' %>
+                    <%= a.file_field :attachment, class: ' ' %>
                   <% end %>
                 </div>
                 <!-- Caption -->
-                <% unless @requirement.new_record? %>
+                <%# unless @requirement.new_record? %>
                   <%= a.label :caption, class: 'col-md-2 control-label' %>
                   <div class='col-md-6'>
                     <%= a.text_field :caption, class: 'form-control' %>
                   </div>
-                <% end %>
+                <%# end %>
               </div>
             </div>
           </div>

@@ -1,0 +1,15 @@
+<div id="sub_category_select">
+  <% parent_category ||= Category.find_by(id: params[:parent_id] || (locals[:parent_id] if defined?(locals))) %>
+
+  <% if parent_category.nil? %>
+    <em>Please select a category above</em>
+  <% elsif parent_category.enabled_sub_categories.size > 0 %>
+    <% if defined?(locals) %>
+      <%= select_tag('requirement[category_ids][]', options_for_select(parent_category.enabled_sub_categories.map { |category| [category.name, category.id] }, locals[:child_id]) )%>
+    <% else %>
+      <%= select_tag('requirement[category_ids][]', options_for_select(parent_category.enabled_sub_categories.map { |category| [category.name, category.id] }), prompt: 'Select sub category')%>
+    <% end %>
+  <% else %>
+    <%= 'No sub category' %>
+  <% end %>
+</div>
