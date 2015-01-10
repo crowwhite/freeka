@@ -31,7 +31,6 @@ class RequirementsController < ApplicationController
 
   def new
     @requirement = current_user.requirements.build
-    @requirement.build_address
   end
 
   def show
