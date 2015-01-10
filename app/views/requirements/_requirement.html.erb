@@ -29,7 +29,7 @@
           <strong title="<%= requirement.title %>"><%= link_to requirement.title.truncate(33), requirement %></strong>
         </div>
         <div class="description">
-          <strong><%= requirement.city %></strong>
+          <strong><%= requirement.try(:city) %></strong>
           <br>
           <text>
             <%= requirement.details.truncate(250) %>
