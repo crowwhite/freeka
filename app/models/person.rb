@@ -7,12 +7,16 @@ class Person < ActiveRecord::Base
 
   TYPES = %w(Admin User)
 
+  # Associations
   has_many :requirements, dependent: :destroy, foreign_key: :requestor_id
   has_many :donor_requirements, dependent: :destroy, foreign_key: :donor_id
   has_many :donations, through: :donor_requirements, dependent: :destroy, source: :requirement
 
+  # Validations
   validates :name, :contact_no, presence: true
-  validates :password, format: { with: VALIDATOR[:password], message: 'No white spaces allowed' }, on: :create
+  validates :name, format: { with: VALIDATOR[:name], message: 'No special characters allowed' }
+  validates :about_me, length: { maximum: 200 }, allow_blank: true
+  validates :password, format: { with: VALIDATOR[:password], message: 'No white spaces allowed' }
   validates :contact_no, numericality: true, allow_blank: true
   validates :contact_no, length: { minimum: 10, maximum: 12 }
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }

@@ -11,7 +11,6 @@ class Requirement < ActiveRecord::Base
   #FIXME_AB: Following two associations are wrong. We have a better way.
   has_one :image, -> { where(attacheable_sub_type: :Image) }, as: :attacheable, class_name: :Attachment, dependent: :destroy
   has_many :files, -> { where(attacheable_sub_type: :File) }, as: :attacheable, class_name: :Attachment, dependent: :destroy
-  belongs_to :address, foreign_key: :location_id, dependent: :destroy
   belongs_to :person, foreign_key: :requestor_id
   has_many :category_requirements, dependent: :destroy
   has_many :categories, through: :category_requirements
@@ -19,12 +18,12 @@ class Requirement < ActiveRecord::Base
   has_many :interested_donors, through: :donor_requirements, source: :user
   has_many :comments, dependent: :destroy
 
-  accepts_nested_attributes_for :address
   accepts_nested_attributes_for :files, allow_destroy: true
   accepts_nested_attributes_for :image, allow_destroy: true
 
   # Validation
-  validates :title, :details, :expiration_date, presence: true
+  validates :title, :details, :expiration_date, :city, :country_code, :state_code, presence: true
+  validates :title, format: { with: VALIDATOR[:name], message: 'No special characters allowed' }
   validates :title, length: { minimum: 5, maximum: 25 }
   validates :details, length: { minimum: 50, maximum: 500 }
   validate :date_not_in_past, unless: :status_changed?

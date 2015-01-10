@@ -2,7 +2,7 @@ $(function () {
 
   // FIXME_AB: You should write Object oriented JS. May be you can have a page class which on init binds events. The current implementation doesn't looks good to me
 
-  $('#requirement_address_attributes_country_code').on('change', function () {
+  $('#requirement_country_code').on('change', function () {
     _this = this;
     $.ajax({
       type: "GET",

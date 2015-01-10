@@ -3,11 +3,15 @@ class Comment < ActiveRecord::Base
 
   attr_accessor :socket_id
 
+  # Associations
   belongs_to :requirement
   belongs_to :user
 
+  # Validations
   validates :content, presence: true
+  validates :content, length:  { minimum: 1, maximum: 500 }, allow_blank: true
 
+  # Callbacks
   after_create :notify_via_pusher
 
   private

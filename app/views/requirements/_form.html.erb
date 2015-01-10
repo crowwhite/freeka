@@ -47,37 +47,37 @@
       </div>
 
       <div class="field row">
-        <%= f.fields_for :address do |a| %>
+        <%#= f.fields_for :address do |a| %>
 
           <div class="field row form-group">
-            <%= a.label :street, class: 'col-md-2 control-label' %>
+            <%= f.label :street, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <%= a.text_field :street, class: 'form-control' %>
+              <%= f.text_field :street, class: 'form-control' %>
             </div>
           </div>
 
           <div class="field row form-group">
-            <%= a.label 'city*', class: 'col-md-2 control-label' %>
+            <%= f.label 'city*', class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <%= a.text_field :city, class: 'form-control' %>
+              <%= f.text_field :city, class: 'form-control' %>
             </div>  
           </div>
 
           <div class="field row form-group">
-            <%= a.label 'country*', for: :country_code, class: 'col-md-2 control-label' %>
+            <%= f.label 'country*', for: :country_code, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <%= a.country_select :country_code, priority: %w(US CA), prompt: 'Please select a country', id: 'country_select', class: 'form-control' %>
+              <%= f.country_select :country_code, priority: %w(IN), prompt: 'Please select a country', id: 'country_select', class: 'form-control' %>
             </div>
           </div>
 
           <div class="field row form-group">
             <%= f.label 'state*', for: :state_code, class: 'col-md-2 control-label' %>
             <div id="subregion_select" class="col-md-10">
-              <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
+              <%= render partial: 'addresses/sub_region_select', locals: { parent_region: f.object.country_code } %>
             </div>
           </div>
 
-        <% end %>
+        <%# end %>
       </div>
 
       <div class="field row form-group" id='files'>
