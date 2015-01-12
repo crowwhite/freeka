@@ -39,6 +39,9 @@
   <div class="row tiles">
     <div class='col-md-12'>
       <div class="container">
+        <% if @requirements.length.zero? %>
+          <%= image_tag '/GRAY-NO-REQUESTS-FRONT.png', class: 'placeholder-photo' %>
+        <% end %>
         <div class="row" id='requirement-tiles'>
           <%= render 'requirements/requirement' %>
         </div>

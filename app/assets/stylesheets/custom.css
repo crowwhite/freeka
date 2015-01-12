@@ -18,6 +18,12 @@
   width: 35px;
 }
 
+.placeholder-photo {
+  height: 500px;
+  width: 600px;
+  margin: 0 200px;
+}
+
 .profile-image {
   position: relative;
   width: 100px !important;
