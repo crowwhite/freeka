@@ -31,22 +31,21 @@ class Category < ActiveRecord::Base
   after_update :change_status_of_sub_categories, if: :enabled_changed? && :is_parent?
   after_update :change_status_of_requirements, if: :enabled_changed?
 
-  def is_parent?
-    parent_id.nil?
-  end
-
-  def change_status_of_sub_categories
-    #FIXME_AB: The name of the method doesn't match with the work this method is doing
-    # Fixed
-    sub_categories.update_all(enabled: enabled)
-  end
-
-  def change_status_of_requirements
-    #FIXME_AB: The name of the method doesn't match with the work this method is doing
-    requirements.update_all(enabled: enabled)
-  end
-
   private
+    def is_parent?
+      parent_id.nil?
+    end
+
+    def change_status_of_sub_categories
+      #FIXME_AB: The name of the method doesn't match with the work this method is doing
+      # Fixed
+      sub_categories.update_all(enabled: enabled)
+    end
+
+    def change_status_of_requirements
+      #FIXME_AB: The name of the method doesn't match with the work this method is doing
+      requirements.update_all(enabled: enabled)
+    end
 
     def ensure_parent_is_not_a_sub_category
       #FIXME_AB: why adding error on parent_id. User doesn't know about parent_id
