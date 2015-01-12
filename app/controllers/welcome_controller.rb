@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
   before_action :check_if_admin, only: :index
 
   def index
-    @requirements = Requirement.enabled.live.pending.includes(:donor_requirements, :files, :image, :address).order(:expiration_date).page params[:page]
+    @requirements = Requirement.enabled.live.pending.includes(:donor_requirements, :files, :image).order(:expiration_date).page params[:page]
     if params[:ajax]
       render partial: 'requirements/requirement', layout: false
     else

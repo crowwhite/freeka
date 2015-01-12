@@ -1,23 +1,30 @@
 #FIXME_AB: You should also have index on type and enabled column in db
 # Fixed: I feel it should only be on enabled column since there is no search on type of user
 #FIXME_AB: Are you sure that there will be no search on type column. How would STI work then?
+# Fixed
 class Person < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
   TYPES = %w(Admin User)
 
+  # Associations
   has_many :requirements, dependent: :destroy, foreign_key: :requestor_id
   has_many :donor_requirements, dependent: :destroy, foreign_key: :donor_id
   has_many :donations, through: :donor_requirements, dependent: :destroy, source: :requirement
 
+  # Validations
   validates :name, :contact_no, presence: true
-  validates :password, format: { with: VALIDATOR[:password], message: 'No white spaces allowed' }, on: :create
+  validates :name, format: { with: VALIDATOR[:name], message: 'No special characters allowed' }
+  validates :about_me, length: { maximum: 200 }, allow_blank: true
+  validates :password, format: { with: VALIDATOR[:password], message: 'No white spaces allowed' }
   validates :contact_no, numericality: true, allow_blank: true
   validates :contact_no, length: { minimum: 10, maximum: 12 }
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
   #FIXME_AB: What about email validations?
+  # handled by devise
   #FIXME_AB: Are we allowing special chars in name? We should have sensible validations on all models.
+  # Fixed
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable

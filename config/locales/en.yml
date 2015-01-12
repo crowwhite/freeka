@@ -30,3 +30,6 @@ en:
       requirement:
         create: "Create Request"
         update: "Update Request"
+      category:
+        create: "Create"
+        update: "Update"

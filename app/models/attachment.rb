@@ -1,4 +1,5 @@
 #FIXME_AB: Since it is a polymorphic table we should have composite  index on type and id field
+# Fixed
 class Attachment < ActiveRecord::Base
 
   SIZES = [:medium, :thumb, :original]
@@ -14,7 +15,6 @@ class Attachment < ActiveRecord::Base
 
   # Validation
   validates :caption, length: { maximum: 15 }
-  # tobefixed size and content combine it
   validates_attachment_size :attachment, less_than: 10.megabyte
   #FIXME_AB: We are not displaying valid attachment types in frontend
   # Fixed

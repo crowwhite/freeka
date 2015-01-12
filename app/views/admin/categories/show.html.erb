@@ -1,0 +1,15 @@
+<br>
+<div class='row'>
+  <ul class="list-group col-md-12">
+    <li class="list-group-item list-group-item-success"><%= @category.name %></li>
+    <ul>
+    <% if @category.parent_category %>
+      <li class="list-group-item list-group-item-danger"><strong>Parent:</strong> <%= @category.parent_category.name %></li>
+    <% end %>
+      <% @category.sub_categories.each do |sub_category| %>
+        <li class="list-group-item"><%= sub_category.name %></li>
+      <% end %>
+    </ul>
+  </ul>
+<%= link_to 'Back', :back, class: 'btn btn-primary btn-sm' %>
+</div>

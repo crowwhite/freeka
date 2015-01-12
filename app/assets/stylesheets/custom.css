@@ -13,6 +13,30 @@
     to { transform: scale(1) rotate(360deg);}
 }
 
+.profile-icon {
+  height: 35px;
+  width: 35px;
+}
+
+.profile-image {
+  position: relative;
+  width: 100px !important;
+}
+
+.profile-image-label {
+  position: absolute;
+  top: 9px;
+  right: -13px;
+}
+
+.profile-image:hover, .profile-image-label:hover {
+  cursor: pointer;
+}
+
+.image-file-field {
+  opacity: 0;
+}
+
 .requirement-detail-box {
   height: 150px !important;
 }

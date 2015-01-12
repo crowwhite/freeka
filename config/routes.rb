@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   resources :users, only: :show
 
   namespace :admin, path: 'admins', as: :admins do
-    resources :categories, except: :show do
+    resources :categories do
       put 'toggle_status', on: :member
     end
     resources :sub_categories, only: [:index, :new]

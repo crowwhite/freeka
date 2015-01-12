@@ -6,16 +6,14 @@
   <div class='container'>
     <div class='container'>
       <div class='row'>
-        <% if display_page == 'welcome' %>
-          <div class='row'>
-            <div class='col-md-9'>
-              <%= render 'layouts/category_menu' %>
-            </div>
-            <div class='col-md-3'>
-              <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
-            </div>
+        <div class='row'>
+          <div class='col-md-9'>
+            <%= render 'layouts/category_menu' %>
           </div>
-        <% end %>
+          <div class='col-md-3'>
+            <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
+          </div>
+        </div>
         <div class='row'>
           <div class='col-md-6'>
             <% unless display_page == 'welcome' %>

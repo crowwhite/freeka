@@ -1,12 +1,14 @@
-<%= javascript_include_tag 'sub_region_select' %>
-<%= javascript_include_tag 'sub_category_select' %>
-<% unless @requirement.new_record? %>
-  <%= javascript_include_tag 'link' %>
+<% content_for :head do %>
+  <%= javascript_include_tag 'sub_region_select' %>
+  <%= javascript_include_tag 'sub_category_select' %>
+  <% unless @requirement.new_record? %>
+    <%= javascript_include_tag 'link' %>
+  <% end %>
+  <%= javascript_include_tag 'nested_attachment.js' %>
+  <%= javascript_include_tag 'remove_link.js' %>
 <% end %>
-<%= javascript_include_tag 'multifile-master/jQuery.MultiFile.min.js' %>
-<%= javascript_include_tag 'file_field.js' %>
 <div class='col-md-2'></div>
-<div class="well bs-component col-md-8">
+<div class="well bs-component col-md-9">
   <%= form_for(@requirement, html: { class: 'form-horizontal', multipart: true }) do |f| %>
   <fieldset>
     <legend>Request</legend>
@@ -14,7 +16,7 @@
       <div class="field row form-group">
         <%= f.label 'Category*', for: :category_ids, class: 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= f.collection_select(:category_ids, Category.roots.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]', class: 'form-control'}) %>
+          <%= f.collection_select(:category_ids, Category.roots.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]', class: 'form-control', data: { url_for_ajax: '/categories/sub_categories' }}) %>
         </div>
       </div>
       <div class="field row form-group">
@@ -46,42 +48,42 @@
       </div>
 
       <div class="field row">
-        <%= f.fields_for :address do |a| %>
+        <%#= f.fields_for :address do |a| %>
 
           <div class="field row form-group">
-            <%= a.label :street, class: 'col-md-2 control-label' %>
+            <%= f.label :street, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <%= a.text_field :street, class: 'form-control' %>
+              <%= f.text_field :street, class: 'form-control' %>
             </div>
           </div>
 
           <div class="field row form-group">
-            <%= a.label 'city*', class: 'col-md-2 control-label' %>
+            <%= f.label 'city*', class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <%= a.text_field :city, class: 'form-control' %>
+              <%= f.text_field :city, class: 'form-control' %>
             </div>  
           </div>
 
           <div class="field row form-group">
-            <%= a.label 'country*', for: :country_code, class: 'col-md-2 control-label' %>
+            <%= f.label 'country*', for: :country_code, id: 'country_select_label', class: 'col-md-2 control-label', data: { url_for_ajax: '/addresses/sub_region' } %>
             <div class="col-md-10">
-              <%= a.country_select :country_code, priority: %w(US CA), prompt: 'Please select a country', id: 'country_select', class: 'form-control' %>
+              <%= f.country_select :country_code, priority: %w(IN), prompt: 'Please select a country', id: 'country_select', class: 'form-control' %>
             </div>
           </div>
 
           <div class="field row form-group">
             <%= f.label 'state*', for: :state_code, class: 'col-md-2 control-label' %>
             <div id="subregion_select" class="col-md-10">
-              <%= render partial: 'addresses/sub_region_select', locals: {parent_region: a.object.country_code} %>
+              <%= render partial: 'addresses/sub_region_select', locals: { parent_region: f.object.country_code } %>
             </div>
           </div>
 
-        <% end %>
+        <%# end %>
       </div>
 
       <div class="field row form-group" id='files'>
         <%= f.fields_for :files, (f.object.files if f.object.files.exists?) || f.object.files.build do |a| %>
-          <div class="col-md-10">
+          <div class="col-md-10 single-file">
             <%= a.label :File, for: :attachment, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
               <div class='row'>
@@ -96,19 +98,20 @@
                       <br>
                       <%= a.hidden_field :_destroy, class: 'hidden_field' %>
                     <% else %>
-                      <%= a.file_field :attachment, class: 'form-control multi' %>
+                      <%= a.file_field :attachment, class: ' ' %>
                     <% end %>
                   <% else %>
-                    <%= a.file_field :attachment, class: 'form-control multi' %>
+                    <%= a.file_field :attachment, class: ' ' %>
                   <% end %>
                 </div>
                 <!-- Caption -->
-                <% unless @requirement.new_record? %>
-                  <%= a.label :caption, class: 'col-md-2 control-label' %>
-                  <div class='col-md-6'>
-                    <%= a.text_field :caption, class: 'form-control' %>
-                  </div>
-                <% end %>
+                <%= a.label ' ', class: 'col-md-2 control-label' %>
+                <div class='col-md-6'>
+                  <%= a.text_field :caption, class: 'form-control', placeholder: :Caption %>
+                </div>
+                <div class='col-md-1'>
+                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>
+                </div>
               </div>
             </div>
           </div>

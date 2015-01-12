@@ -1,5 +1,7 @@
-<%= javascript_include_tag 'loading_button' %>
-<%= javascript_include_tag 'status_button' %>
+<% content_for :head do %>
+  <%= javascript_include_tag 'loading_button' %>
+  <%= javascript_include_tag 'status_button' %>
+<% end %>
 <div class='row'>
   <h1 class='col-md-6'>Listing Users</h1>
   <div class='col-md-3'></div>
@@ -32,8 +34,9 @@
       <td><%= user.email %></td>
       <td><%= user.requirements.size %></td>
       <td><%= user.donations.size %></td>
-      <%= content_tag :td, id: 'status' + user.id.to_s, class: 'loader' do %>
-        <%= render 'status', locals: { user: user } %>
+      <%= content_for :head do %> :td, id: 'status' + user.id.to_s, class: 'loader' do %>
+          <%= render 'status', locals: { user: user } %>
+        <% end %>
       <% end %>
       <td><%= render 'update', locals: { user: user } %></td>
     </tr>

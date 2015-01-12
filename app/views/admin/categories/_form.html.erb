@@ -14,23 +14,29 @@
             </ul>
           </div>
         <% end %>
-        <% if @is_sub_category %>
-          <%= content_tag :div, class: 'field', id: 'sub_category_select' do %>
-            <%= f.label :parent_id %>*<br>
-            <%= f.collection_select(:parent_id, Category.roots.all_except(@category.id), :id, :name, { prompt: 'Select Parent' }) %>
+        <div class='row'>
+          <% if @is_sub_category %>
+            <%= content_tag :div, class: 'field form-group', id: 'sub_category_select' do %>
+              <%= f.label 'parent_id*', for: :parent_id, class: 'col-lg-3 control-label' %>
+              <div class='col-lg-8'>
+                <%= f.collection_select(:parent_id, Category.roots.all_except(@category.id), :id, :name, { prompt: 'Select Parent' }) %>
+              </div>
+            <% end %>
+            <%= hidden_field_tag 'category[is_sub_category]', @is_sub_category %>
           <% end %>
-          <%= hidden_field_tag 'category[is_sub_category]', @is_sub_category %>
-        <% end %>
+        </div>
 
         <div class="field form-group">
-          <%= f.label :name, class: 'col-lg-2 control-label' %>*
-          <div class='col-lg-10'>
-            <%= f.text_field :name, class: 'form-control' %>
+          <div class='row'>
+            <%= f.label 'name*', for: :name, class: 'col-lg-3 control-label' %>
+            <div class='col-lg-8'>
+              <%= f.text_field :name, class: 'form-control' %>
+            </div>
           </div>
         </div>
 
         <div class="actions btn btn-primary">
-          <%= f.submit :Create %>
+          <%= f.submit %>
         </div>
       </fieldset>
     <% end %>

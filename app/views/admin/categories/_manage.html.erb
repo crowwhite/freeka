@@ -1,5 +1,12 @@
-<td><%= locals[:category].name %></td>
-<td><%= link_to 'Edit', edit_admins_category_path(locals[:category]) %></td>
+<td><%= link_to locals[:category].name.humanize, admins_category_path(locals[:category]) %></td>
+<% if controller_name == 'sub_categories' %>
+  <td><%= locals[:category].parent_category.name %></td>
+<% end %>
+<td class='icon-for-sub-category'>
+  <%= link_to edit_admins_category_path(locals[:category]) do %>
+    <span class='glyphicon glyphicon-pencil'></span>
+  <% end %>
+</td>
 <%= content_tag :td, id: 'status' + locals[:category].id.to_s, class: 'loader category-status' do %>
   <%= render 'admin/categories/status', locals: { category: locals[:category] } %>
 <% end %>

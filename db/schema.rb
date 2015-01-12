@@ -11,17 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109060338) do
-
-  create_table "addresses", force: true do |t|
-    t.string   "street"
-    t.string   "city"
-    t.string   "pin_code"
-    t.string   "state_code"
-    t.string   "country_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20150112062105) do
 
   create_table "attachments", force: true do |t|
     t.integer  "attacheable_id"
@@ -33,8 +23,13 @@ ActiveRecord::Schema.define(version: 20150109060338) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "attacheable_sub_type",    default: "File"
-    t.string   "caption",                 default: "",     null: false
+    t.string   "caption",                 default: "No caption available", null: false
   end
+
+  add_index "attachments", ["attacheable_id"], name: "index_attachments_on_attacheable_id", using: :btree
+  add_index "attachments", ["attacheable_sub_type"], name: "index_attachments_on_attacheable_sub_type", using: :btree
+  add_index "attachments", ["attacheable_type", "attacheable_id"], name: "index_attachments_on_attacheable_type_and_attacheable_id", using: :btree
+  add_index "attachments", ["attacheable_type"], name: "index_attachments_on_attacheable_type", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -137,6 +132,7 @@ ActiveRecord::Schema.define(version: 20150109060338) do
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
   add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
   add_index "people", ["slug"], name: "index_people_on_slug", using: :btree
+  add_index "people", ["type"], name: "index_people_on_type", using: :btree
 
   create_table "requirements", force: true do |t|
     t.string   "title"
@@ -150,8 +146,13 @@ ActiveRecord::Schema.define(version: 20150109060338) do
     t.datetime "updated_at"
     t.boolean  "delta",           default: true, null: false
     t.string   "slug"
+    t.string   "street",          default: "",   null: false
+    t.string   "city",            default: "",   null: false
+    t.string   "country_code",    default: "",   null: false
+    t.string   "state_code",      default: "",   null: false
   end
 
+  add_index "requirements", ["requestor_id"], name: "index_requirements_on_requestor_id", using: :btree
   add_index "requirements", ["slug"], name: "index_requirements_on_slug", using: :btree
 
 end

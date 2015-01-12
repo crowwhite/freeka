@@ -6,7 +6,7 @@ class RequirementsController < ApplicationController
   def index
     @requirements = current_user.requirements
     @requirements = @requirements.public_send(params[:filter]) if params[:filter]
-    @requirements = @requirements.includes(:donor_requirements, :files, :image, :address)
+    @requirements = @requirements.includes(:donor_requirements, :files, :image)
     if params[:filter] == 'pending'
       @requirements = @requirements.order(created_at: :desc)
     elsif params[:filter] == 'fulfilled'
@@ -31,7 +31,6 @@ class RequirementsController < ApplicationController
 
   def new
     @requirement = current_user.requirements.build
-    @requirement.build_address
   end
 
   def show
@@ -72,7 +71,7 @@ class RequirementsController < ApplicationController
     end
 
     def requirement_params
-      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy, :caption], address_attributes: [:id, :street, :city, :country_code, :state_code])
+      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, :state_code, :country_code, :city, :street, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy, :caption])
     end
 
     def allow_only_owner

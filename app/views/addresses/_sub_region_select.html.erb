@@ -5,8 +5,8 @@
   <% if country.nil? %>
     <em>Please select a country above</em>
   <% elsif country.subregions? %>
-    <%= subregion_select('requirement[address_attributes]', :state_code, parent_region) %>
+    <%= subregion_select('requirement', :state_code, parent_region) %>
   <% else %>
-    <%= text_field('requirement[address_attributes]', :state_code) %>
+    <%= text_field('requirement', :state_code) %>
   <% end %>
 </div>
