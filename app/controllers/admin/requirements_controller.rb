@@ -32,7 +32,7 @@ class Admin::RequirementsController < Admin::BaseController
 
   private
     def load_requirement
-      @requirement = Requirement.find_by(id: params[:id])
+      @requirement = Requirement.find_by(slug: params[:id])
       redirect_to admins_requirements_path, alert: 'Requirement not found' unless @requirement
     end
 

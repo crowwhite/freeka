@@ -3,7 +3,7 @@
   <meta property="og:description" content="<%= @requirement.details.truncate(400) %>"/>
 <% end %>
 <%= javascript_include_tag 'faliure_link' %>
-<%= javascript_include_tag 'comment_adder' %>
+<%= javascript_include_tag 'push_notifier' %>
 <%= javascript_include_tag 'http://js.pusher.com/2.2/pusher.min.js' %>
 <%= render 'shared/fb_scripts' %>
 <div class="row">
@@ -13,83 +13,93 @@
         <%= render 'layouts/category_menu' %>
       </div>
       <div class='col-md-3'>
-        <%= render 'layouts/search_bar' %>
       </div>
     </div>
     <br>
-    <div class="col-md-6 border-black height-800">
-      <h2><%= @requirement.title.titleize %>
-        <% if owner(@requirement) && @requirement.donor_requirements.size == 0 && !@requirement.fulfilled? %>
-          <%= link_to 'Edit', edit_requirement_path(@requirement), class: 'btn btn-primary btn-xs' %>
-        <% end %>
+    <div class='row'>
+      <div class='col-md-6'>
+        <text class="requirement-heading">
+          <%= @requirement.title.titleize %>
+        </text>
         <span class="fb-share-button" data-href=<%= requirement_url(@requirement) %> data-layout="button_count"></span>
-      </h2>
-      <div class='row'>
-        <div class='col-md-12'>
-          <div class='col-md-6 text-right'>
-            <% if @requirement.pending? %>
-              <%= render 'interested_donors' %>
-            <% end %>
-          </div>
-          <div class='col-md-6 text-right'>
-            <% if @requirement.fulfilled? %>
-              <span> This requirement has been fulfilled. </span>
-            <% else %>
-              <% if @donor_requirement %>
-                <%= render 'withdraw_donate' %>
-              <% else %>
-                <%= render 'interest_or_fulfill' %>
-              <% end %>
-            <% end %>
-          </div>
+      </div>
+      <div class="col-md-6 text-right">
+        <% if @requirement.pending? %>
+          <%= render 'interested_donors' %>
+        <% end %>
+        <% if owner(@requirement) && @requirement.donor_requirements.size == 0 && !@requirement.fulfilled? %>
+          <%= link_to 'Edit', edit_requirement_path(@requirement), class: 'btn btn-primary btn-sm' %>
+        <% end %>
+        <% if @requirement.fulfilled? %>
+          <span> This requirement has been fulfilled. </span>
+        <% else %>
+          <% if @donor_requirement %>
+            <%= render 'withdraw_donate' %>
+          <% else %>
+            <%= render 'interest_or_fulfill' %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <pre class="requirement-description">
+<%= image_tag (@requirement.image && @requirement.image.url(:medium)) || default_requirement_image_url, class: 'col-md-6 requirement_show_page_image' %><%= @requirement.details %>
+        </pre>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-md-12'>
+        <div class="col-md-6 expiration-date bg-info">
+          <h3>Needed By: <%= @requirement.expiration_date %></h3>
+        </div>
+        <div class="col-md-6 bg-info text-right">
+          <h3>Requestor: <%= link_to @requirement.person.display_name, user_path(@requirement.person) %></h3>
         </div>
       </div>
-        <div class='col-md-12'>
-        <%= image_tag (@requirement.image && @requirement.image.url(:medium)) || default_requirement_image_url, class: 'pull-left' %>
-        </div>
-        <div class='col-md-12'>
-          <div class="well col-md-12">
-            <h2>Comments</h2>
-            <ul id="comments">
-              <%= render @requirement.comments.includes(:user) %>
-              <li id="add-comment">
-              </li>
-            </ul>
-            <%= render 'comments/new_comment' %>
-          </div>
-        </div>
     </div>
-    <div class="col-md-6">
-      <div class='border-black height-800 scroll-auto padding-10'>
-        <p>
-          <pre>
-            <%= @requirement.details %>
-          </pre>
-        </p>
-        <strong>Requestor: </strong>
-        <%= link_to @requirement.person.display_name, user_path(@requirement.person) %>
-        <br>
-        <br>
-        <strong>Needed By: </strong>
-        <%= @requirement.expiration_date %>
-        <br>
-        <h4>Supported Documents: </h4>
+    <div class="row">
+      <div class="padding-15">
+      <div class="bg-success col-md-12">
+        <div class="col-md-6">
+          <text class="general-heading">Supported Documents: </text>
+          <% if @requirement.files.size.zero? %>
+            <span>No attached files.</span>
+          <% end %>
         <% @requirement.files.each do |attachment| %>
-          <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
+          <br>
+          <%= attachment.caption %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %>
         <% end %>
-        <% if @requirement.files.size == 0 %>
-          <span>No attached files.</span>
-        <% end %>
-        <br>
-        <% if @requirement.interested_donors.size > 0 %>
-          <h3>Interested Donors</h3>
-          <ul id='donor-list'>
-            <%= render partial: 'donor', collection: @requirement.interested_donors %>
-          </ul>
-        <% end %>
+        </div>
+        <div class="col-md-6 text-right">
+          <text class="general-heading">Interested Donors: </text>
+          <% if @requirement.donor_requirements.size.zero? %>
+            <span>No one has shown interest yet.</span>
+          <% end %>
+          <% if @requirement.interested_donors.size > 0 %>
+            <ul id='donor-list'>
+              <%= render partial: 'donor', collection: @requirement.interested_donors %>
+            </ul>
+          <% end %>
+        </div>
+      </div>
       </div>
     </div>
-  </div>
+    <br>
+    <div class="row">
+      <div class='col-md-12'>
+        <div class="well col-md-12">
+          <h2>Comments</h2>
+          <ul id="comments">
+            <%= render @requirement.comments.includes(:user) %>
+            <li id="add-comment">
+            </li>
+          </ul>
+          <%= render 'comments/new_comment' %>
+        </div>
+      </div>
+    </div>
+
   <div class='row'>
     <div class='row'>
       <div class='col-md-12'>
@@ -98,6 +108,8 @@
     </div>
   </div>
 </div>
+<div class="notifier"></div>
+<%= hidden_field_tag :requirement_id, @requirement.id %>
 <%= hidden_field_tag :app_key, ENV['PUSHER_KEY'] %>
 <br>
 <br>

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :requirements do
     post 'search', on: :collection
-    get 'filter', on: :collection
+    get 'filter/:category_name', to: 'requirements#filter', on: :collection, as: 'filter'
     resources :donor_requirements, only: :create
     put 'mark_donated', to: 'donor_requirements#mark_donated'
     delete 'uninterest', to: 'donor_requirements#destroy'
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   resources :users, only: :show
 
   namespace :admin, path: 'admins', as: :admins do
-    resources :categories, except: :show do
+    resources :categories do
       put 'toggle_status', on: :member
     end
     resources :sub_categories, only: [:index, :new]
@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     resources :requirements, only: [:index, :show] do
       put 'toggle_state', on: :member
       post 'search', on: :collection
-      get 'filter', on: :collection
+      get 'filter/:category_name', to: 'admin/requirements#filter', on: :collection, as: 'filter'
     end
   end
 

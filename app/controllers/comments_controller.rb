@@ -16,11 +16,11 @@ class CommentsController < ApplicationController
 
   private
     def load_requirement
-      @requirement = Requirement.find_by(id: params[:requirement_id])
+      @requirement = Requirement.find_by(slug: params[:requirement_id])
       redirect_to root_path, alert: 'Requirement not found' unless @requirement
     end
 
     def comment_params
-      params.require(:comment).permit(:content)
+      params.require(:comment).permit(:content, :socket_id)
     end
 end

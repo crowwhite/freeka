@@ -7,7 +7,7 @@ $(function () {
       dataType: "html",
       // FIXME_AB: Don't hardcode urls in JS. Pass them to jS using data attributes from erb
       // tobefixed
-      url: '/categories/sub_categories',
+      url: $(_this).data('url-for-ajax'),
       data: { 'parent_id': _this.value },
       success: function (response) {
         $('#sub_category_select').html(response)

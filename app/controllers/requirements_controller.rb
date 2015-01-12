@@ -6,7 +6,7 @@ class RequirementsController < ApplicationController
   def index
     @requirements = current_user.requirements
     @requirements = @requirements.public_send(params[:filter]) if params[:filter]
-    @requirements = @requirements.includes(:donor_requirements, :files, :image, :address)
+    @requirements = @requirements.includes(:donor_requirements, :files, :image)
     if params[:filter] == 'pending'
       @requirements = @requirements.order(created_at: :desc)
     elsif params[:filter] == 'fulfilled'
@@ -23,15 +23,14 @@ class RequirementsController < ApplicationController
   end
 
   def filter
-    @requirements = Requirement.with_category(filter_params).enabled.live.with_status_not(Requirement.statuses[:fulfilled]).page params[:page]
+    @requirements = Requirement.with_category(params[:category_name]).enabled.live.with_status_not(Requirement.statuses[:fulfilled]).page params[:page]
     @display_page = 'welcome'
-    flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
+    flash.now[:notice] = @requirements.empty? ? 'Nothing matched the filter' : 'Currently filtered by ' + params[:category_name].humanize
     render :index
   end
 
   def new
     @requirement = current_user.requirements.build
-    @requirement.build_address
   end
 
   def show
@@ -67,13 +66,12 @@ class RequirementsController < ApplicationController
 
   private
     def load_requirement
-      @requirement = Requirement.find_by(id: params[:id])
+      @requirement = Requirement.find_by(slug: params[:id])
       redirect_to requirements_path(filter: 'pending'), alert: 'Requirement not found' unless @requirement
     end
 
     def requirement_params
-      params[:requirement][:files_attributes] = params[:requirement][:files_attributes].values.flatten if params[:requirement] && params[:requirement][:files_attributes].try(:is_a?, Hash)
-      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy], address_attributes: [:id, :street, :city, :country_code, :state_code])
+      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, :state_code, :country_code, :city, :street, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy, :caption])
     end
 
     def allow_only_owner

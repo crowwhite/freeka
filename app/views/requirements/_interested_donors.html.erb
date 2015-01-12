@@ -1,6 +1,10 @@
 <% no_of_donors = @requirement.donor_requirements.size %>
 <% if no_of_donors.zero? %>
-  <span>Be the first to Show Interest</span>
+  <% if owner(@requirement) %>
+    <span>No one has shown interest yet.</span>
+  <% else %>
+    <span>Be the first to Show Interest </span>
+  <% end %>
 <% else %>
-  <span><%= pluralize(no_of_donors, 'person') + ' is'.pluralize(no_of_donors) %> interested to donate</span>
+  <span><%= pluralize(no_of_donors, 'person') + ' is'.pluralize(no_of_donors) %> interested to donate </span>
 <% end %>

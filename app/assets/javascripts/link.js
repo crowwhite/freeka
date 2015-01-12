@@ -2,6 +2,7 @@ function Link(linkClass) {
   this.$links = $('.' + linkClass);
 // FIXME_AB: can you add some comments what is the purpose of this Link class. Why we need this. Looks like Link is not the right name for the class
 // FIXME_AB: I can't judge what this class is doing
+// When we edit a requirement, a X link is provided to remove files, this class is used for that.
 };
 
 Link.prototype.bindEvents = function() {

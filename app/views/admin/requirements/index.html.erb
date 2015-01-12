@@ -9,7 +9,7 @@
   <tbody>
     <% @requirements.each do |requirement| %>
       <tr>
-        <td><%= link_to requirement.title, admins_requirement_path(requirement) %></td>
+        <td><%= link_to requirement.title.humanize, admins_requirement_path(requirement) %></td>
         <td><%= requirement.expiration_date %></td>
         <td>
           <%= render 'shared/requirement/categories', locals: { requirement: requirement } %>

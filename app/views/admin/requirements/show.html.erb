@@ -1,9 +1,9 @@
 <% content_for :head do %>
   <meta property="og:title" content="<%= @requirement.title %>"/>
   <meta property="og:description" content="<%= @requirement.details.truncate(400) %>"/>
+  <%= javascript_include_tag 'http://js.pusher.com/2.2/pusher.min.js' %>
+  <%= javascript_include_tag 'push_notifier' %>
 <% end %>
-<%= javascript_include_tag 'comment_adder' %>
-<%= javascript_include_tag 'http://js.pusher.com/2.2/pusher.min.js' %>
 <%= render 'shared/fb_scripts' %>
 <div class="row">
   <div class="row">
@@ -12,7 +12,6 @@
         <%= render 'layouts/category_menu' %>
       </div>
       <div class='col-md-3'>
-        <%= render 'layouts/search_bar' %>
       </div>
     </div>
     <br>
@@ -61,7 +60,7 @@
         <br>
         <h4>Supported Documents: </h4>
         <% @requirement.files.each do |attachment| %>
-          <%= attachment.attachment_file_name %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
+          <%= attachment.caption %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %><br>
         <% end %>
         <% if @requirement.files.size == 0 %>
           <span>No attached files.</span>
@@ -86,6 +85,7 @@
     </div>
   </div>
 </div>
+<%= hidden_field_tag :requirement_id, requirement.id %>
 <%= hidden_field_tag :app_key, ENV['PUSHER_KEY'] %>
 <br>
 <br>

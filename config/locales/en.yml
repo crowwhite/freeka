@@ -25,3 +25,11 @@ en:
     attributes:
       attachment:
         attachment: 'Image'
+  helpers:
+    submit:
+      requirement:
+        create: "Create Request"
+        update: "Update Request"
+      category:
+        create: "Create"
+        update: "Update"
