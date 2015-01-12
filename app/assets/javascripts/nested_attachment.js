@@ -11,16 +11,16 @@ NestedAttachment.prototype.createNestedAttachmentHtml = function() {
             <div class='col-md-10'>\
               <div class='row'>\
                 <div class='col-md-3'>\
-                  <div class='' id='requirement_files_attributes_0_file_attachment_wrap'>\
-                    <input class='' id='requirement_files_attributes_0_file_attachment' name='requirement[files_attributes][" + attachmentTimeStamp + "][attachment]' type='file' value=''>\
-                    <div class='MultiFile-list' id='requirement_files_attributes_0_file_attachment_wrap_list'>\
+                  <div class='' id='requirement_files_attributes_" + attachmentTimeStamp + "_file_attachment_wrap'>\
+                    <input class='' id='requirement_files_attributes_" + attachmentTimeStamp + "_file_attachment' name='requirement[files_attributes][" + attachmentTimeStamp + "][attachment]' type='file' value=''>\
+                    <div id='requirement_files_attributes_" + attachmentTimeStamp + "_file_attachment_wrap_list'>\
                     </div>\
                   </div>\
                 </div>\
                 <!-- Caption -->\
-                <label class='col-md-2 control-label' for='requirement_files_attributes_0_caption'> </label>\
+                <label class='col-md-2 control-label' for='requirement_files_attributes_0" + attachmentTimeStamp + "_caption'> </label>\
                 <div class='col-md-6'>\
-                  <input class='form-control' id='requirement_files_attributes_0_caption' name='requirement[files_attributes][" + attachmentTimeStamp + "][caption]' type='text' value='' placeholder='Caption'>\
+                  <input class='form-control' id='requirement_files_attributes_0" + attachmentTimeStamp + "_caption' name='requirement[files_attributes][" + attachmentTimeStamp + "][caption]' type='text' value='' placeholder='Caption'>\
                 </div>\
                 <div class='col-md-1'>\
                   <button type='button' class='close' data-dismiss='alert'>\
