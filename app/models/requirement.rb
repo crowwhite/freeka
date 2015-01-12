@@ -20,7 +20,7 @@ class Requirement < ActiveRecord::Base
   has_many :interested_donors, through: :donor_requirements, source: :user
   has_many :comments, dependent: :destroy
 
-  accepts_nested_attributes_for :files, allow_destroy: true
+  accepts_nested_attributes_for :files, allow_destroy: true, reject_if: proc { |attributes| !attributes[:attachment] }
   accepts_nested_attributes_for :image, allow_destroy: true
 
   # Validation
