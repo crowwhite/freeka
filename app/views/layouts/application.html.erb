@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <%= yield :head %>
   <title>Freeka</title>
   <%= stylesheet_link_tag    'application' %>
   <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag 'bootstrap' %>
   <%= csrf_meta_tags %>
+  <%= yield :head %>
 </head>
 <body>
   <%= render 'layouts/menu_bar' %>

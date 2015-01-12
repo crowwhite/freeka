@@ -4,7 +4,7 @@
   <% unless @requirement.new_record? %>
     <%= javascript_include_tag 'link' %>
   <% end %>
-  <%= javascript_include_tag 'file_field.js' %>
+  <%= javascript_include_tag 'nested_attachment.js' %>
   <%= javascript_include_tag 'remove_link.js' %>
 <% end %>
 <div class='col-md-2'></div>
@@ -16,7 +16,7 @@
       <div class="field row form-group">
         <%= f.label 'Category*', for: :category_ids, class: 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= f.collection_select(:category_ids, Category.roots.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]', class: 'form-control'}) %>
+          <%= f.collection_select(:category_ids, Category.roots.enabled, :id, :name, { prompt: 'Select Category' }, { name: 'requirement[category_ids][]', class: 'form-control', data: { url_for_ajax: '/categories/sub_categories' }}) %>
         </div>
       </div>
       <div class="field row form-group">
@@ -65,7 +65,7 @@
           </div>
 
           <div class="field row form-group">
-            <%= f.label 'country*', for: :country_code, class: 'col-md-2 control-label' %>
+            <%= f.label 'country*', for: :country_code, id: 'country_select_label', class: 'col-md-2 control-label', data: { url_for_ajax: '/addresses/sub_region' } %>
             <div class="col-md-10">
               <%= f.country_select :country_code, priority: %w(IN), prompt: 'Please select a country', id: 'country_select', class: 'form-control' %>
             </div>

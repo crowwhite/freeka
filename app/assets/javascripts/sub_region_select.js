@@ -9,7 +9,7 @@ $(function () {
       dataType: "html",
      // FIXME_AB: Don't hardcode urls in JS. Pass them to jS using data attributes from erb
      // tobefixed
-      url: '/addresses/sub_region',
+      url: $('#country_select_label').data('url-for-ajax'),
       data: { 'parent_region': _this.value },
       success: function (response) {
         $('#subregion_select').html(response)

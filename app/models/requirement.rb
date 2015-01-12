@@ -54,8 +54,8 @@ class Requirement < ActiveRecord::Base
     event :fulfill do
       after do
         #FIXME_AB: Any better way to do this?
-        # tobefixed
-        comments.create(content: 'Requirement has been fulfilled. Thank You all.', user_id: requestor_id)
+        # Fixed
+        add_comment_requirement('Requirement has been fulfilled. Thank You.')
         thank_users
       end
       transitions from: :pending, to: :fulfilled
@@ -63,6 +63,10 @@ class Requirement < ActiveRecord::Base
   end
 
   private
+
+    def add_comment_requirement(comment)
+      comments.create(content: comment, user_id: requestor_id)
+    end
 
     def thank_users
       donor_requirements.interested.includes(:user).each do |donor_requirement|
