@@ -1,4 +1,5 @@
 <% #FIXME_AB: Why Email, don't you have name of user? -%>
+<% #Fixed %>
 <h2>Edit <%= @user.name.to_s.humanize %></h2>
 <%= form_for(@user, url: { action: "update" }) do |f| %>
 <% #FIXME_AB: Following code for displaying error message should be extracted out so that can be used at other places. -%>

@@ -1,7 +1,9 @@
 <% #FIXME_AB: Use content_for tag to include these js files in th html head tag -%>
-<%= javascript_include_tag 'loading_button' %>
-<%= link_to 'Categories', admins_categories_path, class: 'btn btn-default ' + add_class_active(controller_name, 'categories'), role: 'button' %>
-<%= link_to 'Sub Categories', admins_sub_categories_path, class: 'btn btn-default ' + add_class_active(controller_name, 'sub_categories'), role: 'button' %>
+<% content_for :head do %>
+  <%= javascript_include_tag 'loading_button' %>
+  <%= link_to 'Categories', admins_categories_path, class: 'btn btn-default ' + add_class_active(controller_name, 'categories'), role: 'button' %>
+  <%= link_to 'Sub Categories', admins_sub_categories_path, class: 'btn btn-default ' + add_class_active(controller_name, 'sub_categories'), role: 'button' %>
+<% end %>
 
 <% #FIXME_AB: We need to merge subcategory creation and category creation together, to make it easy for user -%>
 <% if controller_name == 'sub_categories' %>
@@ -36,6 +38,7 @@
     <% @categories.each do |category| %>
       <%= content_tag :tr, class: 'parent-item', data: { id: category.id } do %>
         <% #FIXME_AB: You don't need to spicify full directory path if the partial is in the same directory -%>
+        <% #This is being used by sub_categories controller too %>
         <%= render 'admin/categories/manage', locals: { category: category } %>
       <% end %>
     <% end %>

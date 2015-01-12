@@ -13,6 +13,7 @@ class Admin::CategoriesController < Admin::BaseController
   def edit
     if @category.parent_id
       #FIXME_AB: Why do we need following instance variable. We can make it work without this. Please think
+      # tobefixed
       @is_sub_category = true
     end
   end

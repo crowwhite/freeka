@@ -1,8 +1,10 @@
 #FIXME_AB: Through out the application You haven't handled the dependent option with associations. Please do that as per the requirement.
+# Fixed
 class Requirement < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
   #FIXME_AB: There are indexes missing on requirements table, Please add required indexes to all tables as required
+  # Fixed
   include AASM
 
   enum status: { pending: 0, fulfilled: 2 }
@@ -41,6 +43,7 @@ class Requirement < ActiveRecord::Base
   #FIXME_AB: Moreover I think we don't need following scope. Just have similar association in category like category.requirements
   scope :with_category, ->(category_name) { Category.find_by(name: category_name).requirements }
   #FIXME_AB: What is the meaning of following scope?
+  # executing not condition so not to select the requests with a particular status
   scope :with_status_not, ->(status) { where.not(status: status) }
   scope :live, -> { where('expiration_date >= ?', Time.current.to_date) }
 

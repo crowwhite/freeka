@@ -1,4 +1,5 @@
 #FIXME_AB: Since it is a polymorphic table we should have composite  index on type and id field
+# Fixed
 class Attachment < ActiveRecord::Base
 
   SIZES = [:medium, :thumb, :original]

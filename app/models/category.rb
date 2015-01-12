@@ -1,4 +1,5 @@
 #FIXME_AB: We should have index on parent_id field.
+# Fixed
 class Category < ActiveRecord::Base
 
   attr_accessor :is_sub_category
@@ -10,7 +11,8 @@ class Category < ActiveRecord::Base
 
   has_many :sub_categories, class_name: Category, foreign_key: :parent_id,
             dependent: :restrict_with_error
-  #FIXME_AB: Is the following association correct? where it is checking for subcategories?            
+  #FIXME_AB: Is the following association correct? where it is checking for subcategories?
+  # tobefixed         
   has_many :enabled_sub_categories, -> { where enabled: true }, class_name: Category,
             foreign_key: :parent_id
   belongs_to :parent_category, class_name: Category, foreign_key: :parent_id
@@ -35,6 +37,7 @@ class Category < ActiveRecord::Base
 
   def toggle_status_of_sub_categories
     #FIXME_AB: The name of the method doesn't match with the work this method is doing
+    # tobefixed
     sub_categories.update_all(enabled: enabled)
   end
 

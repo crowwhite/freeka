@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110063809) do
+ActiveRecord::Schema.define(version: 20150112062105) do
 
   create_table "attachments", force: true do |t|
     t.integer  "attacheable_id"
@@ -23,11 +23,12 @@ ActiveRecord::Schema.define(version: 20150110063809) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "attacheable_sub_type",    default: "File"
-    t.string   "caption",                 default: "",     null: false
+    t.string   "caption",                 default: "No caption available", null: false
   end
 
   add_index "attachments", ["attacheable_id"], name: "index_attachments_on_attacheable_id", using: :btree
   add_index "attachments", ["attacheable_sub_type"], name: "index_attachments_on_attacheable_sub_type", using: :btree
+  add_index "attachments", ["attacheable_type", "attacheable_id"], name: "index_attachments_on_attacheable_type_and_attacheable_id", using: :btree
   add_index "attachments", ["attacheable_type"], name: "index_attachments_on_attacheable_type", using: :btree
 
   create_table "categories", force: true do |t|
