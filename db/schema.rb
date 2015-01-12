@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105100406) do
+ActiveRecord::Schema.define(version: 20150109060338) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -33,17 +33,19 @@ ActiveRecord::Schema.define(version: 20150105100406) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "attacheable_sub_type",    default: "File"
+    t.string   "caption",                 default: "",     null: false
   end
 
   create_table "categories", force: true do |t|
     t.string   "name"
     t.integer  "parent_id"
-    t.boolean  "enabled",    default: true, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "enabled",    default: true, null: false
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
   create_table "category_requirements", force: true do |t|
     t.integer  "category_id"
@@ -66,6 +68,20 @@ ActiveRecord::Schema.define(version: 20150105100406) do
   add_index "comments", ["requirement_id"], name: "index_comments_on_requirement_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0
+    t.integer  "attempts",   default: 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "donor_requirements", force: true do |t|
     t.integer  "donor_id",                   null: false
     t.integer  "requirement_id",             null: false
@@ -76,6 +92,19 @@ ActiveRecord::Schema.define(version: 20150105100406) do
 
   add_index "donor_requirements", ["donor_id"], name: "index_donor_requirements_on_donor_id", using: :btree
   add_index "donor_requirements", ["requirement_id"], name: "index_donor_requirements_on_requirement_id", using: :btree
+
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "people", force: true do |t|
     t.string   "email",                  default: "",     null: false
@@ -90,22 +119,24 @@ ActiveRecord::Schema.define(version: 20150105100406) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type",                   default: "User"
     t.string   "name",                   default: ""
     t.text     "about_me"
-    t.string   "contact_no"
     t.text     "address"
-    t.string   "type",                   default: "User"
     t.boolean  "enabled",                default: true,   null: false
+    t.string   "contact_no"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.string   "slug"
   end
 
   add_index "people", ["email"], name: "index_people_on_email", unique: true, using: :btree
   add_index "people", ["enabled"], name: "index_people_on_enabled", using: :btree
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
   add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
+  add_index "people", ["slug"], name: "index_people_on_slug", using: :btree
 
   create_table "requirements", force: true do |t|
     t.string   "title"
@@ -118,6 +149,9 @@ ActiveRecord::Schema.define(version: 20150105100406) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "delta",           default: true, null: false
+    t.string   "slug"
   end
+
+  add_index "requirements", ["slug"], name: "index_requirements_on_slug", using: :btree
 
 end

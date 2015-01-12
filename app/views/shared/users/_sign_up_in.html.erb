@@ -1,31 +1,22 @@
 <% if @person_logged_in = current_user || current_admin %>
-  <li id='user-logged-in-options'>
-    <div class='row'>
-      <div class='col-md-3'>
-        <% if current_user && @person_logged_in.image %>
-          <%= image_tag @person_logged_in.image.url(:thumb), class: 'display-icon' %>
-        <% end %>
-      </div>
-      <%= link_to user_path(@person_logged_in), class: 'col-md-9' do %>
+  <li class='top-display-icon'>
+    <% if current_user && @person_logged_in.image %>
+      <%= image_tag @person_logged_in.image.url(:thumb), class: 'display-icon' %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to requirements_path({ filter: 'pending' }), class: '' do %>
       <%= @person_logged_in.display_name %>
     <% end %>
-    </div>
-    <ul>
-      <% if !current_admin %>
-        <li>
-          <%= link_to 'My Account', requirements_path({ filter: 'pending' }) %>
-        </li>
-      <% end %>
-      <li>
-        <%= link_to 'sign out', destroy_user_session_path, method: :delete %>
-      </li>
-    </ul>
+  </li>
+  <li>
+    <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
   </li>
 <% else %>
   <li>
-    <%= link_to 'sign up', new_user_registration_path %>
+    <%= link_to 'Sign Up', new_user_registration_path %>
   </li>
   <li>
-    <%= link_to 'sign in', new_user_session_path %>
+    <%= link_to 'Sign In', new_user_session_path %>
   </li>
 <% end %>

@@ -1,5 +1,5 @@
 <% if current_admin %>
-  <%= link_to locals[:category].name, filter_admins_requirements_path(category_filter: locals[:category].id) %>
+  <%= link_to locals[:category].name.humanize, filter_admins_requirements_path(locals[:category].name) %>
 <% else %>
-  <%= link_to locals[:category].name, filter_requirements_path(category_filter: locals[:category].id) %>
+  <%= link_to locals[:category].name.humanize, filter_requirements_path(locals[:category].name) %>
 <% end %>

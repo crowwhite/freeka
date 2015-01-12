@@ -1,5 +1,7 @@
 #FIXME_AB: Through out the application You haven't handled the dependent option with associations. Please do that as per the requirement.
 class Requirement < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :slugged
   #FIXME_AB: There are indexes missing on requirements table, Please add required indexes to all tables as required
   include AASM
 
@@ -22,8 +24,9 @@ class Requirement < ActiveRecord::Base
   accepts_nested_attributes_for :image, allow_destroy: true
 
   # Validation
-  validates :title, presence: true
-  validates :title, length: { minimum: 10 }
+  validates :title, :details, :expiration_date, presence: true
+  validates :title, length: { minimum: 5, maximum: 25 }
+  validates :details, length: { minimum: 50, maximum: 500 }
   validate :date_not_in_past, unless: :status_changed?
   #FIXME_AB: Why do we have validations on only two fields?
 
@@ -37,7 +40,7 @@ class Requirement < ActiveRecord::Base
   # Fixed: Yes this is chainable
   #FIXME_AB: Ideally we should pass objects, in this case we should pass category object
   #FIXME_AB: Moreover I think we don't need following scope. Just have similar association in category like category.requirements
-  scope :with_category, ->(category_id) { Category.find_by(id: category_id).requirements }
+  scope :with_category, ->(category_name) { Category.find_by(name: category_name).requirements }
   #FIXME_AB: What is the meaning of following scope?
   scope :with_status_not, ->(status) { where.not(status: status) }
   scope :live, -> { where('expiration_date >= ?', Time.current.to_date) }

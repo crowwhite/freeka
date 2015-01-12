@@ -1,6 +1,8 @@
 #FIXME_AB: Since it is a polymorphic table we should have composite  index on type and id field
 class Attachment < ActiveRecord::Base
 
+  SIZES = [:medium, :thumb, :original]
+
   # Association
   belongs_to :attacheable, polymorphic: true
   has_attached_file :attachment, styles: lambda { |attachment|
@@ -11,14 +13,16 @@ class Attachment < ActiveRecord::Base
   after_validation :clean_error_duplication
 
   # Validation
+  validates :caption, length: { maximum: 15 }
   # tobefixed size and content combine it
   validates_attachment_size :attachment, less_than: 10.megabyte
   #FIXME_AB: We are not displaying valid attachment types in frontend
+  # Fixed
   validates_attachment_content_type :attachment, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf", "text/html", "application/doc"], message: "is not valid"
   validate :image_dimensions, if: :is_image
 
-  def url(size = nil)
-    if size
+  def url(size = :original)
+    if is_image && SIZES.include?(size)
       attachment.url(size)
     else
       attachment.url(:original)

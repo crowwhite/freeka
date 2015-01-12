@@ -1,15 +1,17 @@
 class Comment < ActiveRecord::Base
   include Pushable
 
+  attr_accessor :socket_id
+
   belongs_to :requirement
   belongs_to :user
 
   validates :content, presence: true
 
-  after_create :push_comment
+  after_create :notify_via_pusher
 
   private
-    def push_comment
-      send_push_message(requirement.id, 'add_comment', { user_name: user.display_name, user_id: user.id, comment: content, time: created_at.to_s })
+    def notify_via_pusher
+      send_push_message(requirement.id, 'add_comment', 'A comment has been added', @socket_id)
     end
 end

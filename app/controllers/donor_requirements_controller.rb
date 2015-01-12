@@ -34,7 +34,7 @@ class DonorRequirementsController < ApplicationController
 
   private
     def set_requirement
-      @requirement = Requirement.find_by(id: params[:requirement_id])
+      @requirement = Requirement.find_by(slug: params[:requirement_id])
       redirect_to requirements_path(filter: 'pending'), alert: 'Requirement not found' unless @requirement
     end
 

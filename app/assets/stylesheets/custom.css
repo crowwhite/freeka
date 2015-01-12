@@ -13,8 +13,35 @@
     to { transform: scale(1) rotate(360deg);}
 }
 
+.requirement-detail-box {
+  height: 150px !important;
+}
+
 .request-tile:hover, .icon-for-sub-category:hover {
   cursor: pointer;
+}
+
+.requirement-description {
+  font-size: 14px !important;
+  background-color: white !important;
+}
+
+.padding-15 {
+  padding: 15px;
+}
+
+.requirement-heading {
+  font-size: 28px;
+  color: black;
+}
+
+.general-heading {
+  font-size: 22px;
+  color: black;
+}
+
+.requirement_show_page_image {
+  padding-left: 0;
 }
 
 .padding-10 {
@@ -49,10 +76,6 @@
 
 .no-decoration {
   text-decoration: none;
-}
-
-.navbar-brand {
-  font-size: 30px;
 }
 
 .top-pad-0 {
@@ -116,7 +139,6 @@
 }
 
 #comments {
-  max-height: 240px;
   list-style-type: none;
   overflow: auto;
 }
@@ -221,6 +243,26 @@ img {
   display: inline-block;
 }
 
+.logo {
+  height: 50px;
+  width: 50px;
+}
+
+.brand-name {
+  color: #807E7E;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.brand-name:hover {
+  color: #807E7E !important;
+  text-decoration: none !important;
+}
+
+.top-display-icon {
+  padding-top: 15px;
+}
+
 .display-icon {
   width: 25px;
   height: 25px;
@@ -231,8 +273,13 @@ div.custom {
   display: inline-block;
 }
 
-ul.navbar-nav > li {
-  padding: 10px;
+ul.navbar-nav > li:hover {
+  cursor: pointer;
+  background-color: #D8D8D8;
+}
+
+.navbar-right {
+  margin: 0;
 }
 
 table.parent > tbody > tr {
@@ -372,7 +419,7 @@ input[type='submit'] {
 
   #admin-nav a {
     text-decoration: none;
-    height: 70px;
+    height: 50px;
   }
 
   #admin-nav li {

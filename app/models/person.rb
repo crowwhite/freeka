@@ -2,6 +2,8 @@
 # Fixed: I feel it should only be on enabled column since there is no search on type of user
 #FIXME_AB: Are you sure that there will be no search on type column. How would STI work then?
 class Person < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 
   TYPES = %w(Admin User)
 

@@ -1,11 +1,13 @@
 class User < Person
   devise :registerable
 
+  # Scopes
   scope :with_email_like, ->(email) { where("email LIKE CONCAT('%', ?, '%')", email) }
   scope :with_name_like, ->(name) { where("name LIKE CONCAT('%', ?, '%')", name) }
   scope :active, -> { where enabled: true }
   scope :inactive, -> { where enabled: false }
 
+  # Associations
   has_many :comments, dependent: :destroy
   has_one :image, as: :attacheable, dependent: :destroy, class_name: :Attachment
 
