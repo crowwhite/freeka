@@ -1,4 +1,7 @@
 class DonorRequirement < ActiveRecord::Base
+
+  attr_accessor :comment
+
   include AASM
 
   enum status: { interested: 0, donated: 1 }
@@ -14,10 +17,7 @@ class DonorRequirement < ActiveRecord::Base
     state :donated
 
     event :donate, guard: :prevent_if_fulfilled do
-      after do
-        add_comment_on_requirement('I have donted the item.')
-      end
-      transitions from: :interested, to: :donated
+      transitions from: :interested, to: :donated, guard: :add_comment_on_requirement
     end
 
   end
@@ -35,7 +35,10 @@ class DonorRequirement < ActiveRecord::Base
       end
     end
 
-    def add_comment_on_requirement(comment = nil)
-      requirement.comments.create(content: comment || 'I have withdrawn interest from this request.', user_id: self.donor_id)
+    def add_comment_on_requirement
+      unless requirement.comments.create(content: @comment, user_id: self.donor_id).persisted?
+        errors.add(:base, 'comment cannot be blank')
+        false
+      end
     end
 end

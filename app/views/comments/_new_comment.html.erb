@@ -2,7 +2,7 @@
   <%= form_for([@requirement, @requirement.comments.build], remote: true) do |f| %>
 
     <div class='field'>
-      <%= f.text_area :content, class: 'text-area full-width', required: true %>
+      <%= f.text_area :content, class: 'text-area full-width comment-box', required: true %>
     </div>
 
     <div>

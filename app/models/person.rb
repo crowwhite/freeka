@@ -15,11 +15,11 @@ class Person < ActiveRecord::Base
 
   # Validations
   validates :name, :contact_no, presence: true
-  validates :name, format: { with: VALIDATOR[:name], message: 'No special characters allowed' }
+  validates :name, format: { with: VALIDATOR[:name], message: 'cannot have special characters' }, allow_blank: true
   validates :about_me, length: { maximum: 200 }, allow_blank: true
-  validates :password, format: { with: VALIDATOR[:password], message: 'No white spaces allowed' }
+  validates :password, format: { with: VALIDATOR[:password], message: 'no white spaces allowed' }, allow_blank: true
   validates :contact_no, numericality: true, allow_blank: true
-  validates :contact_no, length: { minimum: 10, maximum: 12 }
+  validates :contact_no, length: { minimum: 10, maximum: 12 }, allow_blank: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
   #FIXME_AB: What about email validations?
   # handled by devise
@@ -27,7 +27,7 @@ class Person < ActiveRecord::Base
   # Fixed
 
   devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable
 
   # TODO: Why do we need this?
   # the devise tells us to define this

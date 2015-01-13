@@ -29,15 +29,15 @@
       <div class="field row form-group">
         <%= f.label 'title*', class: 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= f.text_field :title, class: 'form-control' %>
-          (Min 5 and Max 25 characters)
+          <%= f.text_field :title, class: 'form-control', placeholder: "Your request's title.." %>
+          (Min 1 and Max 50 characters)
         </div>
       </div>
       <div class="field row form-group">
         <%= f.label 'details*', class: 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= f.text_area :details, class: 'form-control requirement-detail-box' %>
-          (Min 50 and Max 500 characters)
+          <%= f.text_area :details, class: 'form-control requirement-detail-box', placeholder: 'Write detailed description of your request...' %>
+          (Min 50 characters)
         </div>
       </div>
       <div class="field row form-group">
@@ -48,19 +48,18 @@
       </div>
 
       <div class="field row">
-        <%#= f.fields_for :address do |a| %>
 
           <div class="field row form-group">
             <%= f.label :street, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <%= f.text_field :street, class: 'form-control' %>
+              <%= f.text_field :street, class: 'form-control', placeholder: 'Street' %>
             </div>
           </div>
 
           <div class="field row form-group">
             <%= f.label 'city*', class: 'col-md-2 control-label' %>
             <div class="col-md-10">
-              <%= f.text_field :city, class: 'form-control' %>
+              <%= f.text_field :city, class: 'form-control', placeholder: 'City' %>
             </div>  
           </div>
 
@@ -78,7 +77,6 @@
             </div>
           </div>
 
-        <%# end %>
       </div>
 
       <div class="field row form-group" id='files'>
@@ -87,15 +85,15 @@
             <%= a.label :File, for: :attachment, class: 'col-md-2 control-label' %>
             <div class="col-md-10">
               <div class='row'>
-                <div class='col-md-3'>
+                <div class='col-md-5'>
                   <% unless @requirement.new_record? %>
                     <% if a.object.id %>
-                      <text><%= a.object.caption %></text>
+                      <text><%= (a.object.caption.blank? ? a.object.attachment_file_name.truncate(15) : a.object.caption) %></text>
                       <a href="#" class='remove'>
                         <span class='selected remove-text' data-remove='false'>X</span>
                         <span class='hidden remove-text' data-remove='true'>Undo Remove</span>
                       </a>
-                      <br>
+                      <br><br><br>
                       <%= a.hidden_field :_destroy, class: 'hidden_field' %>
                     <% else %>
                       <%= a.file_field :attachment, class: ' ' %>
@@ -106,7 +104,7 @@
                 </div>
                 <!-- Caption -->
                 <%= a.label ' ', class: 'col-md-2 control-label' %>
-                <div class='col-md-6'>
+                <div class='col-md-4'>
                   <%= a.text_field :caption, class: 'form-control', placeholder: :Caption %>
                 </div>
                 <div class='col-md-1'>
@@ -133,6 +131,10 @@
             <div class="col-md-10">
               <%= file_field_tag :attachment, name: 'requirement[image_attributes][attachment]', class: 'form-control' %>
               (Size of the image should be atleast 300*300 and below 700*700)
+              <% unless @requirement.new_record? %>
+                <br>(Existing Image will be replaced if you select one here)
+                &nbsp;&nbsp;<%= image_tag a.object.url(:thumb), class: 'image-preview' %>
+              <% end %>
             </div>
           </div>
         <% end %>
@@ -141,9 +143,9 @@
       <div class="actions row">
         <div class='col-md-2'></div>
         <div class='col-md-3'>
-          <%= f.submit %>
+          <%= f.submit class: 'btn btn-primary'%>
         </div>
-          <%= link_to 'Cancel', requirements_path(filter: 'pending'), class: 'btn btn-primary btn-sm col-md-2' %>
+          <%= link_to 'Cancel', requirements_path(filter: 'pending'), class: 'btn btn-primary col-md-2' %>
       </div>
     </fieldset>
   <% end %>

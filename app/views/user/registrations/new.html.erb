@@ -4,22 +4,26 @@
   <%= devise_error_messages! %>
 
   <div class="field mandatory">
-    <%= f.label :name %>*<br />
+    <%= f.label 'name*' %><br />
     <%= f.text_field :name, autofocus: true %>
+    <br>
+    <i>(No special characters allowed)</i>
   </div>
 
   <div class="field mandatory">
-    <%= f.label :contact_no %>*<br>
+    <%= f.label 'contact_no*' %><br>
     <%= f.text_field :contact_no %>
+    <br>
+    <i>(Only numbers allowed. Min 10 and Max 12 characters)</i>
   </div>
 
   <div class="field mandatory">
-    <%= f.label :email %>*<br />
+    <%= f.label 'email*' %><br />
     <%= f.email_field :email %>
   </div>
 
   <div class="field mandatory">
-    <%= f.label :password %>*
+    <%= f.label 'password*' %>
     <% if @validatable %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
@@ -27,7 +31,7 @@
   </div>
 
   <div class="field mandatory">
-    <%= f.label :password_confirmation %>*<br />
+    <%= f.label 'password_confirmation*' %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 

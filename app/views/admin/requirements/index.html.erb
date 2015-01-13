@@ -1,5 +1,7 @@
 <h1>Requests</h1>
-<%= render 'shared/requirement/status_select' %>
+<% unless action_name == 'filter' %>
+  <%= render 'shared/requirement/status_select' %>
+<% end %>
 <table class="table table-striped">
   <thead>
     <th>Title</th>

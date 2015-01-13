@@ -16,6 +16,7 @@ class DonorRequirementsController < ApplicationController
   end
 
   def destroy
+    @donor_requirement.comment = params[:requirement][:comment]
     if @donor_requirement.destroy
       flash[:notice] = 'Successfully withdrawn interest'
     else
@@ -25,6 +26,7 @@ class DonorRequirementsController < ApplicationController
   end
 
   def mark_donated
+    @donor_requirement.comment = params[:requirement][:comment]
     if @donor_requirement.donate!
       redirect_to @requirement, notice: 'You have successfully donated the item'
     else

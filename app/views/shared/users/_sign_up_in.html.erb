@@ -5,8 +5,12 @@
     <% end %>
   </li>
   <li>
-    <%= link_to requirements_path({ filter: 'pending' }), class: '' do %>
-      <%= @person_logged_in.display_name %>
+    <% if @person_logged_in.admin? %>
+      <%= link_to @person_logged_in.display_name, admins_requirements_path({ filter: 'pending' }) %>
+    <% else %>
+      <%= link_to requirements_path({ filter: 'pending' }), class: '' do %>
+        <%= @person_logged_in.display_name %>
+      <% end %>
     <% end %>
   </li>
   <li>

@@ -1,6 +1,7 @@
 <% if @donor_requirement.donated? %>
   <div> You have already donated this item. </div>
 <% else %>
-  <%= link_to 'Donate', requirement_mark_donated_path(@requirement), method: :put, class: 'btn btn-primary btn-xs' %>
-  <%= link_to 'Withdraw Interest', requirement_uninterest_path(@requirement), method: :delete, class: 'btn btn-primary btn-xs' %>
+  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#commentModal" data-comment="I have donated this item." data-action="/mark_donated" data-button-name="Donate" data-method="put">Donate</button>
+
+  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#commentModal" data-comment="I have withdrawn interest from this request." data-action="/uninterest" data-button-name="Withdraw Interest" data-method="delete">Withdraw Interest</button>
 <% end %>

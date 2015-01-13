@@ -4,34 +4,29 @@
 <% @requirements ||= @donations %>
 <div class="bs-docs-section">
   <div class='container'>
-    <div class='container'>
+    <div class=''>
       <div class='row'>
         <div class='row'>
           <div class='col-md-9'>
             <%= render 'layouts/category_menu' %>
           </div>
           <div class='col-md-3'>
-            <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary', role: 'button' %>
+            <%= link_to 'New Request', new_requirement_path, class: 'btn btn-primary pull-right', role: 'button' %>
           </div>
         </div>
+        <br>
         <div class='row'>
           <div class='col-md-6'>
             <% unless display_page == 'welcome' %>
               <%= render 'requirements/user_pages_select' %>
             <% end %>
           </div>
-          <div class='col-md-4'>
-          </div>
-          <div class="col-md-2">
-          </div>
+          <% unless display_page == 'welcome' || display_page == 'users' || display_page == 'donations' %>
+              <div class='col-md-6 text-right'>
+                <%= render 'shared/requirement/status_select' %>
+              </div>
+          <% end %>
         </div>
-        <% unless display_page == 'welcome' || display_page == 'users' || display_page == 'donations' %>
-          <div class='row'>
-            <div class='col-md-4'>
-              <%= render 'shared/requirement/status_select' %>
-            </div>
-          </div>
-        <% end %>
         <br>
       </div>
     </div>

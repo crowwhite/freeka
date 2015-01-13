@@ -3,6 +3,8 @@
 class Requirement < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
+
+  attr_accessor :comment
   #FIXME_AB: There are indexes missing on requirements table, Please add required indexes to all tables as required
   # Fixed
   include AASM
@@ -47,7 +49,7 @@ class Requirement < ActiveRecord::Base
   scope :with_status_not, ->(status) { where.not(status: status) }
   scope :live, -> { where('expiration_date >= ?', Time.current.to_date) }
 
-  aasm column: :status, enum: true do
+  aasm column: :status, enum: true, whiny_transitions: false do
     state :pending, initial: true
     state :fulfilled
 
@@ -55,17 +57,19 @@ class Requirement < ActiveRecord::Base
       after do
         #FIXME_AB: Any better way to do this?
         # Fixed
-        add_comment_requirement('Requirement has been fulfilled. Thank You.')
         thank_users
       end
-      transitions from: :pending, to: :fulfilled
+      transitions from: :pending, to: :fulfilled, guard: :add_comment_on_requirement
     end
   end
 
   private
 
-    def add_comment_requirement(comment)
-      comments.create(content: comment, user_id: requestor_id)
+    def add_comment_on_requirement
+      unless comments.create(content: @comment, user_id: requestor_id).persisted?
+        errors.add(:base, 'comment cannot be blank')
+        false
+      end
     end
 
     def thank_users
