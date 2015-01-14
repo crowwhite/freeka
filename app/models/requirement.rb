@@ -28,9 +28,9 @@ class Requirement < ActiveRecord::Base
   # Validation
   validates :title, :details, :expiration_date, :city, :country_code, :state_code, presence: true
   validates :title, format: { with: VALIDATOR[:name], message: 'No special characters allowed' }
-  validates :title, length: { minimum: 5, maximum: 25 }
-  validates :details, length: { minimum: 50, maximum: 500 }
-  validate :date_not_in_past, unless: :status_changed?, if: 'self.expiration_date'
+  validates :title, length: { minimum: 1 }
+  validates :details, length: { minimum: 50 }
+  validate :date_not_in_past, if: -> { !status_changed? && expiration_date }
   #FIXME_AB: Why do we have validations on only two fields?
 
   # Callbacks
@@ -70,6 +70,8 @@ class Requirement < ActiveRecord::Base
       unless comments.create(content: @comment, user_id: requestor_id).persisted?
         errors.add(:base, 'comment cannot be blank')
         false
+      else
+        true
       end
     end
 
@@ -90,6 +92,8 @@ class Requirement < ActiveRecord::Base
       if donor_requirements.exists?
         errors.add(:base, 'Requirement cannot be destroyed or updated if users have shown interest.')
         false
+      else
+        true
       end
     end
     alias :check_destroyable :prevent_if_interest_shown

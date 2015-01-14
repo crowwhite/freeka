@@ -37,7 +37,7 @@ NestedAttachment.prototype.addNestedAttachmentField = function() {
 
 NestedAttachment.prototype.bindEvents = function(btnId) {
   var _this = this;
-  $('#' + btnId).on('click', function() {
+  $('#' + btnId).on('click', function(event) {
     event.preventDefault();
     _this.addNestedAttachmentField();
   });
