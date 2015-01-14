@@ -39,6 +39,7 @@ class Requirement < ActiveRecord::Base
 
   # Scopes
   scope :enabled, -> { where(enabled: true) }
+  scope :title_like, ->(search_string) { where("title like %#{search_string}%")}
   #FIXME_AB: I doubt if this is a right way of making scope, Is this scope chainable?
   # Fixed: Yes this is chainable
   #FIXME_AB: Ideally we should pass objects, in this case we should pass category object

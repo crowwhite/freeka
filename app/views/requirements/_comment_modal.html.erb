@@ -3,15 +3,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">Post a comment as:</h4>
+        <h4 class="modal-title" id="exampleModalLabel">Post a Comment:</h4>
       </div>
       <div class="modal-body">
-        <%= form_tag('/requirements/' + @requirement.slug, method: :put) do %>
+        <%= form_tag('/', method: :put) do %>
 
         <div class='field'>
           <%= text_area_tag 'requirement[comment]', 'enter comment text here', class: 'text-area full-width comment-box', required: true %>
           <br>
-          <a id="comment_popup" tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="Comment cannot be blank" data-content="And as we said, comment cannot be blank!">(Comment cannot be blank)</a>
+          <a id="comment_popup" tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="Comment cannot be blank" data-content="Please add in some text!">*(Comment cannot be blank)</a>
         </div>
       </div>
       <div class="modal-footer">

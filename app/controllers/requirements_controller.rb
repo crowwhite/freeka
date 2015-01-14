@@ -17,7 +17,8 @@ class RequirementsController < ApplicationController
 
   def search
     searched_text = Riddle::Query.escape(params[:requirement][:search])
-    @requirements = Requirement.search(searched_text).page params[:page]
+    # @requirements = Requirement.search(searched_text).page params[:page]
+    @requirements = Requirement.title_like(searched_text)
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     render :index
   end

@@ -10,8 +10,7 @@ $( function() {
   $commentBox.val(button.data('comment'));
 
   var $modalForm = $modal.find('form');
-  var modal_form_action = $modalForm.attr('action');
-  $modalForm.attr('action', modal_form_action + button.data('action'));
+  $modalForm.attr('action', button.data('action'));
   $modalForm.find("input[name='_method']").val(button.data('method'));
 
   var $submitButton = $modal.find('#submit_button')

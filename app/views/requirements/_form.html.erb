@@ -88,7 +88,7 @@
                 <div class='col-md-5'>
                   <% unless @requirement.new_record? %>
                     <% if a.object.id %>
-                      <text><%= (a.object.caption.blank? ? a.object.attachment_file_name.truncate(15) : a.object.caption) %></text>
+                      <text><%= (a.object.caption.blank? ? a.object.attachment_file_name.try(:truncate, 15) : a.object.caption) %></text>
                       <a href="#" class='remove'>
                         <span class='selected remove-text' data-remove='false'>X</span>
                         <span class='hidden remove-text' data-remove='true'>Undo Remove</span>

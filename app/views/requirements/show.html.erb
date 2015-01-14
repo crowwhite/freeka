@@ -71,7 +71,7 @@
           <ul>
             <% @requirement.files.each do |attachment| %>
               <li>
-                <%= link_to (attachment.caption.blank? ? attachment.attachment_file_name.truncate(15) : attachment.caption), attachment.url(:medium), target: '_blank' %>
+                <%= link_to (attachment.caption.blank? ? attachment.attachment_file_name.try(:truncate, 15) : attachment.caption), attachment.url(:medium), target: '_blank' %>
               </li>
             <% end %>
           </ul>

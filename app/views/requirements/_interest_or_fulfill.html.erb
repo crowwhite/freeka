@@ -1,6 +1,5 @@
 <% if owner(@requirement) %>
-  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#commentModal" data-comment="This requirement has been fulfilled. Thank you." data-action="/fulfill" data-button-name="Fulfilled" data-method="put">Fulfilled</button>
-  <%#= link_to 'Fulfilled', fulfill_requirement_path(@requirement, comment: 'ddd'), method: :put, class: 'btn btn-primary btn-sm' %>
+  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#commentModal" data-comment="This requirement has been fulfilled. Thank you." data-action="<%= requirement_path(@requirement) %>/fulfill" data-button-name="Fulfilled" data-method="put">Fulfilled</button>
 <% else %>
   <%= link_to 'Show Interest', requirement_donor_requirements_path(@requirement), method: :post, class: 'btn btn-primary btn-sm' %>
 <% end %>
