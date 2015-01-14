@@ -14,29 +14,91 @@
     <div class='container'>
       <div class='row'>
         <div id='profile' class='well col-md-12'>
-          <legend>
-            Edit Profile
-          </legend>
+          <div class='col-md-6'>
+            <legend>
+              Edit Profile
+            </legend>
 
-          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f| %>
-            <%= devise_error_messages! %>
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f| %>
+              <%= devise_error_messages! %>
 
 
-            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-            <% end %>
+              <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+              <% end %>
 
-            <div class="field form-group row">
-              <div class='col-md-2'>
-                <%= f.label 'name*', for: :user_name, class: 'control-label' %>
+              <div class="field form-group row">
+                <div class='col-md-4'>
+                  <%= f.label 'name*', for: :user_name, class: 'control-label' %>
+                </div>
+                <div class='col-md-8'>
+                  <%= f.text_field :name, class: 'form-control' %>
+                  <i>(No special characters allowed)</i>
+                </div>
+                <div class='col-md-1'></div>
+                
               </div>
-              <div class='col-md-5'>
-                <%= f.text_field :name, class: 'form-control' %>
+              <div class="field form-group row">
+                <div class='col-md-4'>
+                  <%= f.label :Bio, for: :about_me, class: 'control-label' %>
+                </div>
+                <div class='col-md-8'>
+                  <%= f.text_area :about_me, class: 'form-control requirement-detail-box' %>
+                </div>
               </div>
-              <div class='col-md-1'></div>
-              <div class='col-md-1'>
+              <div class="field form-group row">
+                <div class='col-md-4'>
+                  <%= f.label 'contact_no*', for: :contact_no, class: 'control-label' %>
+                </div>
+                <div class='col-md-8'>
+                  <%= f.text_field :contact_no, class: 'form-control' %>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="field form-group row">
+                <div class='col-md-4'>
+                  <%= f.label :New_password, for: :password, class: 'control-label' %>
+                </div>
+                <div class='col-md-8'>
+                  <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+                  <i>(Leave blank if you don't want to change it)(No white spaces allowed)</i>
+                </div>
+              </div>
+              <div class="field form-group row">
+                <div class='col-md-4'>
+                  <%= f.label :password_confirmation, class: 'control-label' %>
+                </div>
+                <div class='col-md-8'>
+                  <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+                </div>
+              </div>
+              <div class="field form-group row">
+                <div class='col-md-4'>
+                  <%= f.label :current_password, class: 'control-label' %>
+                </div>
+                <div class='col-md-8'>
+                  <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
+                  <i>(We need your current password to confirm your changes)</i>
+                </div>
+              </div>
+              <div class="actions row">
+                <div class='col-md-4'></div>
+                <div class='col-md-8'>
+                  <%= f.submit "Update", class: 'btn btn-primary color-white' %>
+                  <%= link_to 'Cancel', user_path(resource), class: 'btn btn-primary' %>
+                </div>
+              </div>
+          </div>
+          <div class='col-md-6'>
+            <div class='row'>
+              <div class='col-md-4'></div>
+              <div class='col-md-8'>
                 <%= image_tag f.object.image.try(:url, :thumb) || 'https://jobcase.com/assets/profile_placeholder-faf3cf5ab272e5637914f24578e5a5bd.png', class: 'profile-icon' %>
               </div>
+            </div>
+            <div class='row'>
+              <div class='col-md-4'></div>
               <div class='col-md-1 profile-image'>
                 <%= f.fields_for :image, f.object.image || f.object.build_image do |image| %>
                   <%= image.label :change_image, for: :user_image_attributes_attachment, class: 'profile-image-label btn btn-primary btn-sm' %>
@@ -44,71 +106,8 @@
                 <% end %>
               </div>
             </div>
-            <div class="field form-group row">
-              <div class='col-md-2'>
-                <%= f.label :Bio, for: :about_me, class: 'control-label' %>
-              </div>
-              <div class='col-md-5'>
-                <%= f.text_area :about_me, class: 'form-control requirement-detail-box' %>
-              </div>
-            </div>
-            <div class="field form-group row">
-              <div class='col-md-2'>
-                <%= f.label 'contact_no*', for: :contact_no, class: 'control-label' %>
-              </div>
-              <div class='col-md-5'>
-                <%= f.text_field :contact_no, class: 'form-control' %>
-              </div>
-            </div>
-            <!-- <div class"field form-group row"> -->
-              <%# if f.object.image %>
-                <%#= image_tag f.object.image.url(:thumb), class: 'icon' %>
-              <%# end %>
-              <%#= f.fields_for :image, f.object.image || f.object.build_image do |image| %>
-              <!-- <div class='col-md-2'> -->
-                <%#= image.label :attachment, class: 'control-label' %>
-              <!-- </div> -->
-              <!-- <div class='col-md-5'> -->
-                <%#= image.file_field :attachment, class: 'form-control' %>
-              <!-- </div> -->
-              <%# end %>
-            <!-- </div> -->
-            <br>
-            <br>
-            <div class="field form-group row">
-              <div class='col-md-2'>
-                <%= f.label :New_password, for: :password, class: 'control-label' %>
-              </div>
-              <div class='col-md-5'>
-                <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-                <i>(leave blank if you don't want to change it)</i>
-              </div>
-            </div>
-            <div class="field form-group row">
-              <div class='col-md-2'>
-                <%= f.label :password_confirmation, class: 'control-label' %>
-              </div>
-              <div class='col-md-5'>
-                <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
-              </div>
-            </div>
-            <div class="field form-group row">
-              <div class='col-md-2'>
-                <%= f.label :current_password, class: 'control-label' %>
-              </div>
-              <div class='col-md-5'>
-                <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
-                <i>(we need your current password to confirm your changes)</i>
-              </div>
-            </div>
-            <div class="actions row">
-              <div class='col-md-2'></div>
-              <div class='col-md-5'>
-                <%= f.submit "Update" %>
-                <%= link_to 'Cancel', user_path(resource), class: 'btn btn-sm btn-default' %>
-              </div>
-            </div>
-          <% end %>
+          </div>
+            <% end %>
         </div>
       </div>
     </div>

@@ -3,9 +3,11 @@
   <meta property="og:description" content="<%= @requirement.details.truncate(400) %>"/>
 <% end %>
 <%= javascript_include_tag 'faliure_link' %>
+<%= javascript_include_tag 'comment_modal' %>
 <%= javascript_include_tag 'push_notifier' %>
 <%= javascript_include_tag 'http://js.pusher.com/2.2/pusher.min.js' %>
 <%= render 'shared/fb_scripts' %>
+<%= render 'comment_modal' %>
 <div class="row">
   <div class="row">
     <div class='row'>
@@ -66,12 +68,15 @@
           <% if @requirement.files.size.zero? %>
             <span>No attached files.</span>
           <% end %>
-        <% @requirement.files.each do |attachment| %>
-          <br>
-          <%= attachment.caption %>: <%= link_to 'Download', attachment.url(:medium), target: '_blank' %>
-        <% end %>
+          <ul>
+            <% @requirement.files.each do |attachment| %>
+              <li>
+                <%= link_to (attachment.caption.blank? ? attachment.attachment_file_name.try(:truncate, 15) : attachment.caption), attachment.url(:medium), target: '_blank' %>
+              </li>
+            <% end %>
+          </ul>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-6">
           <text class="general-heading">Interested Donors: </text>
           <% if @requirement.donor_requirements.size.zero? %>
             <span>No one has shown interest yet.</span>

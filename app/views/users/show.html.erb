@@ -33,6 +33,9 @@
             <% else %>
               <%= @user.about_me %>
             <% end %>
+            <br>
+            <br>
+            <strong>Total Number of Requests Posted: <%= @user.requirements.size %></strong>
           </div>
           <div class='col-md-2'></div>
           <div class='col-md-4'>
@@ -41,7 +44,6 @@
         </div>
         <div class='row'>
           <div class='col-md-6'>
-            <strong>Total Number of Requests Posted: <%= @user.requirements.size %></strong>
           </div>
         </div>
         <br>

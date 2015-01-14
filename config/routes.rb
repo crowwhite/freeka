@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     resources :requirements, only: [:index, :show] do
       put 'toggle_state', on: :member
       post 'search', on: :collection
-      get 'filter/:category_name', to: 'admin/requirements#filter', on: :collection, as: 'filter'
+      get 'filter/:category_name', to: 'requirements#filter', on: :collection, as: 'filter'
     end
   end
 

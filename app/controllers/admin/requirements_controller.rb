@@ -25,7 +25,7 @@ class Admin::RequirementsController < Admin::BaseController
   end
 
   def filter
-    @requirements = Requirement.with_category(filter_params).page params[:page]
+    @requirements = Requirement.with_category(params[:category_name]).page params[:page]
     flash.now[:notice] = 'Nothing matched the filter' if @requirements.empty?
     render :index
   end
@@ -34,9 +34,5 @@ class Admin::RequirementsController < Admin::BaseController
     def load_requirement
       @requirement = Requirement.find_by(slug: params[:id])
       redirect_to admins_requirements_path, alert: 'Requirement not found' unless @requirement
-    end
-
-    def filter_params
-      params.require(:category_filter)
     end
 end

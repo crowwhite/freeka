@@ -11,5 +11,12 @@
       <% end %>
     </ul>
   </ul>
-<%= link_to 'Back', :back, class: 'btn btn-primary btn-sm' %>
+</div>
+<div class='row'>
+  <div class='col-md-6'>
+    <%= link_to 'Back', :back, class: 'btn btn-primary' %>
+  </div>
+  <div class='col-md-6 text-right'>
+    <%= link_to 'View all requests of this category', filter_admins_requirements_path(@category.name), class: 'btn btn-primary' %>
+  </div>
 </div>

@@ -13,9 +13,43 @@
     to { transform: scale(1) rotate(360deg);}
 }
 
+#flash {
+  position: absolute;
+  top: 91px;
+  width: 100%;
+  opacity: 0.9;
+}
+
+#comment_popup {
+  text-decoration: none;
+}
+
+#comment_popup:hover {
+  text-decoration: none;
+}
+
+#error_explanation {
+  background-color: rgb(242, 222, 222);
+  color: rgb(190, 74, 72);
+}
+
+#error_explanation > h2 {
+  color: rgb(190, 74, 72);
+}
+
+.color-white {
+  color: white !important;
+}
+
 .profile-icon {
-  height: 35px;
-  width: 35px;
+  height: 300px;
+  width: 300px;
+}
+
+.placeholder-photo {
+  height: 500px;
+  width: 600px;
+  margin: 0 200px;
 }
 
 .profile-image {
@@ -104,6 +138,10 @@
 
 .top-pad-0 {
   padding-top: 0;
+}
+
+.comment-box {
+  height: 150px;
 }
 
 .full-width {
@@ -267,6 +305,12 @@ img {
   display: inline-block;
 }
 
+.image-preview {
+  width: 50px;
+  height: 40px;
+  display: inline-block;
+}
+
 .logo {
   height: 50px;
   width: 50px;
@@ -354,10 +398,6 @@ div.link {
 div.right {
   float: right;
   margin-right: 30px;
-}
-
-input[type='submit'] {
-  color: black !important;
 }
 
 .navbar {

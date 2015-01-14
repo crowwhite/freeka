@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
 
   # Validations
   validates :content, presence: true
-  validates :content, length:  { minimum: 1, maximum: 500 }, allow_blank: true
+  validates :content, length:  { minimum: 1 }, allow_blank: true
 
   # Callbacks
   after_create :notify_via_pusher

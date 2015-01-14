@@ -1,6 +1,6 @@
 <% no_of_donors = @requirement.donor_requirements.size %>
 <% if no_of_donors.zero? %>
-  <% if owner(@requirement) %>
+  <% if owner(@requirement) || current_admin %>
     <span>No one has shown interest yet.</span>
   <% else %>
     <span>Be the first to Show Interest </span>

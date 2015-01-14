@@ -17,7 +17,8 @@ class RequirementsController < ApplicationController
 
   def search
     searched_text = Riddle::Query.escape(params[:requirement][:search])
-    @requirements = Requirement.search(searched_text).page params[:page]
+    # @requirements = Requirement.search(searched_text).page params[:page]
+    @requirements = Requirement.title_like(searched_text)
     flash.now[:notice] = 'Nothing matched the search' if @requirements.empty?
     render :index
   end
@@ -57,6 +58,7 @@ class RequirementsController < ApplicationController
   end
 
   def fulfill
+    @requirement.comment = requirement_params[:comment]
     if @requirement.fulfill!
       redirect_to @requirement, notice: 'Successfully fulfilled the requirement.'
     else
@@ -71,14 +73,10 @@ class RequirementsController < ApplicationController
     end
 
     def requirement_params
-      params.require(:requirement).permit(:title, :details, { category_ids: [] }, :expiration_date, :enabled, :state_code, :country_code, :city, :street, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy, :caption])
+      params.require(:requirement).permit(:comment, :title, :details, { category_ids: [] }, :expiration_date, :enabled, :state_code, :country_code, :city, :street, image_attributes: [:id, :attachment, :attacheable_sub_type], files_attributes: [:id, :attachment, :_destroy, :caption])
     end
 
     def allow_only_owner
       redirect_to @requirement, alert: 'Not authorised to use this page' if current_user.id != @requirement.requestor_id
-    end
-
-    def filter_params
-      params.require(:category_filter)
     end
 end

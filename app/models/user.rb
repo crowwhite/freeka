@@ -1,5 +1,5 @@
 class User < Person
-  devise :registerable
+  devise :registerable, :confirmable
 
   # Scopes
   scope :with_email_like, ->(email) { where("email LIKE CONCAT('%', ?, '%')", email) }

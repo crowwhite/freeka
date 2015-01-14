@@ -34,9 +34,8 @@
       <td><%= user.email %></td>
       <td><%= user.requirements.size %></td>
       <td><%= user.donations.size %></td>
-      <%= content_for :head do %> :td, id: 'status' + user.id.to_s, class: 'loader' do %>
-          <%= render 'status', locals: { user: user } %>
-        <% end %>
+      <%= content_tag :td, id: 'status' + user.id.to_s, class: 'loader' do %>
+        <%= render 'status', locals: { user: user } %>
       <% end %>
       <td><%= render 'update', locals: { user: user } %></td>
     </tr>
