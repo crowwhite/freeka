@@ -1,5 +1,7 @@
 <h1>Requests</h1>
-<% unless action_name == 'filter' %>
+<% if action_name == 'filter' || action_name == 'search' %>
+  <h2>Showing results for <%= params[:category_name] || (params[:requirement] && params[:requirement][:search]) %></h2>
+<% else %>
   <%= render 'shared/requirement/status_select' %>
 <% end %>
 <table class="table table-striped">
@@ -20,4 +22,7 @@
     <% end %>
   </tbody>
 </table>
+<% if action_name == 'filter' || action_name == 'search' %>
+  <%= link_to 'Back', :back, class: 'btn btn-primary' %>
+<% end %>
 <%= paginate @requirements %>

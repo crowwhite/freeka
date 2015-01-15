@@ -37,6 +37,10 @@
   color: rgb(190, 74, 72);
 }
 
+.category-name {
+  padding-left: 30px !important;
+}
+
 .color-white {
   color: white !important;
 }

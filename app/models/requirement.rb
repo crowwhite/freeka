@@ -28,8 +28,8 @@ class Requirement < ActiveRecord::Base
   # Validation
   validates :title, :details, :expiration_date, :city, :country_code, :state_code, presence: true
   validates :title, format: { with: VALIDATOR[:name], message: 'No special characters allowed' }
-  validates :title, length: { minimum: 5, maximum: 25 }
-  validates :details, length: { minimum: 50, maximum: 500 }
+  validates :title, length: { minimum: 1 }
+  validates :details, length: { minimum: 50 }
   validate :date_not_in_past, unless: :status_changed?
   #FIXME_AB: Why do we have validations on only two fields?
 

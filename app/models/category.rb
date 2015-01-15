@@ -23,7 +23,7 @@ class Category < ActiveRecord::Base
 
   validates :sub_categories, absence: { message: 'should not exist for this category' }, if: :parent_id, on: :update
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  validates :name, format: { with: VALIDATOR[:name], message: 'No special characters allowed' }
+  validates :name, format: { with: VALIDATOR[:name], message: 'cannot have special characters' }, allow_blank: true
   validates :parent_category, presence: true, if: :parent_id
   validates :parent_id, presence: true, if: :is_sub_category
   validate :ensure_parent_is_not_a_sub_category, if: :parent_id
