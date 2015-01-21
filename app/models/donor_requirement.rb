@@ -17,7 +17,10 @@ class DonorRequirement < ActiveRecord::Base
     state :donated
 
     event :donate, guard: :prevent_if_fulfilled do
-      transitions from: :interested, to: :donated, guard: :add_comment_on_requirement
+      after do
+        add_comment_on_requirement
+      end
+      transitions from: :interested, to: :donated
     end
 
   end
@@ -39,6 +42,8 @@ class DonorRequirement < ActiveRecord::Base
       unless requirement.comments.create(content: @comment, user_id: self.donor_id).persisted?
         errors.add(:base, 'comment cannot be blank')
         false
+      else
+        true
       end
     end
 end

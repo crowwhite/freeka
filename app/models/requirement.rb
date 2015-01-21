@@ -26,10 +26,9 @@ class Requirement < ActiveRecord::Base
   accepts_nested_attributes_for :image, allow_destroy: true
 
   # Validation
-  validates :title, :details, :expiration_date, :city, :country_code, :state_code, presence: true
-  validates :title, format: { with: VALIDATOR[:name], message: 'No special characters allowed' }
-  validates :title, length: { minimum: 1 }
-  validates :details, length: { minimum: 50 }
+  validates :title, :details, :expiration_date, :city, :country_code, :state_code, :category_ids, presence: true
+  validates :title, format: { with: VALIDATOR[:name], message: 'cannot have special characters' }, allow_blank: true
+  validates :details, length: { minimum: 50 }, allow_blank: true
   validate :date_not_in_past, unless: :status_changed?
   #FIXME_AB: Why do we have validations on only two fields?
 

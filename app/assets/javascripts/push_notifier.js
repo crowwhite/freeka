@@ -1,4 +1,5 @@
 var notifyOnPage = function(message) {
+  $('#pop-message').remove();
   var $popUpDiv = $('<div>', { id: 'pop-message' });
   var $message = $('<i>', { html: message });
   var $reloadLink = $('<a>', { html: 'Refresh', href: '#' }).css({ 'margin-bottom': '5px' });

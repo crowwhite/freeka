@@ -9,7 +9,7 @@
       <% @category.sub_categories.each do |sub_category| %>
         <li class="list-group-item"><%= sub_category.name %></li>
       <% end %>
-      <% if @category.sub_categories.size == 0 %>
+      <% if @category.is_parent? && @category.sub_categories.size == 0 %>
         <li class="list-group-item"><i>No sub categories.</i></li>
       <% end %>
     </ul>
@@ -17,7 +17,11 @@
 </div>
 <div class='row'>
   <div class='col-md-6'>
-    <%= link_to 'Back', admins_categories_path, class: 'btn btn-primary' %>
+    <% if @category.is_parent? %>
+      <%= link_to 'Back', admins_categories_path, class: 'btn btn-primary' %>
+    <% else %>
+      <%= link_to 'Back', admins_sub_categories_path, class: 'btn btn-primary' %>
+    <% end %>
   </div>
   <div class='col-md-6 text-right'>
     <%= link_to 'View all requests of this category', filter_admins_requirements_path(@category.name), class: 'btn btn-primary' %>

@@ -25,6 +25,10 @@ en:
     attributes:
       attachment:
         attachment: 'Image'
+      requirement:
+        category_ids: Category
+        country_code: Country
+        state_code: State
   helpers:
     submit:
       requirement:

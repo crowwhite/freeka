@@ -18,6 +18,7 @@
   top: 91px;
   width: 100%;
   opacity: 0.9;
+  z-index: 5;
 }
 
 #comment_popup {

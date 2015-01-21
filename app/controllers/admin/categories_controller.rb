@@ -35,7 +35,12 @@ class Admin::CategoriesController < Admin::BaseController
 
   def update
     if @category.update(category_params)
-      redirect_to admins_categories_path, notice: 'Category successfully updated'
+      flash[:notice] = 'Category successfully updated'
+      if @category.is_parent?
+        redirect_to admins_categories_path
+      else
+        redirect_to admins_sub_categories_path
+      end
     else
       flash.now[:alert] = 'Some errors were encountered in Category updation'
       render :edit
