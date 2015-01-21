@@ -13,7 +13,6 @@ set :deploy_to, '/var/www/freeka'
 # Default value for :scm is :git
 # set :scm, :git
 set :branch, 'deploy'
-set :deploy_via, :copy
 set :keep_releases, 3
 # default_run_options[:pty] = true
 
