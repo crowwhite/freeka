@@ -6,6 +6,10 @@
     <%= f.text_field :coins %>
 
     <div>
+      <%= f.collection_select(:id, current_user.cards, :id, :last_numbers, { prompt: 'Select Category' }, { name: 'card_id', class: 'form-control' }) %>
+    </div>
+
+    <div>
       <%= label_tag :card_no %>
       <%= text_field_tag 'card[number]' %>
     </div>
@@ -32,6 +36,9 @@
     <div>
       <%= label_tag :last_name %>
       <%= text_field_tag 'card[last_name]' %>
+    </div>
+    <div>
+      <%= f.submit 'Buy' %>
     </div>
   <% end %>
 </div>

@@ -46,9 +46,9 @@ Rails.application.configure do
   config.after_initialize do
     ActiveMerchant::Billing::Base.mode = :test
     ::GATEWAY = ActiveMerchant::Billing::BraintreeGateway.new(
-      merchant_id: 'ghhq76vjh2rj647x',
-      public_key: '4xfqk33prbw492mg',
-      private_key: 'da1e682a045abc5ad26d409b19bc6c01'
+      merchant_id: 'wpnh3vc9y33d89p9',
+      public_key: 'jpcyf5z2f9z7dyg6',
+      private_key: 'eaee3b9958fe7d30b27a90a85d145b8e'
     )
   end
 

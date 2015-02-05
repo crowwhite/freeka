@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204130346) do
+ActiveRecord::Schema.define(version: 20150205140650) do
 
   create_table "attachments", force: true do |t|
     t.integer  "attacheable_id"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20150204130346) do
     t.integer  "last_numbers"
     t.string   "reference"
     t.date     "expiration_date"
-    t.string   "type"
+    t.string   "card_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
