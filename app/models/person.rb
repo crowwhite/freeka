@@ -12,6 +12,8 @@ class Person < ActiveRecord::Base
   has_many :requirements, dependent: :destroy, foreign_key: :requestor_id
   has_many :donor_requirements, dependent: :destroy, foreign_key: :donor_id
   has_many :donations, through: :donor_requirements, dependent: :destroy, source: :requirement
+  has_many :cards, dependent: :destroy
+  has_many :coin_adjustments, dependent: :destroy
 
   # Validations
   validates :name, :contact_no, presence: true
@@ -21,6 +23,7 @@ class Person < ActiveRecord::Base
   validates :contact_no, numericality: true, allow_blank: true
   validates :contact_no, length: { minimum: 10, maximum: 12 }, allow_blank: true
   validates :type, inclusion: { in: TYPES, message: "%{ value } is not a valid type" }
+  validates :coins, numericality: { greater_than_equal_to: 0 }
   #FIXME_AB: What about email validations?
   # handled by devise
   #FIXME_AB: Are we allowing special chars in name? We should have sensible validations on all models.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150112062105) do
+ActiveRecord::Schema.define(version: 20150204130346) do
 
   create_table "attachments", force: true do |t|
     t.integer  "attacheable_id"
@@ -23,13 +23,24 @@ ActiveRecord::Schema.define(version: 20150112062105) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "attacheable_sub_type",    default: "File"
-    t.string   "caption",                 default: "No caption available", null: false
+    t.string   "caption",                 default: "",     null: false
   end
 
   add_index "attachments", ["attacheable_id"], name: "index_attachments_on_attacheable_id", using: :btree
   add_index "attachments", ["attacheable_sub_type"], name: "index_attachments_on_attacheable_sub_type", using: :btree
   add_index "attachments", ["attacheable_type", "attacheable_id"], name: "index_attachments_on_attacheable_type_and_attacheable_id", using: :btree
   add_index "attachments", ["attacheable_type"], name: "index_attachments_on_attacheable_type", using: :btree
+
+  create_table "cards", force: true do |t|
+    t.integer  "person_id"
+    t.boolean  "active"
+    t.integer  "last_numbers"
+    t.string   "reference"
+    t.date     "expiration_date"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -51,6 +62,28 @@ ActiveRecord::Schema.define(version: 20150112062105) do
 
   add_index "category_requirements", ["category_id"], name: "index_category_requirements_on_category_id", using: :btree
   add_index "category_requirements", ["requirement_id"], name: "index_category_requirements_on_requirement_id", using: :btree
+
+  create_table "coin_adjustments", force: true do |t|
+    t.integer  "adjustable_id"
+    t.string   "adjustable_type"
+    t.integer  "person_id"
+    t.integer  "coins"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "coin_transactions", force: true do |t|
+    t.integer  "coins"
+    t.integer  "amount"
+    t.boolean  "success"
+    t.string   "reference"
+    t.text     "message"
+    t.string   "action"
+    t.text     "params"
+    t.boolean  "test"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -125,6 +158,7 @@ ActiveRecord::Schema.define(version: 20150112062105) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.string   "slug"
+    t.integer  "coins",                  default: 0
   end
 
   add_index "people", ["email"], name: "index_people_on_email", unique: true, using: :btree

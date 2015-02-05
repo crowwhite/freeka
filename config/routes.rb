@@ -31,6 +31,8 @@ Rails.application.routes.draw do
 
   resources :users, only: :show
 
+  resources :coin_adjustments, only: [:index, :new, :create]
+
   namespace :admin, path: 'admins', as: :admins do
     resources :categories do
       put 'toggle_status', on: :member

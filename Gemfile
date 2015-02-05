@@ -14,6 +14,8 @@ gem 'paperclip',                              '~>4.2'
 gem 'pusher',                                 '~>0.14.2'
 gem 'friendly_id',                            '~>5.0.0'
 gem 'unicorn',                                '~>4.8.3'
+gem 'activemerchant',                         '~>1.46.0'
+gem 'braintree',                              '~>2.40.0'
 
 group :development do
   gem 'binding_of_caller',                    '~>0.7.2'

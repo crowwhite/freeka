@@ -36,6 +36,8 @@
             <br>
             <br>
             <strong>Total Number of Requests Posted: <%= @user.requirements.size %></strong>
+            <br>
+            <strong>Total Number of Available Coins: <%= @user.coins %></strong>          
           </div>
           <div class='col-md-2'></div>
           <div class='col-md-4'>
@@ -48,10 +50,13 @@
         </div>
         <br>
         <div class='row'>
-          <div class='col-md-2'>
+          <div class='col-md-4'>
             <%= link_to 'Back', :back, class: 'btn btn-primary' %>
             <% if current_user == @user %>
               <%= link_to 'Edit', edit_user_registration_path, class: 'btn btn-primary' %>
+              <%= link_to 'Buy Coins', new_coin_adjustment_path, class: 'btn btn-primary' %>
+              <br>
+              <br>
             <% end %>
           </div>
         </div>

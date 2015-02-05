@@ -19,6 +19,7 @@ class DonorRequirement < ActiveRecord::Base
     event :donate, guard: :prevent_if_fulfilled do
       after do
         add_comment_on_requirement
+        adjust_coins
       end
       transitions from: :interested, to: :donated
     end
@@ -45,5 +46,10 @@ class DonorRequirement < ActiveRecord::Base
       else
         true
       end
+    end
+
+    def adjust_coins
+      user.update(coins: user.coins + 5)
+      user.coin_adjustments.create(coins: 5, adjustable_type: 'Donation', adjustable_id: id)
     end
 end

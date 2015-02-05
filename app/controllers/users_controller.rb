@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :load_user, only: :show
+  before_action :load_user, only: [:show, :buy_coins]
 
   private
     def load_user

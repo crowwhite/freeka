@@ -43,6 +43,15 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :test
+    ::GATEWAY = ActiveMerchant::Billing::BraintreeGateway.new(
+      merchant_id: 'ghhq76vjh2rj647x',
+      public_key: '4xfqk33prbw492mg',
+      private_key: 'da1e682a045abc5ad26d409b19bc6c01'
+    )
+  end
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

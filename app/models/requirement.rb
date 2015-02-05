@@ -33,6 +33,7 @@ class Requirement < ActiveRecord::Base
   #FIXME_AB: Why do we have validations on only two fields?
 
   # Callbacks
+  after_create :adjust_coins
   before_destroy :check_destroyable
   before_update :prevent_if_interest_shown, unless: :status_changed?
 
@@ -64,6 +65,11 @@ class Requirement < ActiveRecord::Base
   end
 
   private
+
+    def adjust_coins
+      person.update(coins: person.coins - 5)
+      person.coin_adjustments.create(coins: 5, adjustable_type: 'Request', adjustable_id: id)
+    end
 
     def add_comment_on_requirement
       unless comments.create(content: @comment, user_id: requestor_id).persisted?
