@@ -41,7 +41,7 @@ class RequirementsController < ApplicationController
   def create
     @requirement = current_user.requirements.build(requirement_params)
     if @requirement.save
-      redirect_to @requirement, notice: 'Requirement created'
+      redirect_to @requirement, notice: "Requirement created. #{ @requirement.person.errors[:base].join }"
     else
       flash.now[:alert] = 'Some errors prevented the creation of requirement'
       render :new

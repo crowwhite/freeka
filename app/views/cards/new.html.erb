@@ -1,0 +1,41 @@
+<br>
+<br>
+<div class="well bs-component col-md-9">
+
+  <%= form_for @card do |f| %>
+
+    <div>
+      <%= f.label :number %>
+      <%= f.text_field :number %>
+    </div>
+    <div>
+      <%= f.label :card_type %>
+      <%= f.text_field :card_type %>
+    </div>
+    <div>
+      <%= f.label :cvv %>
+      <%= f.text_field :cvv %>
+    </div>
+    <div>
+      <%= f.label :expiration_month %>
+      <%= f.text_field :month %>
+    </div>
+    <div>
+      <%= f.label :expiration_year %>
+      <%= f.text_field :year %>
+    </div>
+    <div>
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+    </div>
+    <div>
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+    </div>
+
+    <div>
+      <%= f.submit 'Add Card' %>
+    </div>
+
+  <% end %>
+</div>

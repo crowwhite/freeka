@@ -29,6 +29,8 @@ class Person < ActiveRecord::Base
   #FIXME_AB: Are we allowing special chars in name? We should have sensible validations on all models.
   # Fixed
 
+  after_update :buy_coins
+
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -48,6 +50,14 @@ class Person < ActiveRecord::Base
 
   def display_name
     name.capitalize
+  end
+
+  def buy_coins
+    if coins < 10
+      errors.add(:base, '10 coins will be credited to your account.')
+      credit_card_reference = cards.find_by(active: true).reference
+      CoinAdjustment.delay.buy(10, credit_card_reference, self)
+    end
   end
 
 end
